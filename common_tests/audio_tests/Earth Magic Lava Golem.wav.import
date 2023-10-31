@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/Earth Magic Lava Golem.wav-d1ab58ce35a11ce9c654d90cf194026e.sample"
+
+[deps]
+
+source_file="res://common_tests/audio_tests/Earth Magic Lava Golem.wav"
+dest_files=[ "res://.import/Earth Magic Lava Golem.wav-d1ab58ce35a11ce9c654d90cf194026e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

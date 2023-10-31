@@ -1,0 +1,53 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://common_tests/audio_tests/AudioManagerTests.cs" type="Script" id=1]
+[ext_resource path="res://common_tests/audio_tests/Bow Arrow Draw A.wav" type="AudioStream" id=2]
+[ext_resource path="res://common_tests/audio_tests/Bow Arrow Fire A.wav" type="AudioStream" id=3]
+[ext_resource path="res://common_tests/audio_tests/Electronic Vol2 Hybrid Theory Cut 30.wav" type="AudioStream" id=4]
+[ext_resource path="res://common_tests/audio_tests/Bow Arrow Reload A.wav" type="AudioStream" id=5]
+[ext_resource path="res://common_tests/audio_tests/Earth Magic Lava Golem.wav" type="AudioStream" id=6]
+[ext_resource path="res://common_tests/audio_tests/Thunder Magic Ark Touch.wav" type="AudioStream" id=7]
+[ext_resource path="res://common_tests/audio_tests/Ambient Vol3 Sad Decisions Cut 30.wav" type="AudioStream" id=8]
+[ext_resource path="res://common_tests/audio_tests/Horror Vol2 Terror Cut 30.wav" type="AudioStream" id=9]
+[ext_resource path="res://common/audio/audio_manager.tscn" type="PackedScene" id=10]
+
+[node name="AudioManagerTest" type="Node"]
+script = ExtResource( 1 )
+_music = [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 4 ) ]
+_sfx = [ ExtResource( 2 ), ExtResource( 3 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ) ]
+_playMusicPath = NodePath("CanvasLayer/HBoxContainer/Button")
+_stopMusicPath = NodePath("CanvasLayer/HBoxContainer/Button2")
+_playSfxPath = NodePath("CanvasLayer/HBoxContainer/Button3")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -40.0
+margin_top = -20.0
+margin_right = 40.0
+margin_bottom = 20.0
+grow_horizontal = 2
+custom_constants/separation = 50
+
+[node name="Button" type="Button" parent="CanvasLayer/HBoxContainer"]
+margin_right = 68.0
+margin_bottom = 40.0
+text = "Play Music"
+
+[node name="Button2" type="Button" parent="CanvasLayer/HBoxContainer"]
+margin_left = 118.0
+margin_right = 188.0
+margin_bottom = 40.0
+text = "Stop Music"
+
+[node name="Button3" type="Button" parent="CanvasLayer/HBoxContainer"]
+margin_left = 238.0
+margin_right = 290.0
+margin_bottom = 40.0
+text = "Play SFX"
+
+[node name="AudioManager" parent="." instance=ExtResource( 10 )]

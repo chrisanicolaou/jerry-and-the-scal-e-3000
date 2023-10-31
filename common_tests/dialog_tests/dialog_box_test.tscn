@@ -1,0 +1,115 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://common/dialog/dialog_box.tscn" type="PackedScene" id=1]
+[ext_resource path="res://common_tests/dialog_tests/DialogBoxTest.cs" type="Script" id=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+_dialogBoxPath = NodePath("DialogBox")
+_showButtonPath = NodePath("Button")
+_advanceButtonPath = NodePath("Button2")
+_closeButtonPath = NodePath("Button3")
+_fillColorPickerPath = NodePath("ColorPicker")
+_borderColorPickerPath = NodePath("ColorPicker2")
+_titleTextPickerPath = NodePath("LineEdit")
+_textPickerPath = NodePath("LineEdit2")
+_textSpeedPickerPath = NodePath("OptionButton")
+
+[node name="DialogBox" parent="." instance=ExtResource( 1 )]
+margin_left = 152.0
+margin_top = 144.0
+margin_right = 152.0
+margin_bottom = 144.0
+
+[node name="Button" type="Button" parent="."]
+margin_left = 33.0
+margin_top = 104.0
+margin_right = 73.0
+margin_bottom = 112.0
+text = "Show"
+
+[node name="ColorPicker" type="ColorPicker" parent="."]
+margin_left = 21.0
+margin_top = 13.0
+margin_right = 311.0
+margin_bottom = 429.0
+rect_scale = Vector2( 0.2, 0.2 )
+
+[node name="ColorPicker2" type="ColorPicker" parent="."]
+margin_left = 98.0
+margin_top = 11.0
+margin_right = 388.0
+margin_bottom = 436.0
+rect_scale = Vector2( 0.2, 0.2 )
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 95.0
+margin_top = 2.0
+margin_right = 137.0
+margin_bottom = 10.0
+text = "Border Color"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 19.0
+margin_top = 3.0
+margin_right = 59.0
+margin_bottom = 11.0
+text = "Fill Color"
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 174.0
+margin_top = 5.0
+margin_right = 214.0
+margin_bottom = 13.0
+text = "Title"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 195.0
+margin_top = 4.0
+margin_right = 267.0
+margin_bottom = 22.0
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 175.0
+margin_top = 31.0
+margin_right = 215.0
+margin_bottom = 39.0
+text = "Text"
+
+[node name="LineEdit2" type="LineEdit" parent="."]
+margin_left = 195.0
+margin_top = 28.0
+margin_right = 289.0
+margin_bottom = 92.0
+
+[node name="OptionButton" type="OptionButton" parent="."]
+margin_left = 242.0
+margin_top = 98.0
+margin_right = 278.0
+margin_bottom = 110.0
+text = "Normal"
+items = [ "Normal", null, false, 0, null, "Slow", null, false, 1, null, "Fast", null, false, 2, null, "VeryFast", null, false, 3, null ]
+selected = 0
+
+[node name="Label5" type="Label" parent="."]
+margin_left = 198.0
+margin_top = 99.0
+margin_right = 238.0
+margin_bottom = 107.0
+text = "Text Speed"
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 85.0
+margin_top = 104.0
+margin_right = 125.0
+margin_bottom = 112.0
+text = "Advance"
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 136.0
+margin_top = 104.0
+margin_right = 176.0
+margin_bottom = 112.0
+text = "Close"

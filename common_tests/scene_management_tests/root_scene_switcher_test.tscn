@@ -1,0 +1,54 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://common_tests/scene_management_tests/RootSceneSwitcherTests.cs" type="Script" id=1]
+[ext_resource path="res://common_tests/scene_management_tests/black_transition_tex.tres" type="Texture" id=2]
+[ext_resource path="res://common/scene_management/default_transition_tex.tres" type="Texture" id=3]
+[ext_resource path="res://common_tests/scene_management_tests/red_transition_tex.tres" type="Texture" id=4]
+[ext_resource path="res://common/scene_management/star.png" type="Texture" id=5]
+[ext_resource path="res://common/scene_management/root_scene_switcher.tscn" type="PackedScene" id=6]
+
+[node name="Node" type="Node2D"]
+script = ExtResource( 1 )
+_sceneSwitcherPath = NodePath("RootSceneSwitcher")
+_transitionButtonPath = NodePath("CanvasLayer/Button")
+_dropdownButtonPath = NodePath("CanvasLayer/OptionButton")
+_colorDropdownButtonPath = NodePath("CanvasLayer/OptionButton2")
+_colors = {
+"Black": ExtResource( 2 ),
+"Purple": ExtResource( 3 ),
+"Red": ExtResource( 4 ),
+"Star": ExtResource( 5 )
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+margin_left = 134.0
+margin_top = 112.0
+margin_right = 184.0
+margin_bottom = 123.0
+text = "Transition"
+
+[node name="OptionButton" type="OptionButton" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -110.0
+margin_top = 45.0
+margin_right = -57.0
+margin_bottom = 57.0
+text = "Fade"
+align = 1
+items = [ "Fade", null, false, 0, null, "Circle", null, false, 1, null, "Diamond", null, false, 2, null, "Line", null, false, 3, null, "Saw", null, false, 4, null, "Pixel", null, false, 5, null ]
+selected = 0
+
+[node name="OptionButton2" type="OptionButton" parent="CanvasLayer"]
+margin_left = 205.0
+margin_top = 45.0
+margin_right = 259.0
+margin_bottom = 57.0
+text = "Purple"
+align = 1
+items = [ "Purple", null, false, 0, null, "Black", null, false, 1, null, "Red", null, false, 2, null, "Star", null, false, 3, null ]
+selected = 0
+
+[node name="RootSceneSwitcher" parent="." instance=ExtResource( 6 )]

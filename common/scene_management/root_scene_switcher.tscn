@@ -1,0 +1,33 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://common/scene_management/RootSceneSwitcher.cs" type="Script" id=1]
+[ext_resource path="res://common/scene_management/pixel_scene_transition_mat.tres" type="Material" id=2]
+[ext_resource path="res://common/scene_management/default_transition_tex.tres" type="Texture" id=3]
+[ext_resource path="res://common/scene_management/circle_scene_transition_mat.tres" type="Material" id=4]
+[ext_resource path="res://common/scene_management/diamond_scene_transition_mat.tres" type="Material" id=5]
+[ext_resource path="res://common/scene_management/line_scene_transition_mat.tres" type="Material" id=6]
+[ext_resource path="res://common/scene_management/fade_scene_transition_mat.tres" type="Material" id=7]
+[ext_resource path="res://common/scene_management/saw_scene_transition_mat.tres" type="Material" id=8]
+
+[node name="RootSceneSwitcher" type="CanvasLayer"]
+layer = 2
+script = ExtResource( 1 )
+_transitionSpritePath = NodePath("TransitionTarget")
+_defaultTransitionTex = ExtResource( 3 )
+_transitionShaderMatInfo = {
+"Circle": ExtResource( 4 ),
+"Diamond": ExtResource( 5 ),
+"Fade": ExtResource( 7 ),
+"Line": ExtResource( 6 ),
+"Pixel": ExtResource( 2 ),
+"Saw": ExtResource( 8 )
+}
+
+[node name="TransitionTarget" type="Sprite" parent="."]
+material = ExtResource( 7 )
+z_index = 100
+z_as_relative = false
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Tween" type="Tween" parent="."]

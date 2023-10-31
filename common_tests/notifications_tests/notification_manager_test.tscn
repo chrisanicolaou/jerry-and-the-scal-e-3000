@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://common_tests/notifications_tests/NotificationManagerTests.cs" type="Script" id=1]
+[ext_resource path="res://common/notifications/notification_manager.tscn" type="PackedScene" id=2]
+
+[node name="Node" type="Node"]
+script = ExtResource( 1 )
+_emitTestNotificationButton = NodePath("CanvasLayer/Button")
+_notificationManagerPath = NodePath("NotificationManager")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Button" type="Button" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -68.0
+margin_top = -14.5
+margin_right = 68.0
+margin_bottom = 14.5
+text = "Send test notification"
+
+[node name="NotificationManager" parent="." instance=ExtResource( 2 )]
