@@ -9,6 +9,9 @@ extents = Vector2( 168.5, 10 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 _jumpSpeed = 100.0
+_jumpFloatyness = 0.015
+_elongatedJumpMultiplier = 550.0
+_snappyFallMultiplier = 750.0
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2( 9, 144 )
