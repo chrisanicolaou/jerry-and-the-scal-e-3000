@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://common/interaction/interaction_manager/InteractionManager.cs" type="Script" id=1]
+
+[node name="InteractionManager" type="Node"]
+script = ExtResource( 1 )
+InteractionCollisionMask = 2
