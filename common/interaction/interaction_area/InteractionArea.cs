@@ -22,6 +22,7 @@ public class InteractionArea : Area2D
         Connect("area_entered", this, nameof(OnAreaEntered));
         Connect("area_exited", this, nameof(OnAreaExited));
         _interactionManager = GetNode<InteractionManager>($"/root/{nameof(InteractionManager)}");
+        CollisionMask = _interactionManager.InteractionCollisionMask;
     }
 
     public void Activate()
@@ -34,12 +35,12 @@ public class InteractionArea : Area2D
         EmitSignal(nameof(InteractionAreaDeactivated));
     }
 
-    private void OnAreaEntered()
+    private void OnAreaEntered(Area2D area)
     {
         _interactionManager.RegisterNearbyInteractionArea(this);
     }
 
-    private void OnAreaExited()
+    private void OnAreaExited(Area2D area)
     {
         _interactionManager.DeregisterNearbyInteractionArea(this);
     }

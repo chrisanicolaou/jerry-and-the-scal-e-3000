@@ -31,17 +31,17 @@ margin_bottom = 112.0
 text = "Show"
 
 [node name="ColorPicker" type="ColorPicker" parent="."]
-margin_left = 25.0
-margin_top = 17.0
-margin_right = 315.0
-margin_bottom = 433.0
+margin_left = 37.0
+margin_top = 29.0
+margin_right = 327.0
+margin_bottom = 445.0
 rect_scale = Vector2( 0.2, 0.2 )
 
 [node name="ColorPicker2" type="ColorPicker" parent="."]
-margin_left = 102.0
-margin_top = 15.0
-margin_right = 392.0
-margin_bottom = 440.0
+margin_left = 114.0
+margin_top = 27.0
+margin_right = 404.0
+margin_bottom = 452.0
 rect_scale = Vector2( 0.2, 0.2 )
 
 [node name="Label2" type="Label" parent="."]

@@ -1,21 +1,37 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/player/player.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.cs" type="Script" id=2]
+[ext_resource path="res://src/player/player_gun/player_gun.tscn" type="PackedScene" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
 
-[node name="Player" type="KinematicBody2D"]
-position = Vector2( 52, 102 )
+[sub_resource type="CircleShape2D" id=2]
+radius = 23.0217
+
+[node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 2 )
-__meta__ = {
-"_edit_group_": true
-}
 _speed = 100.0
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Graphic" type="Sprite" parent="."]
+position = Vector2( -15, -16 )
 texture = ExtResource( 1 )
+centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Interaction" type="Area2D" parent="."]
+visible = false
+collision_layer = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction"]
+shape = SubResource( 2 )
+
+[node name="Node2D" parent="." instance=ExtResource( 3 )]
+position = Vector2( 17, 0 )
+_playerPath = NodePath("..")

@@ -5,3 +5,4 @@
 [node name="InteractionManager" type="Node"]
 script = ExtResource( 1 )
 InteractionCollisionMask = 2
+_interactionTargetGroupName = "player"
