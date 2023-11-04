@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using GithubGameJam2023.player.player_gun;
 
 public class PlayerGun : Node2D
 {
@@ -29,19 +30,23 @@ public class PlayerGun : Node2D
             Scale = new Vector2(yScale, yScale);
         }
 
-        if (Input.IsActionPressed("shoot_big"))
+        if (Input.IsActionJustPressed("shoot_big"))
         {
             var bullet = _bulletScene.Instance<Bullet>();
+            bullet.Modulate = Colors.Green;
             bullet.GlobalPosition = GlobalPosition;
             bullet.Direction = direction;
+            bullet.Type = BulletType.ShootBig;
             GetTree().Root.AddChild(bullet);
         }
 
-        if (Input.IsActionPressed("shoot_small"))
+        if (Input.IsActionJustPressed("shoot_small"))
         {
             var bullet = _bulletScene.Instance<Bullet>();
+            bullet.Modulate = Colors.Red;
             bullet.GlobalPosition = GlobalPosition;
             bullet.Direction = new Vector2(direction);
+            bullet.Type = BulletType.ShootSmall;
             GetTree().Root.AddChild(bullet);
         }
     }
