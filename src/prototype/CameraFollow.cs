@@ -1,0 +1,27 @@
+using Godot;
+using System;
+
+public class CameraFollow : Camera2D
+{
+    [Export] private NodePath _followTargetPath;
+    [Export] private Vector2 _offset;
+    [Export] private float _lerpSpeed = 5;
+    [Export] private Vector2 _horizontalLevelBounds;
+    [Export] private Vector2 _verticalLevelBounds;
+    
+    private Node2D _followTarget;
+
+    public override void _Ready()
+    {
+        _followTarget = GetNode<Node2D>(_followTargetPath);
+    }
+
+    public override void _Process(float delta)
+    {
+        var targetPos = _followTarget.GlobalPosition + _offset;
+        var clampedTargetPos = new Vector2(Mathf.Clamp(targetPos.x, _horizontalLevelBounds.x, _horizontalLevelBounds.y),
+            Mathf.Clamp(targetPos.y, _verticalLevelBounds.x, _verticalLevelBounds.y));
+
+        GlobalPosition = GlobalPosition.LinearInterpolate(clampedTargetPos, delta * _lerpSpeed);
+    }
+}

@@ -20,6 +20,8 @@ public class PlayerGun : Node2D
 
     public override void _Process(float delta)
     {
+        if (_player.Freeze) return;
+        
         var mousePos = _viewport.GetMousePosition();
         var direction = _player.GlobalPosition.DirectionTo(mousePos);
         GlobalPosition = _player.GlobalPosition + (_radius * direction);
@@ -36,7 +38,7 @@ public class PlayerGun : Node2D
             bullet.Modulate = Colors.Green;
             bullet.GlobalPosition = GlobalPosition;
             bullet.Direction = direction;
-            bullet.Type = BulletType.ShootBig;
+            bullet.Type = ScaleType.Big;
             GetTree().Root.AddChild(bullet);
         }
 
@@ -46,7 +48,7 @@ public class PlayerGun : Node2D
             bullet.Modulate = Colors.Red;
             bullet.GlobalPosition = GlobalPosition;
             bullet.Direction = new Vector2(direction);
-            bullet.Type = BulletType.ShootSmall;
+            bullet.Type = ScaleType.Small;
             GetTree().Root.AddChild(bullet);
         }
     }

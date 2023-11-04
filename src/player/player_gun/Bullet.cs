@@ -7,7 +7,7 @@ public class Bullet : KinematicBody2D
     [Export] public float Speed { get; set; }
     [Export] public string ScaleGroupName { get; set; } = "scalable";
     public Vector2 Direction { get; set;  }
-    public BulletType Type { get; set; }
+    public ScaleType Type { get; set; }
 
     public override void _PhysicsProcess(float delta)
     {

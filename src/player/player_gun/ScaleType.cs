@@ -1,8 +1,8 @@
 ﻿namespace GithubGameJam2023.player.player_gun
 {
-    public enum BulletType
+    public enum ScaleType
     {
-        ShootBig,
-        ShootSmall
+        Big,
+        Small
     }
 }

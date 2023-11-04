@@ -3,6 +3,7 @@ using System;
 
 public class Player : KinematicBody2D
 {
+    public bool Freeze { get; set; }
     [Export] private float _speed = 1;
     [Export] private float _jumpSpeed = 1;
     [Export] private float _jumpFloatyness = 0.1f;
@@ -14,6 +15,8 @@ public class Player : KinematicBody2D
     private float _timeInAir;
     public override void _PhysicsProcess(float delta)
     {
+        if (Freeze) return;
+        
         var direction = Input.GetAxis("left", "right");
         _velocity.x = Mathf.Abs(direction) > 0.001 ? direction * _speed : 0;
 
