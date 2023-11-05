@@ -11,7 +11,7 @@ config_version=4
 [application]
 
 config/name="Github Game Jam 2023"
-run/main_scene="res://src/prototype/prototype.tscn"
+run/main_scene="res://src/main/main.tscn"
 config/icon="res://icon.png"
 
 [autoload]
