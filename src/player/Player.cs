@@ -10,6 +10,7 @@ public class Player : KinematicBody2D
     [Export] private float _gravityMultiplier = 1;
     [Export] private float _elongatedJumpMultiplier = 25;
     [Export] private float _snappyFallMultiplier = 25;
+    [Export] private float _snapLength = 0.2f;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
     
@@ -76,7 +77,13 @@ public class Player : KinematicBody2D
         
         _velocity.x = direction * _speed;
 
-        MoveAndSlide(_velocity, Vector2.Up);
+        // Correction to allow walking smoothly over slopes
+        // var correction = Vector2.Zero;
+        // if (IsOnFloor())
+        // {
+        //     correction = new Vector2(0, -1) - GetFloorNormal();
+        //     correction *= -_gravity;
+        // }
 
         if (!IsOnFloor())
         {
@@ -98,6 +105,8 @@ public class Player : KinematicBody2D
             _timeInAir = 0;
             _velocity.y = Input.IsActionPressed("jump") ? -_jumpSpeed : 0;
         }
+        
+        MoveAndSlide(_velocity, Vector2.Up, true);
     }
 
     private void PlayAnimationIfNotPlaying(string animName)

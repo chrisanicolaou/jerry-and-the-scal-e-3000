@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/prototype/boulder.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/prototype/concrete_grass_ground.png" type="Texture" id=6]
 [ext_resource path="res://src/prototype/key.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/prototype/coin.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/prototype/level_ui.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 160, 7 )
@@ -23,6 +24,7 @@ _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
 _coinPaths = [ NodePath("Coin") ]
+_levelUIPath = NodePath("UI")
 
 [node name="Floor" type="StaticBody2D" parent="."]
 position = Vector2( 160, 145 )
@@ -80,3 +82,5 @@ position = Vector2( 290, -18 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 57, 117 )
+
+[node name="UI" parent="." instance=ExtResource( 9 )]

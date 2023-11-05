@@ -12,6 +12,7 @@ public class Level : Node2D
     [Export] private NodePath _keyPath;
     [Export] private NodePath _playerPath;
     [Export] private Array<NodePath> _coinPaths;
+    [Export] private NodePath _levelUIPath;
 
     private Door _entranceDoor;
     private Door _exitDoor;
@@ -19,6 +20,7 @@ public class Level : Node2D
     private Key _key;
     private bool _keyFound;
     private Coin[] _coins;
+    private LevelUI _levelUI;
 
     public override void _Ready()
     {
@@ -26,12 +28,9 @@ public class Level : Node2D
         _exitDoor = GetNode<Door>(_exitDoorPath);
         _key = GetNode<Key>(_keyPath);
         _player = GetNode<Player>(_playerPath);
+        _levelUI = GetNode<LevelUI>(_levelUIPath);
         _player.Freeze = true;
         _player.Visible = false;
-        if (StartAutomatically)
-        {
-            StartLevel();
-        }
 
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
@@ -41,6 +40,13 @@ public class Level : Node2D
         {
             _coins[i] = GetNode<Coin>(_coinPaths[i]);
             _coins[i].Connect(nameof(Coin.CoinFound), this, nameof(OnCoinFound), new Array(i));
+        }
+        
+        _levelUI.Initialise(1, _coins.Length);
+        
+        if (StartAutomatically)
+        {
+            StartLevel();
         }
     }
 
@@ -58,6 +64,7 @@ public class Level : Node2D
     {
         _keyFound = true;
         _key.QueueFree();
+        _levelUI.AddCollectedKey();
     }
 
     private async void OnExitDoorReached()
@@ -82,5 +89,6 @@ public class Level : Node2D
     private void OnCoinFound(int coinIndex)
     {
         _coins[coinIndex].QueueFree();
+        _levelUI.AddCollectedCoin();
     }
 }
