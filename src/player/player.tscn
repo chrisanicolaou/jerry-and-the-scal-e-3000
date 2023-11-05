@@ -6,6 +6,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
+height = 16.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 23.0217
@@ -109,6 +110,7 @@ hframes = 4
 vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 1, 0 )
 shape = SubResource( 1 )
 __meta__ = {
 "_edit_group_": true
