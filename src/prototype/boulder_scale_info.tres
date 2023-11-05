@@ -7,8 +7,8 @@
 [resource]
 script = ExtResource( 1 )
 BigTex = ExtResource( 2 )
-BigScale = Vector2( 1, 1 )
+BigScale = Vector2( 2, 2 )
 BigOffset = Vector2( 0, 0 )
 SmallTex = ExtResource( 3 )
-SmallScale = Vector2( 0.2, 0.2 )
-SmallOffset = Vector2( 0, 25 )
+SmallScale = Vector2( 0.4, 0.4 )
+SmallOffset = Vector2( 0, 12.5 )

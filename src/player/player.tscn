@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=11 format=2]
 
-[ext_resource path="res://src/player/player.png" type="Texture" id=1]
+[ext_resource path="res://src/player/jerry_sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://src/player/player_gun/player_gun.tscn" type="PackedScene" id=3]
 
@@ -10,14 +10,103 @@ radius = 6.0
 [sub_resource type="CircleShape2D" id=2]
 radius = 23.0217
 
+[sub_resource type="Animation" id=3]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphic:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "enter_level"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphic:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 4, 5, 6, 7 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "exit_level"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphic:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "idle"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphic:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 6 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "walk"
+length = 1.2
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Graphic:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 8, 9, 10, 11 ]
+}
+
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 script = ExtResource( 2 )
-_speed = 100.0
+_speed = 150.0
+_jumpSpeed = 200.0
+_jumpFloatyness = 0.015
+_elongatedJumpMultiplier = 550.0
+_snappyFallMultiplier = 750.0
+_animPlayerPath = NodePath("AnimationPlayer")
+_spriteNodePath = NodePath("Graphic")
 
 [node name="Graphic" type="Sprite" parent="."]
-position = Vector2( -15, -16 )
 texture = ExtResource( 1 )
-centered = false
+hframes = 4
+vframes = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -35,3 +124,10 @@ shape = SubResource( 2 )
 [node name="Node2D" parent="." instance=ExtResource( 3 )]
 position = Vector2( 17, 0 )
 _playerPath = NodePath("..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/RESET = SubResource( 3 )
+anims/enter_level = SubResource( 7 )
+anims/exit_level = SubResource( 6 )
+anims/idle = SubResource( 4 )
+anims/walk = SubResource( 5 )
