@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class Level : Node2D
 {
@@ -9,12 +11,14 @@ public class Level : Node2D
     [Export] private NodePath _exitDoorPath;
     [Export] private NodePath _keyPath;
     [Export] private NodePath _playerPath;
+    [Export] private Array<NodePath> _coinPaths;
 
     private Door _entranceDoor;
     private Door _exitDoor;
     private Player _player;
     private Key _key;
     private bool _keyFound;
+    private Coin[] _coins;
 
     public override void _Ready()
     {
@@ -31,6 +35,13 @@ public class Level : Node2D
 
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
+
+        _coins = new Coin[_coinPaths.Count];
+        for (var i = 0; i < _coinPaths.Count; i++)
+        {
+            _coins[i] = GetNode<Coin>(_coinPaths[i]);
+            _coins[i].Connect(nameof(Coin.CoinFound), this, nameof(OnCoinFound), new Array(i));
+        }
     }
 
     public async void StartLevel()
@@ -66,5 +77,10 @@ public class Level : Node2D
         await _player.ExitLevel(_exitDoor);
         await _exitDoor.Close();
         EmitSignal(nameof(LevelCompleted));
+    }
+
+    private void OnCoinFound(int coinIndex)
+    {
+        _coins[coinIndex].QueueFree();
     }
 }
