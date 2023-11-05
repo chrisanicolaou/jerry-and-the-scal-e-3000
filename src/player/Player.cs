@@ -67,6 +67,7 @@ public class Player : KinematicBody2D
         if (!IsOnFloor())
         {
             _timeInAir += delta;
+            if (IsOnCeiling()) _velocity.y = 0;
             _velocity.y += _gravity * _gravityMultiplier * delta;
             if (_velocity.y < 0)
             {
