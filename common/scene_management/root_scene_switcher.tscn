@@ -25,6 +25,7 @@ _transitionShaderMatInfo = {
 
 [node name="TransitionTarget" type="Sprite" parent="."]
 material = ExtResource( 7 )
+scale = Vector2( 0.166667, 0.166667 )
 z_index = 100
 z_as_relative = false
 texture = ExtResource( 3 )

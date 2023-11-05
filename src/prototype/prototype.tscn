@@ -12,12 +12,13 @@
 extents = Vector2( 160, 7 )
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 160, 7 )
+extents = Vector2( 58.5, 7.5 )
 
 [node name="Level" type="Node2D"]
 script = ExtResource( 5 )
-_startAutomatically = true
+StartAutomatically = true
 _entranceDoorPath = NodePath("Door")
+_exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
 
@@ -37,18 +38,19 @@ vframes = 7
 frame = 5
 
 [node name="Floor2" type="StaticBody2D" parent="."]
-position = Vector2( 160, 82 )
+position = Vector2( 48, 28 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Floor2"]
-position = Vector2( 0, -3 )
+position = Vector2( 10.5, -0.5 )
 shape = SubResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="Floor2"]
 texture = ExtResource( 6 )
-vframes = 7
+hframes = 2
+vframes = 9
 frame = 5
 
 [node name="Boulder" parent="." instance=ExtResource( 2 )]
@@ -56,9 +58,6 @@ position = Vector2( 169, 117 )
 
 [node name="Door" parent="." instance=ExtResource( 4 )]
 position = Vector2( 58, 117 )
-
-[node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 57, 117 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 current = true
@@ -69,3 +68,10 @@ _verticalLevelBounds = Vector2( 0, 65 )
 
 [node name="Key" parent="." instance=ExtResource( 7 )]
 position = Vector2( 275, 126 )
+
+[node name="ExitDoor" parent="." instance=ExtResource( 4 )]
+position = Vector2( 59, 2 )
+_isLocked = true
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 57, 117 )

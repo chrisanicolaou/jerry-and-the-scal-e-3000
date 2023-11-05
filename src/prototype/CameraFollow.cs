@@ -14,10 +14,14 @@ public class CameraFollow : Camera2D
     public override void _Ready()
     {
         _followTarget = GetNode<Node2D>(_followTargetPath);
+        var targetPos = _followTarget.GlobalPosition + _offset;
+        GlobalPosition = new Vector2(Mathf.Clamp(targetPos.x, _horizontalLevelBounds.x, _horizontalLevelBounds.y),
+            Mathf.Clamp(targetPos.y, _verticalLevelBounds.x, _verticalLevelBounds.y));
     }
 
     public override void _Process(float delta)
     {
+        if (_followTarget == null) return;
         var targetPos = _followTarget.GlobalPosition + _offset;
         var clampedTargetPos = new Vector2(Mathf.Clamp(targetPos.x, _horizontalLevelBounds.x, _horizontalLevelBounds.y),
             Mathf.Clamp(targetPos.y, _verticalLevelBounds.x, _verticalLevelBounds.y));

@@ -8,3 +8,4 @@ gradient = SubResource( 1 )
 width = 1920
 height = 1080
 fill_from = Vector2( 0, 1 )
+fill_to = Vector2( 0.983333, 0.0229665 )

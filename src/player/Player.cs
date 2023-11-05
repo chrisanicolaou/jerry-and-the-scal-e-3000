@@ -46,6 +46,20 @@ public class Player : KinematicBody2D
         await ToSignal(tween, "finished");
         PlayAnimationIfNotPlaying("idle");
     }
+    
+    public async Task ExitLevel(Door door)
+    {
+        var playerScale = 0.5f;
+        var exitDoorDuration = 0.5f;
+        
+        GlobalPosition = door.GlobalPosition;
+        
+        PlayAnimationIfNotPlaying("exit_level");
+        var tween = GetTree().CreateTween().SetParallel();
+        tween.TweenProperty(this, "scale", new Vector2(playerScale, playerScale), exitDoorDuration);
+        tween.TweenProperty(this, "modulate:a", 0f, exitDoorDuration);
+        await ToSignal(tween, "finished");
+    }
 
     public override void _PhysicsProcess(float delta)
     {

@@ -53,7 +53,9 @@ tracks/0/keys = {
 
 [node name="Door" type="Node2D"]
 script = ExtResource( 3 )
+_interactionAreaPath = NodePath("Area2D")
 _animPlayerPath = NodePath("AnimationPlayer")
+_spritePath = NodePath("Sprite")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

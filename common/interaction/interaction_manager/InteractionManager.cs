@@ -25,12 +25,12 @@ public class InteractionManager : Node
 
     public override void _Process(float _)
     {
-        if (InteractionTarget == null)
+        if (InteractionTarget == null || !IsInstanceValid(InteractionTarget))
         {
             var nodesInGroup = GetTree().GetNodesInGroup(_interactionTargetGroupName);
             if (nodesInGroup.Count < 1) return;
             InteractionTarget = nodesInGroup[0] as Node2D;
-            if (InteractionTarget == null) return;
+            if (InteractionTarget == null || !IsInstanceValid(InteractionTarget)) return;
         }
         if (_nearbyInteractionAreas.Count <= 0) return;
         var interactionTargetPos = InteractionTarget.GlobalPosition;
