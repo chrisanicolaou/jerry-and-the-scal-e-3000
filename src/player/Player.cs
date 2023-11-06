@@ -62,6 +62,16 @@ public class Player : KinematicBody2D
         await ToSignal(tween, "finished");
     }
 
+    public void PickupItem(ScalableItem item)
+    {
+        _sprite.AddChild(item);
+    }
+
+    public void PutdownItem(ScalableItem item)
+    {
+        _sprite.RemoveChild(item);
+    }
+
     public override void _PhysicsProcess(float delta)
     {
         if (Freeze) return;

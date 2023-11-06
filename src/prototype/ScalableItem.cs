@@ -5,11 +5,14 @@ using GithubGameJam2023.player.player_gun;
 
 public class ScalableItem : KinematicBody2D
 {
+    [Signal] public delegate void ItemCarryRequested(ScalableItem item);
+    [Signal] public delegate void ItemPutdownRequested(ScalableItem item);
     [Export] protected bool PhysicsBased { get; set; } = true;
     [Export(PropertyHint.Range, "0,1,0.01")] protected float Friction { get; set; } = 0.5f;
     [Export(PropertyHint.Range, "2,10,0.1")] protected float ScaleDuration { get; private set; } = 2f;
+    public bool IsBeingCarried { get; set; }
 
-    [Export] protected bool CanBeCarried { get; set; }
+    [Export] protected bool CanBeCarriedByDefault { get; set; }
     
     [Export] private ScalableItemInfo _itemScaleInfo;
     [Export] private NodePath _spritePath;
@@ -26,6 +29,7 @@ public class ScalableItem : KinematicBody2D
     private Texture _normalTex;
     private Vector2 _normalScale;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
+    private bool _isCurrentlyCarryable;
 
     public override void _Ready()
     {
@@ -34,8 +38,10 @@ public class ScalableItem : KinematicBody2D
         CollisionShapeNode = GetNode<Node2D>(_collisionShapePath);
         OtherChildToScale = GetNode<Node2D>(_otherChildToScalePath);
         InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
+        InteractionArea.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
         _normalScale = CollisionShapeNode.Scale;
         _normalTex = Sprite.Texture;
+        _isCurrentlyCarryable = CanBeCarriedByDefault;
     }
 
     public void OnBulletCollide(ScaleType type)
@@ -55,10 +61,10 @@ public class ScalableItem : KinematicBody2D
         }
     }
 
-    public virtual void OnInteractionAreaActivated()
+    public virtual void OnInteractionAreaTriggered()
     {
-        if (!CanBeCarried) return;
-        // Handle being carried
+        if (!_isCurrentlyCarryable) return;
+        EmitSignal(IsBeingCarried ? nameof(ItemPutdownRequested) : nameof(ItemCarryRequested), this);
     }
 
     protected virtual void ScaleUp()
@@ -78,12 +84,14 @@ public class ScalableItem : KinematicBody2D
         Sprite.Texture = info.Tex;
         GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", info.Scale, 0.1f);
         OtherChildToScale.Scale = info.Scale;
+        _isCurrentlyCarryable = info.Carryable;
         Position += info.Offset;
         await ToSignal(GetTree().CreateTimer(ScaleDuration, false), "timeout");
         IsMutated = false;
         GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", _normalScale, 0.1f);
         OtherChildToScale.Scale = _normalScale;
         Sprite.Texture = _normalTex;
+        _isCurrentlyCarryable = CanBeCarriedByDefault;
         Position -= info.Offset;
     }
 

@@ -23,6 +23,11 @@ public class InteractionManager : Node
         _nearbyInteractionAreas.Remove(area);
     }
 
+    public void TriggerActiveInteraction()
+    {
+        _activeInteractionArea?.Trigger();
+    }
+
     public override void _Process(float _)
     {
         if (InteractionTarget == null || !IsInstanceValid(InteractionTarget))

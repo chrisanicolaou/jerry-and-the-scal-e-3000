@@ -12,6 +12,7 @@ public class Level : Node2D
     [Export] private NodePath _keyPath;
     [Export] private NodePath _playerPath;
     [Export] private Array<NodePath> _coinPaths;
+    [Export] private Array<NodePath> _carryableItemPaths;
     [Export] private NodePath _levelUIPath;
 
     private Door _entranceDoor;
@@ -21,6 +22,7 @@ public class Level : Node2D
     private bool _keyFound;
     private Coin[] _coins;
     private LevelUI _levelUI;
+    private ScalableItem[] _carryableItems;
 
     public override void _Ready()
     {
@@ -40,6 +42,14 @@ public class Level : Node2D
         {
             _coins[i] = GetNode<Coin>(_coinPaths[i]);
             _coins[i].Connect(nameof(Coin.CoinFound), this, nameof(OnCoinFound), new Array(i));
+        }
+
+        _carryableItems = new ScalableItem[_carryableItemPaths.Count];
+        for (var i = 0; i < _carryableItemPaths.Count; i++)
+        {
+            _carryableItems[i] = GetNode<ScalableItem>(_carryableItemPaths[i]);
+            _carryableItems[i].Connect(nameof(ScalableItem.ItemCarryRequested), this, nameof(OnItemCarryRequested));
+            _carryableItems[i].Connect(nameof(ScalableItem.ItemPutdownRequested), this, nameof(OnItemPutdownRequested));
         }
         
         _levelUI.Initialise(1, _coins.Length);
@@ -90,5 +100,17 @@ public class Level : Node2D
     {
         _coins[coinIndex].QueueFree();
         _levelUI.AddCollectedCoin();
+    }
+
+    private void OnItemCarryRequested(ScalableItem item)
+    {
+        RemoveChild(item);
+        _player.PickupItem(item);
+    }
+
+    private void OnItemPutdownRequested(ScalableItem item)
+    {
+        _player.PutdownItem(item);
+        AddChild(item);
     }
 }

@@ -11,12 +11,14 @@ public class ScalableItemInfo : Resource
     [Export] public Texture SmallTex { get; set; }
     [Export] public Vector2 SmallScale { get; set; }
     [Export] public Vector2 SmallOffset { get; set; }
+    [Export] public bool CanBeCarriedWhenSmall { get; set; }
 
     public ScaleInfo GetScaleInfo(ScaleType type)
     {
         Texture tex;
         Vector2 scale;
         Vector2 offset;
+        var carryable = false;
 
         switch (type)
         {
@@ -29,11 +31,12 @@ public class ScalableItemInfo : Resource
                 tex = SmallTex;
                 scale = SmallScale;
                 offset = SmallOffset;
+                carryable = CanBeCarriedWhenSmall;
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
 
-        return new ScaleInfo { Tex = tex, Offset = offset, Scale = scale };
+        return new ScaleInfo { Tex = tex, Offset = offset, Scale = scale, Carryable = carryable };
     }
 }

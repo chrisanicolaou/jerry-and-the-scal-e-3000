@@ -12,3 +12,4 @@ BigOffset = Vector2( 0, 0 )
 SmallTex = ExtResource( 3 )
 SmallScale = Vector2( 0.4, 0.4 )
 SmallOffset = Vector2( 0, 0 )
+CanBeCarriedWhenSmall = false

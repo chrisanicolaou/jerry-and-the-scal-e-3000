@@ -12,6 +12,7 @@ using System;
 /// </summary>
 public class InteractionArea : Area2D
 {
+    [Signal] public delegate void InteractionAreaTriggered();
     [Signal] public delegate void InteractionAreaActivated();
     [Signal] public delegate void InteractionAreaDeactivated();
 
@@ -23,6 +24,11 @@ public class InteractionArea : Area2D
         Connect("area_exited", this, nameof(OnAreaExited));
         _interactionManager = GetNode<InteractionManager>($"/root/{nameof(InteractionManager)}");
         CollisionMask = _interactionManager.InteractionCollisionMask;
+    }
+
+    public void Trigger()
+    {
+        EmitSignal(nameof(InteractionAreaTriggered));
     }
 
     public void Activate()
