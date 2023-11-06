@@ -13,11 +13,11 @@ public class Bullet : KinematicBody2D
     {
         var velocity = Direction * Speed * delta;
 
-        var collision = MoveAndCollide(velocity);
+        var collision = MoveAndCollide(velocity, infiniteInertia: false);
         // We've collided! DESTROY >:)
         if (collision != null)
         {
-            var scalableItem = ((collision.Collider as Node)?.Owner as ScalableItem);
+            var scalableItem = collision.Collider as ScalableItem;
             scalableItem?.OnBulletCollide(Type);
             QueueFree();
         }

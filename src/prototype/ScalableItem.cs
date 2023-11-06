@@ -3,25 +3,38 @@ using System;
 using System.Threading.Tasks;
 using GithubGameJam2023.player.player_gun;
 
-public class ScalableItem : Node2D
+public class ScalableItem : KinematicBody2D
 {
+    [Export] protected bool PhysicsBased { get; set; } = true;
+    [Export(PropertyHint.Range, "0,1,0.01")] protected float Friction { get; set; } = 0.5f;
     [Export(PropertyHint.Range, "2,10,0.1")] protected float ScaleDuration { get; private set; } = 2f;
+
+    [Export] protected bool CanBeCarried { get; set; }
+    
     [Export] private ScalableItemInfo _itemScaleInfo;
     [Export] private NodePath _spritePath;
-    [Export] private NodePath _scalableChildPath;
+    [Export] private NodePath _collisionShapePath;
+    [Export] private NodePath _otherChildToScalePath;
+    [Export] private NodePath _interactionAreaPath;
+    protected Sprite Sprite { get; private set; }
+    protected Node2D CollisionShapeNode { get; private set; }
+    protected Node2D OtherChildToScale { get; private set; }
+    protected InteractionArea InteractionArea { get; private set; }
+    protected bool IsMutated { get; set; }
+    protected Vector2 Velocity;
+    
     private Texture _normalTex;
     private Vector2 _normalScale;
-    protected Sprite Sprite { get; private set; }
-    protected Node2D ScalableChild { get; private set; }
-    protected bool IsMutated { get; set; }
+    private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
 
     public override void _Ready()
     {
-        Sprite = GetNode<Sprite>(_spritePath);
-        ScalableChild = GetNode<Node2D>(_scalableChildPath);
-        (Sprite.Material as ShaderMaterial)?.SetShaderParam("enabled", true);
         AddToGroup("scalable");
-        _normalScale = ScalableChild.Scale;
+        Sprite = GetNode<Sprite>(_spritePath);
+        CollisionShapeNode = GetNode<Node2D>(_collisionShapePath);
+        OtherChildToScale = GetNode<Node2D>(_otherChildToScalePath);
+        InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
+        _normalScale = CollisionShapeNode.Scale;
         _normalTex = Sprite.Texture;
     }
 
@@ -42,6 +55,12 @@ public class ScalableItem : Node2D
         }
     }
 
+    public virtual void OnInteractionAreaActivated()
+    {
+        if (!CanBeCarried) return;
+        // Handle being carried
+    }
+
     protected virtual void ScaleUp()
     {
         HandleScale(ScaleType.Big);
@@ -57,11 +76,13 @@ public class ScalableItem : Node2D
         var info = _itemScaleInfo.GetScaleInfo(type);
         await PlayPreScaleAnimation(type == ScaleType.Big);
         Sprite.Texture = info.Tex;
-        ScalableChild.Scale = info.Scale;
+        GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", info.Scale, 0.1f);
+        OtherChildToScale.Scale = info.Scale;
         Position += info.Offset;
         await ToSignal(GetTree().CreateTimer(ScaleDuration, false), "timeout");
         IsMutated = false;
-        ScalableChild.Scale = _normalScale;
+        GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", _normalScale, 0.1f);
+        OtherChildToScale.Scale = _normalScale;
         Sprite.Texture = _normalTex;
         Position -= info.Offset;
     }
@@ -90,6 +111,35 @@ public class ScalableItem : Node2D
         await ToSignal(tween, "finished");
         await ToSignal(GetTree().CreateTimer(postTweenDelay, false), "timeout");
         Scale = originalScale;
+    }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        if (!PhysicsBased) return;
+
+        // var previousXVelocity = Velocity.x;
+        
+        if (!IsOnFloor())
+        {
+            Velocity.y += _gravity * delta;
+        }
+
+        Velocity = MoveAndSlide(Velocity, Vector2.Up);
+        if (Velocity.x != 0)
+        {
+            var directionSign = Velocity.x > 0 ? 1 : -1;
+            Velocity.x -= directionSign == -1 ? -Friction : Friction;
+            if (Mathf.Sign(Velocity.x) != directionSign) Velocity.x = 0;
+        }
+
+        for (var i = 0; i < GetSlideCount(); i++)
+        {
+            var col = GetSlideCollision(i);
+            if (col.Collider is Player || col.Collider is Bullet && Mathf.Abs(Velocity.x) > 0.001)
+            {
+                Velocity = Vector2.Zero;
+            }
+        }
     }
 }
 

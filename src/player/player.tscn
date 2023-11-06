@@ -95,6 +95,7 @@ tracks/0/keys = {
 }
 
 [node name="Player" type="KinematicBody2D" groups=["player"]]
+collision/safe_margin = 0.5
 script = ExtResource( 2 )
 _speed = 150.0
 _jumpSpeed = 200.0

@@ -106,7 +106,7 @@ public class Player : KinematicBody2D
             _velocity.y = Input.IsActionPressed("jump") ? -_jumpSpeed : 0;
         }
         
-        MoveAndSlide(_velocity, Vector2.Up, true);
+        MoveAndSlide(_velocity, Vector2.Up, true, infiniteInertia: false);
     }
 
     private void PlayAnimationIfNotPlaying(string animName)
