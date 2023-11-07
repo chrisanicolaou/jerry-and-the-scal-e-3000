@@ -9,5 +9,7 @@ namespace GithubGameJam2023.prototype
         public Vector2 Offset { get; set; }
         public bool Carryable { get; set; }
         public Vector2 CarryOffset { get; set; }
+        public float Mass { get; set; }
+        public float Friction { get; set; }
     }
 }

@@ -17,9 +17,21 @@ public class Bullet : KinematicBody2D
         // We've collided! DESTROY >:)
         if (collision != null)
         {
-            var scalableItem = collision.Collider as ScalableItem;
-            scalableItem?.OnBulletCollide(Type);
-            QueueFree();
+            HandleCollision(collision);
         }
+    }
+
+    private void HandleCollision(KinematicCollision2D collision)
+    {
+        if (collision.Collider is BulletDeflector)
+        {
+            Direction = Direction.Bounce(collision.Normal);
+            return;
+        }
+        if (collision.Collider is ScalableItem scalableItem)
+        {
+            scalableItem.OnBulletCollide(Type);
+        }
+        QueueFree();
     }
 }

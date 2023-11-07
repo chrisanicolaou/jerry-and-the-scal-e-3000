@@ -7,11 +7,15 @@
 [resource]
 script = ExtResource( 1 )
 BigTex = ExtResource( 2 )
-BigScale = Vector2( 2, 2 )
+BigScale = Vector2( 1.8, 1.8 )
+BigMass = 50.0
+BigFriction = 0.75
 BigOffset = Vector2( 0, 0 )
 BigCarryOffset = Vector2( 80, -20 )
 SmallTex = ExtResource( 3 )
 SmallScale = Vector2( 0.4, 0.4 )
+SmallMass = 10.0
+SmallFriction = 0.2
 SmallOffset = Vector2( 0, 0 )
 CanBeCarriedWhenSmall = true
 SmallCarryOffset = Vector2( 40, -10 )

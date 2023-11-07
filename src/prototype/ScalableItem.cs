@@ -7,8 +7,10 @@ public class ScalableItem : KinematicBody2D
 {
     [Signal] public delegate void ItemInteractionRequested(ScalableItem item);
     [Export] protected bool PhysicsBased { get; set; } = true;
-    [Export(PropertyHint.Range, "0,1,0.01")] protected float Friction { get; set; } = 0.5f;
-    [Export(PropertyHint.Range, "2,10,0.1")] protected float ScaleDuration { get; private set; } = 2f;
+    [Export(PropertyHint.Range, "0,2,0.01")] protected float DefaultFriction { get; set; } = 0.5f;
+    [Export(PropertyHint.Range, "2,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 2f;
+
+    [Export(PropertyHint.Range, "1,100,0.1")] protected float DefaultMass { get; set; } = 10;
     public bool IsBeingCarried { get; set; }
     public Vector2 CarryOffset { get; set; }
     public bool DisablePhysics { get; set; } = false;
@@ -30,9 +32,14 @@ public class ScalableItem : KinematicBody2D
     
     private Texture _normalTex;
     private Vector2 _normalScale;
+    private float _mass;
+    private float _friction;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
+    private float _massFactor = 0.1f;
     
     public bool IsCurrentlyCarryable { get; set; }
+    public Vector2 ExertingForce => (Vector2.One + _previousVelocity) * _mass;
+    private Vector2 _previousVelocity;
 
     public override void _Ready()
     {
@@ -44,6 +51,8 @@ public class ScalableItem : KinematicBody2D
         InteractionArea.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
         _normalScale = CollisionShapeNode.Scale;
         _normalTex = Sprite.Texture;
+        _mass = DefaultMass;
+        _friction = DefaultFriction;
         IsCurrentlyCarryable = CanBeCarriedByDefault;
         CarryOffset = DefaultCarryOffset;
     }
@@ -83,6 +92,7 @@ public class ScalableItem : KinematicBody2D
 
     protected virtual async void HandleScale(ScaleType type)
     {
+        _mass = 0;
         var info = _itemScaleInfo.GetScaleInfo(type);
         await PlayPreScaleAnimation(type == ScaleType.Big);
         Sprite.Texture = info.Tex;
@@ -90,14 +100,19 @@ public class ScalableItem : KinematicBody2D
         OtherChildToScale.Scale = info.Scale;
         IsCurrentlyCarryable = info.Carryable;
         CarryOffset = info.CarryOffset;
+        _mass = info.Mass;
+        _friction = info.Friction;
         Position += info.Offset;
-        await ToSignal(GetTree().CreateTimer(ScaleDuration, false), "timeout");
+        await ToSignal(GetTree().CreateTimer(DefaultScaleDuration, false), "timeout");
         IsMutated = false;
+        _mass = 0;
         GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", _normalScale, 0.1f);
         OtherChildToScale.Scale = _normalScale;
         Sprite.Texture = _normalTex;
         IsCurrentlyCarryable = CanBeCarriedByDefault;
         CarryOffset = DefaultCarryOffset;
+        _mass = DefaultMass;
+        _friction = DefaultFriction;
         Position -= info.Offset;
     }
 
@@ -131,24 +146,31 @@ public class ScalableItem : KinematicBody2D
     {
         if (!PhysicsBased || DisablePhysics) return;
 
-        // var previousXVelocity = Velocity.x;
+        _previousVelocity = new Vector2(Velocity);
         
         if (!IsOnFloor())
         {
-            Velocity.y += _gravity * delta;
+            Velocity.y += _gravity * delta * (_mass * _massFactor);
         }
 
         Velocity = MoveAndSlide(Velocity, Vector2.Up);
         if (Velocity.x != 0)
         {
             var directionSign = Velocity.x > 0 ? 1 : -1;
-            Velocity.x -= directionSign == -1 ? -Friction : Friction;
+            Velocity.x -= directionSign == -1 ? -_friction : _friction;
             if (Mathf.Sign(Velocity.x) != directionSign) Velocity.x = 0;
         }
 
         for (var i = 0; i < GetSlideCount(); i++)
         {
             var col = GetSlideCollision(i);
+            if (col.Collider is BreakableItem breakableItem)
+            {
+                if (ExertingForce.x >= breakableItem.ForceRequiredToBreak || ExertingForce.y >= breakableItem.ForceRequiredToBreak)
+                {
+                    breakableItem.Break();
+                }
+            }
             if (col.Collider is Player || col.Collider is Bullet && Mathf.Abs(Velocity.x) > 0.001)
             {
                 Velocity = Vector2.Zero;

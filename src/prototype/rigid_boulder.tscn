@@ -7,9 +7,10 @@
 
 [node name="KinematicBody2D" type="KinematicBody2D"]
 collision_layer = 5
-collision_mask = 2
+collision_mask = 10
 collision/safe_margin = 0.001
 script = ExtResource( 2 )
+DefaultMass = 30.0
 DefaultCarryOffset = Vector2( 40, -20 )
 _itemScaleInfo = ExtResource( 3 )
 _spritePath = NodePath("Sprite")
