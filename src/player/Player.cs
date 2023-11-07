@@ -1,11 +1,12 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using GithubGameJam2023.player.player_gun;
 
 public class Player : KinematicBody2D
 {
-    [Signal]
-    public delegate void ItemForcePutdown(ScalableItem item);
+    [Signal] public delegate void ShotsFired();
+    [Signal] public delegate void ItemForcePutdown(ScalableItem item);
     [Export] private float _speed = 1;
     [Export] private float _jumpSpeed = 1;
     [Export] private float _jumpFloatyness = 0.1f;
@@ -15,20 +16,25 @@ public class Player : KinematicBody2D
     [Export] private float _snapLength = 0.2f;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
+    [Export] private NodePath _gunPath;
     
     private Vector2 _velocity;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
     private float _timeInAir;
     private AnimationPlayer _animPlayer;
     private Sprite _sprite;
+    private PlayerGun _gun;
     
     public bool Freeze { get; set; }
     public ScalableItem ItemCarry { get; set; }
+    public int NumOfBullets { get; set; }
+    public bool CanShoot => NumOfBullets > 0;
 
     public override void _Ready()
     {
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         _sprite = GetNode<Sprite>(_spriteNodePath);
+        _gun = GetNode<PlayerGun>(_gunPath);
         _animPlayer.Play("idle");
     }
 
@@ -83,6 +89,27 @@ public class Player : KinematicBody2D
         item.DisablePhysics = false;
         ItemCarry = null;
         return item;
+    }
+
+    public override void _Process(float delta)
+    {
+        if (Input.IsActionJustPressed("shoot_big"))
+        {
+            if (!CanShoot) return;
+            var bullet = _gun.CreateBullet(ScaleType.Big);
+            GetTree().Root.AddChild(bullet);
+            NumOfBullets--;
+            EmitSignal(nameof(ShotsFired));
+        }
+
+        if (Input.IsActionJustPressed("shoot_small"))
+        {
+            if (!CanShoot) return;
+            var bullet = _gun.CreateBullet(ScaleType.Big);
+            GetTree().Root.AddChild(bullet);
+            NumOfBullets--;
+            EmitSignal(nameof(ShotsFired));
+        }
     }
 
     public override void _PhysicsProcess(float delta)

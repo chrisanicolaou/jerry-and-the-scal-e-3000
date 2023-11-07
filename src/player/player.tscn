@@ -104,6 +104,7 @@ _elongatedJumpMultiplier = 550.0
 _snappyFallMultiplier = 750.0
 _animPlayerPath = NodePath("AnimationPlayer")
 _spriteNodePath = NodePath("Graphic")
+_gunPath = NodePath("Node2D")
 
 [node name="Graphic" type="Sprite" parent="."]
 texture = ExtResource( 1 )

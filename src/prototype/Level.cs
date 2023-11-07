@@ -7,6 +7,7 @@ public class Level : Node2D
 {
     [Signal] public delegate void LevelCompleted();
     [Export] public bool StartAutomatically;
+    [Export] private int _numOfBullets = 1;
     [Export] private NodePath _entranceDoorPath;
     [Export] private NodePath _exitDoorPath;
     [Export] private NodePath _keyPath;
@@ -30,10 +31,12 @@ public class Level : Node2D
         _exitDoor = GetNode<Door>(_exitDoorPath);
         _key = GetNode<Key>(_keyPath);
         _player = GetNode<Player>(_playerPath);
+        _player.NumOfBullets = _numOfBullets;
         _levelUI = GetNode<LevelUI>(_levelUIPath);
         _player.Freeze = true;
         _player.Visible = false;
 
+        _player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
         _player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
@@ -52,7 +55,7 @@ public class Level : Node2D
             _carryableItems[i].Connect(nameof(ScalableItem.ItemInteractionRequested), this, nameof(OnItemCarryRequested));
         }
         
-        _levelUI.Initialise(1, _coins.Length);
+        _levelUI.Initialise(1, _coins.Length, _numOfBullets);
         
         if (StartAutomatically)
         {
@@ -117,6 +120,11 @@ public class Level : Node2D
         }
         RemoveChild(item);
         _player.PickupItem(item);
+    }
+
+    private void OnShotsFired()
+    {
+        _levelUI.RemoveBullet();
     }
 
     private void OnItemForcePutdown(ScalableItem item)
