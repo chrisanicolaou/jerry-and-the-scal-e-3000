@@ -40,7 +40,7 @@ __meta__ = {
 }
 
 [node name="ExitDoor" parent="." instance=ExtResource( 2 )]
-position = Vector2( 260, 143 )
+position = Vector2( 372, 127 )
 z_index = 2
 _isLocked = true
 
@@ -49,7 +49,7 @@ position = Vector2( 45, 143 )
 z_index = 2
 
 [node name="Key" parent="." instance=ExtResource( 4 )]
-position = Vector2( 345, 123 )
+position = Vector2( 298, 129 )
 z_index = 2
 
 [node name="Player" parent="." instance=ExtResource( 5 )]
