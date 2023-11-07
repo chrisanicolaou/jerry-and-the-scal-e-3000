@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 
 public class Player : KinematicBody2D
 {
+    [Signal]
+    public delegate void ItemForcePutdown(ScalableItem item);
     [Export] private float _speed = 1;
     [Export] private float _jumpSpeed = 1;
     [Export] private float _jumpFloatyness = 0.1f;
@@ -21,6 +23,7 @@ public class Player : KinematicBody2D
     private Sprite _sprite;
     
     public bool Freeze { get; set; }
+    public ScalableItem ItemCarry { get; set; }
 
     public override void _Ready()
     {
@@ -64,12 +67,22 @@ public class Player : KinematicBody2D
 
     public void PickupItem(ScalableItem item)
     {
+        ItemCarry = item;
         _sprite.AddChild(item);
+        ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
+            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+        item.DisablePhysics = true;
     }
 
-    public void PutdownItem(ScalableItem item)
+    public ScalableItem PutdownItem()
     {
+        var item = ItemCarry;
         _sprite.RemoveChild(item);
+        item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
+            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+        item.DisablePhysics = false;
+        ItemCarry = null;
+        return item;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -77,8 +90,29 @@ public class Player : KinematicBody2D
         if (Freeze) return;
         
         var direction = Input.GetAxis("left", "right");
-        if (direction > 0.001) _sprite.FlipH = false;
-        if (direction < -0.001) _sprite.FlipH = true;
+        if (direction > 0.001)
+        {
+            _sprite.FlipH = false;
+        }
+
+        if (direction < -0.001)
+        {
+            _sprite.FlipH = true;
+        }
+        
+        if (ItemCarry != null)
+        {
+            if (!ItemCarry.IsCurrentlyCarryable)
+            {
+                var item = PutdownItem();
+                EmitSignal(nameof(ItemForcePutdown), item);
+            }
+            else
+            {
+                ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
+                _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+            }
+        }
 
         if (IsOnFloor())
         {

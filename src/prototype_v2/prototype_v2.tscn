@@ -46,6 +46,6 @@ position = Vector2( 44, 147 )
 [node name="UI" parent="." instance=ExtResource( 6 )]
 
 [node name="RigidBody2D" parent="." instance=ExtResource( 7 )]
-position = Vector2( 55, -22 )
+position = Vector2( 80, 6 )
 
 [node name="Node" parent="." instance=ExtResource( 8 )]

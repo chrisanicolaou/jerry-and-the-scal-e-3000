@@ -34,6 +34,7 @@ public class Level : Node2D
         _player.Freeze = true;
         _player.Visible = false;
 
+        _player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
@@ -48,8 +49,7 @@ public class Level : Node2D
         for (var i = 0; i < _carryableItemPaths.Count; i++)
         {
             _carryableItems[i] = GetNode<ScalableItem>(_carryableItemPaths[i]);
-            _carryableItems[i].Connect(nameof(ScalableItem.ItemCarryRequested), this, nameof(OnItemCarryRequested));
-            _carryableItems[i].Connect(nameof(ScalableItem.ItemPutdownRequested), this, nameof(OnItemPutdownRequested));
+            _carryableItems[i].Connect(nameof(ScalableItem.ItemInteractionRequested), this, nameof(OnItemCarryRequested));
         }
         
         _levelUI.Initialise(1, _coins.Length);
@@ -104,13 +104,23 @@ public class Level : Node2D
 
     private void OnItemCarryRequested(ScalableItem item)
     {
+        if (_player.ItemCarry != null)
+        {
+            if (_player.ItemCarry == item)
+            {
+                _player.PutdownItem();
+                AddChild(item);
+                return;
+            }
+            var itemDropped = _player.PutdownItem();
+            AddChild(itemDropped);
+        }
         RemoveChild(item);
         _player.PickupItem(item);
     }
 
-    private void OnItemPutdownRequested(ScalableItem item)
+    private void OnItemForcePutdown(ScalableItem item)
     {
-        _player.PutdownItem(item);
         AddChild(item);
     }
 }
