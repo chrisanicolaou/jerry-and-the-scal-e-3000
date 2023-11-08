@@ -104,7 +104,7 @@ _elongatedJumpMultiplier = 550.0
 _snappyFallMultiplier = 750.0
 _animPlayerPath = NodePath("AnimationPlayer")
 _spriteNodePath = NodePath("Graphic")
-_gunPath = NodePath("Node2D")
+_gunPath = NodePath("Gun")
 
 [node name="Graphic" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -125,7 +125,7 @@ collision_layer = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction"]
 shape = SubResource( 2 )
 
-[node name="Node2D" parent="." instance=ExtResource( 3 )]
+[node name="Gun" parent="." instance=ExtResource( 3 )]
 position = Vector2( 17, 0 )
 _playerPath = NodePath("..")
 

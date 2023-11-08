@@ -1,0 +1,21 @@
+[gd_resource type="Resource" load_steps=4 format=2]
+
+[ext_resource path="res://src/levels/prototype/ScalableItemInfo.cs" type="Script" id=1]
+[ext_resource path="res://src/levels/prototype/boulder_large.png" type="Texture" id=2]
+[ext_resource path="res://src/levels/prototype/boulder_small.png" type="Texture" id=3]
+
+[resource]
+script = ExtResource( 1 )
+BigTex = ExtResource( 2 )
+BigScale = Vector2( 1.8, 1.8 )
+BigMass = 50.0
+BigFriction = 0.6
+BigOffset = Vector2( 0, 0 )
+BigCarryOffset = Vector2( 80, -20 )
+SmallTex = ExtResource( 3 )
+SmallScale = Vector2( 0.4, 0.4 )
+SmallMass = 10.0
+SmallFriction = 0.2
+SmallOffset = Vector2( 0, 0 )
+CanBeCarriedWhenSmall = true
+SmallCarryOffset = Vector2( 40, -10 )

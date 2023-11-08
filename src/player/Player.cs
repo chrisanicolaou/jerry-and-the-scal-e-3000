@@ -17,6 +17,7 @@ public class Player : KinematicBody2D
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
     [Export] private NodePath _gunPath;
+    [Export] private NodePath _trajectoryLinePath;
     
     private Vector2 _velocity;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
@@ -35,6 +36,8 @@ public class Player : KinematicBody2D
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         _sprite = GetNode<Sprite>(_spriteNodePath);
         _gun = GetNode<PlayerGun>(_gunPath);
+        if (_trajectoryLinePath != null) _gun.TrajectoryLine = GetNode<TrajectoryLine>(_trajectoryLinePath);
+        
         _animPlayer.Play("idle");
     }
 
@@ -93,6 +96,8 @@ public class Player : KinematicBody2D
 
     public override void _Process(float delta)
     {
+        if (Freeze) return;
+        
         if (Input.IsActionJustPressed("shoot_big"))
         {
             if (!CanShoot) return;
@@ -105,7 +110,7 @@ public class Player : KinematicBody2D
         if (Input.IsActionJustPressed("shoot_small"))
         {
             if (!CanShoot) return;
-            var bullet = _gun.CreateBullet(ScaleType.Big);
+            var bullet = _gun.CreateBullet(ScaleType.Small);
             GetTree().Root.AddChild(bullet);
             NumOfBullets--;
             EmitSignal(nameof(ShotsFired));

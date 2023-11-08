@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://src/prototype_v2/prototype_v2.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/levels/prototype_v2/prototype_v2.tscn" type="PackedScene" id=1]
 [ext_resource path="res://common/scene_management/root_scene_switcher.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/main/Main.cs" type="Script" id=3]
 [ext_resource path="res://common_tests/scene_management_tests/black_transition_tex.tres" type="Texture" id=4]

@@ -9,7 +9,6 @@ extents = Vector2( 1.5, 0.5 )
 [node name="Bullet" type="KinematicBody2D"]
 collision_mask = 20
 script = ExtResource( 2 )
-Speed = 500.0
 
 [node name="Sprite" type="Sprite" parent="."]
 modulate = Color( 0.831373, 0.137255, 0, 1 )

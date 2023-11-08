@@ -1,0 +1,24 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/ui/level_ui/trajectory_line/TrajectoryLine.cs" type="Script" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 1.5, 0.5 )
+
+[node name="TrajectoryLine" type="Line2D"]
+z_index = 6
+width = 1.0
+default_color = Color( 1, 0, 0, 0.235294 )
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource( 1 )
+_kinematicBodyPath = NodePath("Area2D")
+
+[node name="Area2D" type="KinematicBody2D" parent="."]
+collision_layer = 0
+collision_mask = 20
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( -0.5, 0.5 )
+shape = SubResource( 2 )

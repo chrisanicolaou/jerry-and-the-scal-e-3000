@@ -4,8 +4,7 @@ using GithubGameJam2023.player.player_gun;
 
 public class Bullet : KinematicBody2D
 {
-    [Export] public float Speed { get; set; }
-    [Export] public string ScaleGroupName { get; set; } = "scalable";
+    public float Speed { get; set; }
     public Vector2 Direction { get; set;  }
     public ScaleType Type { get; set; }
 

@@ -5,14 +5,18 @@ using GithubGameJam2023.player.player_gun;
 public class PlayerGun : Node2D
 {
     [Signal] public delegate void ShotFired();
-    
     [Export] private NodePath _playerPath;
     [Export] private PackedScene _bulletScene;
+    [Export] public float BulletSpeed { get; set; }
+    
+    private const float MaxPointsPerLine = 750;
 
     private Player _player;
     private float _radius;
     private Viewport _viewport;
     private Vector2 _aimDirection;
+    
+    public TrajectoryLine TrajectoryLine { get; set; }
 
     public override void _Ready()
     {
@@ -25,10 +29,11 @@ public class PlayerGun : Node2D
     {
         if (_player.Freeze) return;
         
-        var mousePos = _viewport.GetMousePosition();
+        var mousePos = GetGlobalMousePosition();
         _aimDirection = _player.GlobalPosition.DirectionTo(mousePos);
         GlobalPosition = _player.GlobalPosition + (_radius * _aimDirection);
         RotationDegrees = 90 * _aimDirection.y * (_aimDirection.x > 0 ? 1 : -1);
+        if (TrajectoryLine != null) UpdateBulletTrajectory(_aimDirection, delta);
         var yScale = _aimDirection.x > 0 ? 1 : -1;
         if (Math.Abs(Scale.y - yScale) > 0.01)
         {
@@ -42,7 +47,34 @@ public class PlayerGun : Node2D
         bullet.Modulate = type == ScaleType.Big ? Colors.Aqua : Colors.Fuchsia;
         bullet.GlobalPosition = GlobalPosition;
         bullet.Direction = _aimDirection;
+        bullet.Speed = BulletSpeed;
         bullet.Type = type;
         return bullet;
+    }
+
+    public void UpdateBulletTrajectory(Vector2 direction, float delta)
+    {
+        TrajectoryLine.ClearPoints();
+        var pos = GlobalPosition;
+        TrajectoryLine.CollisionTestPosition = pos;
+        var velocity = BulletSpeed * direction * delta;
+        for (var i = 0; i < MaxPointsPerLine; i++)
+        {
+            TrajectoryLine.AddPoint(pos);
+            var collision = TrajectoryLine.TestCollision(velocity);
+            if (collision != null)
+            {
+                if (collision.Collider is BulletDeflector)
+                {
+                    velocity = velocity.Bounce(collision.Normal);
+                }
+                else
+                {
+                    break;
+                }
+            }
+            pos += velocity;
+            TrajectoryLine.CollisionTestPosition = pos;
+        }
     }
 }

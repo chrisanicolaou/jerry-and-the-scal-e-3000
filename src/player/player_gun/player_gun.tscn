@@ -4,8 +4,9 @@
 [ext_resource path="res://src/player/player_gun/gun.png" type="Texture" id=2]
 [ext_resource path="res://src/player/player_gun/bullet.tscn" type="PackedScene" id=3]
 
-[node name="Node2D" type="Node2D"]
+[node name="Gun" type="Node2D"]
 script = ExtResource( 1 )
+BulletSpeed = 500.0
 _bulletScene = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
