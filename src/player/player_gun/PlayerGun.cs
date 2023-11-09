@@ -55,6 +55,7 @@ public class PlayerGun : Node2D
     public void UpdateBulletTrajectory(Vector2 direction, float delta)
     {
         TrajectoryLine.ClearPoints();
+        TrajectoryLine.EnableCollisions();
         var pos = GlobalPosition;
         TrajectoryLine.CollisionTestPosition = pos;
         var velocity = BulletSpeed * direction * delta;
@@ -70,6 +71,7 @@ public class PlayerGun : Node2D
                 }
                 else
                 {
+                    TrajectoryLine.DisableCollisions();
                     break;
                 }
             }

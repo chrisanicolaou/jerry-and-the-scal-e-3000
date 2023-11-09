@@ -9,6 +9,7 @@ public class Player : KinematicBody2D
     [Signal] public delegate void ItemForcePutdown(ScalableItem item);
     [Export] private float _speed = 1;
     [Export] private float _jumpSpeed = 1;
+    [Export] private float _jumpPlatformForgiveness = 0.2f;
     [Export] private float _jumpFloatyness = 0.1f;
     [Export] private float _gravityMultiplier = 1;
     [Export] private float _elongatedJumpMultiplier = 25;
@@ -22,6 +23,7 @@ public class Player : KinematicBody2D
     private Vector2 _velocity;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
     private float _timeInAir;
+    private bool _hasJustJumped;
     private AnimationPlayer _animPlayer;
     private Sprite _sprite;
     private PlayerGun _gun;
@@ -168,18 +170,33 @@ public class Player : KinematicBody2D
             _velocity.y += _gravity * _gravityMultiplier * delta;
             if (_velocity.y < 0)
             {
-                if (Input.IsActionPressed("jump")) _velocity.y -= _elongatedJumpMultiplier * delta;
+                if (Input.IsActionPressed("jump"))
+                {
+                    _velocity.y -= _elongatedJumpMultiplier * delta;
+                }
                 _velocity.y += (1 / _jumpFloatyness) * _timeInAir;
             }
             else
             {
                 _velocity.y += _snappyFallMultiplier * delta;
+                if (Input.IsActionPressed("jump") && _timeInAir < _jumpPlatformForgiveness && !_hasJustJumped)
+                {
+                    Jump();
+                }
             }
         }
         else
         {
             _timeInAir = 0;
-            _velocity.y = Input.IsActionPressed("jump") ? -_jumpSpeed : 0;
+            _hasJustJumped = false;
+            if (Input.IsActionPressed("jump"))
+            {
+                Jump();
+            }
+            else
+            {
+                _velocity.y = 0;
+            }
         }
         
         MoveAndSlide(_velocity, Vector2.Up, true, infiniteInertia: false);
@@ -189,5 +206,12 @@ public class Player : KinematicBody2D
     {
         if (_animPlayer.CurrentAnimation == animName) return;
         _animPlayer.Play(animName);
+    }
+
+    private void Jump()
+    {
+        _velocity.y = -_jumpSpeed;
+        _timeInAir = 0;
+        _hasJustJumped = true;
     }
 }
