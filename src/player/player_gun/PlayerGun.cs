@@ -61,6 +61,8 @@ public class PlayerGun : Node2D
         var velocity = BulletSpeed * direction * delta;
         for (var i = 0; i < MaxPointsPerLine; i++)
         {
+            if (!TrajectoryLine.IsOnScreen) break;
+            
             TrajectoryLine.AddPoint(pos);
             var collision = TrajectoryLine.TestCollision(velocity);
             if (collision != null)

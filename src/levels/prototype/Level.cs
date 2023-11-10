@@ -14,6 +14,7 @@ public class Level : Node2D
     [Export] private NodePath _playerPath;
     [Export] private Array<NodePath> _coinPaths;
     [Export] private Array<NodePath> _carryableItemPaths;
+    [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
 
     private Door _entranceDoor;
@@ -53,6 +54,11 @@ public class Level : Node2D
         {
             _carryableItems[i] = GetNode<ScalableItem>(_carryableItemPaths[i]);
             _carryableItems[i].Connect(nameof(ScalableItem.ItemInteractionRequested), this, nameof(OnItemCarryRequested));
+        }
+        for (var i = 0; i < _fallZonePaths.Count; i++)
+        {
+            var fallZone = GetNode<FallZone>(_fallZonePaths[i]);
+            fallZone.Connect(nameof(FallZone.PlayerFell), this, nameof(OnPlayerFell));
         }
         
         _levelUI.Initialise(1, _coins.Length, _numOfBullets);
@@ -121,6 +127,11 @@ public class Level : Node2D
         }
         RemoveChild(item);
         _player.PickupItem(item);
+    }
+
+    private void OnPlayerFell()
+    {
+        EmitSignal(nameof(LevelCompleted));
     }
 
     private void OnShotsFired()
