@@ -15,6 +15,7 @@ end_cap_mode = 2
 script = ExtResource( 1 )
 _kinematicBodyPath = NodePath("KinematicBody2D")
 _visibilityNotifierPath = NodePath("KinematicBody2D/VisibilityNotifier2D")
+_emptyColLayer = 536870912
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 collision_layer = 0

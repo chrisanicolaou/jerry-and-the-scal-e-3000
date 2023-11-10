@@ -8,8 +8,6 @@ public class PlayerGun : Node2D
     [Export] private NodePath _playerPath;
     [Export] private PackedScene _bulletScene;
     [Export] public float BulletSpeed { get; set; }
-    
-    private const float MaxPointsPerLine = 750;
 
     private Player _player;
     private float _radius;
@@ -54,31 +52,6 @@ public class PlayerGun : Node2D
 
     public void UpdateBulletTrajectory(Vector2 direction, float delta)
     {
-        TrajectoryLine.ClearPoints();
-        TrajectoryLine.EnableCollisions();
-        var pos = GlobalPosition;
-        TrajectoryLine.CollisionTestPosition = pos;
-        var velocity = BulletSpeed * direction * delta;
-        for (var i = 0; i < MaxPointsPerLine; i++)
-        {
-            if (!TrajectoryLine.IsOnScreen) break;
-            
-            TrajectoryLine.AddPoint(pos);
-            var collision = TrajectoryLine.TestCollision(velocity);
-            if (collision != null)
-            {
-                if (collision.Collider is BulletDeflector)
-                {
-                    velocity = velocity.Bounce(collision.Normal);
-                }
-                else
-                {
-                    TrajectoryLine.DisableCollisions();
-                    break;
-                }
-            }
-            pos += velocity;
-            TrajectoryLine.CollisionTestPosition = pos;
-        }
+        TrajectoryLine.UpdateLine(GlobalPosition, direction, delta);
     }
 }
