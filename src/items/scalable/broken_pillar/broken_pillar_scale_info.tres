@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=4 format=2]
 
-[ext_resource path="res://src/levels/prototype/ScalableItemInfo.cs" type="Script" id=1]
+[ext_resource path="res://src/items/scalable/ScalableItemInfo.cs" type="Script" id=1]
 [ext_resource path="res://src/items/scalable/broken_pillar/broken_pillar_small.png" type="Texture" id=2]
 [ext_resource path="res://src/items/scalable/broken_pillar/broken_pillar_large.png" type="Texture" id=3]
 

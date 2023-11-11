@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://src/levels/prototype/key.png" type="Texture" id=1]
+[ext_resource path="res://src/items/interactables/key/key.png" type="Texture" id=1]
 [ext_resource path="res://src/levels/prototype/rainbow_outline.gdshader" type="Shader" id=2]
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/levels/prototype/Key.cs" type="Script" id=4]
+[ext_resource path="res://src/items/interactables/key/Key.cs" type="Script" id=4]
 
 [sub_resource type="ShaderMaterial" id=1]
 shader = ExtResource( 2 )

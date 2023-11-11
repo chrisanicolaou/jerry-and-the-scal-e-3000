@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/concrete_grass_ground.png-d2525ff5430cd82d96fffb8bdaf35062.stex"
+path="res://.import/boulder.png-0859bd565fb59e5a723af71c9e79b02f.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/prototype/concrete_grass_ground.png"
-dest_files=[ "res://.import/concrete_grass_ground.png-d2525ff5430cd82d96fffb8bdaf35062.stex" ]
+source_file="res://src/items/scalable/boulder/boulder.png"
+dest_files=[ "res://.import/boulder.png-0859bd565fb59e5a723af71c9e79b02f.stex" ]
 
 [params]
 

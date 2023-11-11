@@ -7,12 +7,12 @@
 [ext_resource path="res://src/items/bullet_deflector/bullet_deflector.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/levels/prototype_v2/level_input_controller.tscn" type="PackedScene" id=7]
-[ext_resource path="res://src/levels/prototype/door.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/levels/prototype/key.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=10]
-[ext_resource path="res://src/levels/prototype/level_ui.tscn" type="PackedScene" id=11]
-[ext_resource path="res://src/levels/prototype/rigid_boulder.tscn" type="PackedScene" id=12]
-[ext_resource path="res://src/levels/prototype/Level.cs" type="Script" id=13]
+[ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/items/scalable/boulder/boulder.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/levels/Level.cs" type="Script" id=13]
 [ext_resource path="res://src/levels/prototype_v2/grey_background.png" type="Texture" id=14]
 [ext_resource path="res://src/environment/hazards/fall_zone/fall_zone.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/environment/props/wall_torch/wall_torch.tscn" type="PackedScene" id=16]
@@ -31,7 +31,6 @@ _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_coinPaths = [  ]
 _carryableItemPaths = [ NodePath("Boulder"), NodePath("Pillar") ]
 _fallZonePaths = [ NodePath("FallZone") ]
 _levelUIPath = NodePath("UI")

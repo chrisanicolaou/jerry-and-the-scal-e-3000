@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/boulder_large.png-8cb69cc4cf955ccf54869d7cd204e4c7.stex"
+path="res://.import/boulder_small.png-e2e4aa3b19b80eba0ef87f50bcb39ebd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/prototype/boulder_large.png"
-dest_files=[ "res://.import/boulder_large.png-8cb69cc4cf955ccf54869d7cd204e4c7.stex" ]
+source_file="res://src/items/scalable/boulder/boulder_small.png"
+dest_files=[ "res://.import/boulder_small.png-e2e4aa3b19b80eba0ef87f50bcb39ebd.stex" ]
 
 [params]
 

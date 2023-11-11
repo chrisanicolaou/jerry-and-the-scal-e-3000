@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://src/levels/prototype/CameraFollow.cs" type="Script" id=1]
+[ext_resource path="res://src/camera/camera_follow/CameraFollow.cs" type="Script" id=1]
 
 [node name="Camera2D" type="Camera2D"]
 current = true

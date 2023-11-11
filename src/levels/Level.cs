@@ -12,7 +12,6 @@ public class Level : Node2D
     [Export] private NodePath _exitDoorPath;
     [Export] private NodePath _keyPath;
     [Export] private NodePath _playerPath;
-    [Export] private Array<NodePath> _coinPaths;
     [Export] private Array<NodePath> _carryableItemPaths;
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
@@ -22,7 +21,6 @@ public class Level : Node2D
     private Player _player;
     private Key _key;
     private bool _keyFound;
-    private Coin[] _coins;
     private LevelUI _levelUI;
     private ScalableItem[] _carryableItems;
 
@@ -42,13 +40,6 @@ public class Level : Node2D
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
-        _coins = new Coin[_coinPaths.Count];
-        for (var i = 0; i < _coinPaths.Count; i++)
-        {
-            _coins[i] = GetNode<Coin>(_coinPaths[i]);
-            _coins[i].Connect(nameof(Coin.CoinFound), this, nameof(OnCoinFound), new Array(i));
-        }
-
         _carryableItems = new ScalableItem[_carryableItemPaths.Count];
         for (var i = 0; i < _carryableItemPaths.Count; i++)
         {
@@ -61,7 +52,7 @@ public class Level : Node2D
             fallZone.Connect(nameof(FallZone.PlayerFell), this, nameof(OnPlayerFell));
         }
         
-        _levelUI.Initialise(1, _coins.Length, _numOfBullets);
+        _levelUI.Initialise(1, _numOfBullets);
         _levelUI.Connect(nameof(LevelUI.RetryRequested), this, nameof(OnRetryRequested));
         
         if (StartAutomatically)
@@ -104,12 +95,6 @@ public class Level : Node2D
         await _player.ExitLevel(_exitDoor);
         await _exitDoor.Close();
         EmitSignal(nameof(LevelCompleted));
-    }
-
-    private void OnCoinFound(int coinIndex)
-    {
-        _coins[coinIndex].QueueFree();
-        _levelUI.AddCollectedCoin();
     }
 
     private void OnItemCarryRequested(ScalableItem item)
