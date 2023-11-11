@@ -119,7 +119,6 @@ __meta__ = {
 }
 
 [node name="Interaction" type="Area2D" parent="."]
-visible = false
 collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Interaction"]

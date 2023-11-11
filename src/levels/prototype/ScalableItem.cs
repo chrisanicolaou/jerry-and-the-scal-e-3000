@@ -49,6 +49,7 @@ public class ScalableItem : KinematicBody2D
         OtherChildToScale = GetNode<Node2D>(_otherChildToScalePath);
         InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
         InteractionArea.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
+        InteractionArea.SetDisabled(!IsCurrentlyCarryable);
         _normalScale = CollisionShapeNode.Scale;
         _normalTex = Sprite.Texture;
         _mass = DefaultMass;
@@ -99,6 +100,7 @@ public class ScalableItem : KinematicBody2D
         GetTree().CreateTween().TweenProperty(CollisionShapeNode, "scale", info.Scale, 0.1f);
         OtherChildToScale.Scale = info.Scale;
         IsCurrentlyCarryable = info.Carryable;
+        InteractionArea.SetDisabled(!IsCurrentlyCarryable);
         CarryOffset = info.CarryOffset;
         _mass = info.Mass;
         _friction = info.Friction;
@@ -110,6 +112,7 @@ public class ScalableItem : KinematicBody2D
         OtherChildToScale.Scale = _normalScale;
         Sprite.Texture = _normalTex;
         IsCurrentlyCarryable = CanBeCarriedByDefault;
+        InteractionArea.SetDisabled(!IsCurrentlyCarryable);
         CarryOffset = DefaultCarryOffset;
         _mass = DefaultMass;
         _friction = DefaultFriction;

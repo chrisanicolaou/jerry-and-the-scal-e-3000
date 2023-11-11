@@ -1,8 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/prototype/door.png" type="Texture" id=2]
 [ext_resource path="res://src/levels/prototype/Door.cs" type="Script" id=3]
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 18, 19 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -63,9 +66,14 @@ hframes = 5
 frame = 1
 
 [node name="Area2D" parent="." instance=ExtResource( 1 )]
-scale = Vector2( 2, 2 )
+UseKeyHint = false
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 1 )
 anims/door_close = SubResource( 2 )
 anims/door_open = SubResource( 3 )
+
+[editable path="Area2D"]

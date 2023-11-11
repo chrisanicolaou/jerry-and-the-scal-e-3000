@@ -1,8 +1,13 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/levels/pre_level/PreLevel.cs" type="Script" id=1]
 
 [node name="PreLevel" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+script = ExtResource( 1 )
+_levelNumLabelPath = NodePath("CenterContainer/VBoxContainer/LevelNum")
+_levelNameLabelPath = NodePath("CenterContainer/VBoxContainer/Label")
 
 [node name="BackgroundColor" type="ColorRect" parent="."]
 anchor_right = 1.0

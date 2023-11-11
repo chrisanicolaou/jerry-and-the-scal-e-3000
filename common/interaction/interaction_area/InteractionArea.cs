@@ -1,15 +1,6 @@
 using Godot;
-using System;
 
-/// <summary>
-/// INTERACTION SYSTEM:
-/// - InteractionArea's that, when entered, will be added to a list (somewhere) of active interaction areas
-/// - If an InteractionArea becomes the active area, it will emit a signal. This allows an InteractionArea's parent node control
-///   over what happens when an interaction is valid. For example, an NPC might want to show a speech bubble, whereas a chest might glow & open slightly.
-/// RANDOM NOTES:
-/// - set global mask layer in InteractionManager so that in future if the player collision changes, i don't need to change each area
-/// - how will the InteractionManager know which interaction is closest? Will have to know player pos - but then it can't be a singleton?
-/// </summary>
+
 public class InteractionArea : Area2D
 {
     [Signal] public delegate void InteractionAreaTriggered();
@@ -17,6 +8,15 @@ public class InteractionArea : Area2D
     [Signal] public delegate void InteractionAreaDeactivated();
 
     private InteractionManager _interactionManager;
+    [Export] private bool _disabled;
+
+    [Export] public bool UseKeyHint { get; set; } = true;
+    [Export] private NodePath _collisionShapePath;
+    [Export] private NodePath _keyHintPath;
+    [Export] private Vector2 _keyHintOffset = new Vector2(20, -20);
+
+    private CollisionShape2D _collisionShape;
+    private Control _keyHint;
 
     public override void _Ready()
     {
@@ -24,6 +24,27 @@ public class InteractionArea : Area2D
         Connect("area_exited", this, nameof(OnAreaExited));
         _interactionManager = GetNode<InteractionManager>($"/root/{nameof(InteractionManager)}");
         CollisionMask = _interactionManager.InteractionCollisionMask;
+        _collisionShape = GetNode<CollisionShape2D>(_collisionShapePath);
+        _keyHint = GetNode<Control>(_keyHintPath);
+        _keyHint.RectPosition += _keyHintOffset;
+        _keyHint.Hide();
+        if (_disabled) Disable();
+    }
+
+    public void SetDisabled(bool disabled)
+    {
+        if (disabled) Disable();
+        else Enable();
+    }
+
+    public void Disable()
+    {
+        _collisionShape.Disabled = true;
+    }
+
+    public void Enable()
+    {
+        _collisionShape.Disabled = false;
     }
 
     public void Trigger()
@@ -34,11 +55,13 @@ public class InteractionArea : Area2D
     public void Activate()
     {
         EmitSignal(nameof(InteractionAreaActivated));
+        if (UseKeyHint) _keyHint.Show();
     }
 
     public void Deactivate()
     {
         EmitSignal(nameof(InteractionAreaDeactivated));
+        if (UseKeyHint) _keyHint.Hide();
     }
 
     private void OnAreaEntered(Area2D area)

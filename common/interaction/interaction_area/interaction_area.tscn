@@ -1,13 +1,57 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://common/interaction/interaction_area/InteractionArea.cs" type="Script" id=1]
+[ext_resource path="res://common/interaction/interaction_area/key_hint_border.png" type="Texture" id=2]
 
 [sub_resource type="CircleShape2D" id=1]
 
 [node name="Area2D" type="Area2D"]
+z_index = 20
 collision_layer = 0
 collision_mask = 2
 script = ExtResource( 1 )
+_collisionShapePath = NodePath("CollisionShape2D")
+_keyHintPath = NodePath("KeyPressHint")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
+
+[node name="KeyPressHint" type="Control" parent="."]
+visible = false
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -8.5
+margin_top = -8.5
+margin_right = 8.5
+margin_bottom = 8.5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="KeyPressHint"]
+position = Vector2( 9, 9 )
+texture = ExtResource( 2 )
+
+[node name="CenterContainer" type="CenterContainer" parent="KeyPressHint"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -7.5
+margin_top = -8.5
+margin_right = 7.5
+margin_bottom = 8.5
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="KeyText" type="Label" parent="KeyPressHint/CenterContainer"]
+margin_left = 4.0
+margin_right = 11.0
+margin_bottom = 16.0
+text = "E"
+align = 1
+valign = 1
+uppercase = true

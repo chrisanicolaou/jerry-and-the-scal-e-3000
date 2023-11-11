@@ -12,6 +12,7 @@ config_version=4
 
 config/name="Github Game Jam 2023"
 run/main_scene="res://src/main/main.tscn"
+boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
 [autoload]
@@ -19,6 +20,7 @@ config/icon="res://icon.png"
 RootSceneSwitcher="*res://common/scene_management/root_scene_switcher.tscn"
 AudioManager="*res://common/audio/audio_manager.tscn"
 InteractionManager="*res://common/interaction/interaction_manager/interaction_manager.tscn"
+GameDataManager="*res://src/game_data_manager/game_data_manager.tscn"
 
 [display]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ground_tiles.png-fe06c248d0393656a43e469a4ed3181b.stex"
+path="res://.import/tile_accents_16.png-832fcd179d767c6dcc869463cc4a299c.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/prototype/ground_tiles.png"
-dest_files=[ "res://.import/ground_tiles.png-fe06c248d0393656a43e469a4ed3181b.stex" ]
+source_file="res://src/environment/tiles/tile_accents_16.png"
+dest_files=[ "res://.import/tile_accents_16.png-832fcd179d767c6dcc869463cc4a299c.stex" ]
 
 [params]
 

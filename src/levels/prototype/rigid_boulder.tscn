@@ -16,7 +16,7 @@ _itemScaleInfo = ExtResource( 3 )
 _spritePath = NodePath("Sprite")
 _collisionShapePath = NodePath("NormalShape")
 _otherChildToScalePath = NodePath("Node2D")
-_interactionAreaPath = NodePath("Node2D/Area2D")
+_interactionAreaPath = NodePath("Area2D")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )
@@ -24,7 +24,8 @@ texture = ExtResource( 1 )
 [node name="NormalShape" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -23, 7, -17, 14, -14, 14, -9, 17, 2, 17, 17, 17, 24, 9, 24, -7, 14, -16, 0, -16, -1, -14, -6, -14, -12, -9, -19, -8, -24, -2 )
 
+[node name="Area2D" parent="." instance=ExtResource( 4 )]
+
 [node name="Node2D" type="Node2D" parent="."]
 
-[node name="Area2D" parent="Node2D" instance=ExtResource( 4 )]
-scale = Vector2( 3, 3 )
+[editable path="Area2D"]

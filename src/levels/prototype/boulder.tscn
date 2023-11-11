@@ -10,7 +10,6 @@
 script = ExtResource( 3 )
 _itemScaleInfo = ExtResource( 5 )
 _spritePath = NodePath("Sprite")
-_scalableChildPath = NodePath("ScaledChildren")
 
 [node name="Sprite" type="Sprite" parent="."]
 material = ExtResource( 2 )

@@ -24,4 +24,3 @@ material = SubResource( 1 )
 texture = ExtResource( 1 )
 
 [node name="Area2D" parent="." instance=ExtResource( 3 )]
-scale = Vector2( 2, 2 )

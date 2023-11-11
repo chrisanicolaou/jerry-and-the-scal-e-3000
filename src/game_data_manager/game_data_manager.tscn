@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://src/game_data_manager/GameDataManager.cs" type="Script" id=1]
+[ext_resource path="res://src/levels/level_collection/all_levels.tres" type="Resource" id=2]
+
+[node name="GameDataManager" type="Node"]
+script = ExtResource( 1 )
+AllLevelsCollection = ExtResource( 2 )

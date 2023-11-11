@@ -9,12 +9,13 @@
 collision_layer = 5
 collision/safe_margin = 0.001
 script = ExtResource( 2 )
+PhysicsBased = false
 DefaultCarryOffset = Vector2( 40, -20 )
 _itemScaleInfo = ExtResource( 3 )
 _spritePath = NodePath("Sprite")
 _collisionShapePath = NodePath("Shape")
-_otherChildToScalePath = NodePath("Node2D")
-_interactionAreaPath = NodePath("Node2D/Area2D")
+_otherChildToScalePath = NodePath("ScalableChildren")
+_interactionAreaPath = NodePath("Area2D")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 4 )
@@ -22,7 +23,8 @@ texture = ExtResource( 4 )
 [node name="Shape" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -16, -15, 16, -20, 16, 8, 19, 8, 20, 11, 23, 11, 24, 16, -23, 16, -24, 15, -24, 12, -20, 11, -16, 8 )
 
-[node name="Node2D" type="Node2D" parent="."]
+[node name="ScalableChildren" type="Node2D" parent="."]
 
-[node name="Area2D" parent="Node2D" instance=ExtResource( 1 )]
-scale = Vector2( 3, 3 )
+[node name="Area2D" parent="." instance=ExtResource( 1 )]
+
+[editable path="Area2D"]
