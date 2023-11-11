@@ -24,6 +24,11 @@ public class Main : Node
 
     private async void StartGame()
     {
+        await LoadMainMenu();
+    }
+
+    private async Task LoadMainMenu()
+    {
         var mainMenu = await SwitchRootScene<MainMenu>(_mainMenuScene, false);
         mainMenu.Connect(nameof(MainMenu.PlayRequested), this, nameof(OnPlayRequested));
     }
@@ -52,8 +57,8 @@ public class Main : Node
         await _sceneSwitcher.Transition(SceneTransitionDirection.In);
         await preLevel.HoldForDuration();
         var levelInstance = await SwitchRootScene<Level>(level.Scene);
+        levelInstance.Connect(nameof(Level.LevelCompleted), this, nameof(OnLevelComplete));
         levelInstance.StartLevel();
-        // levelInstance.Connect(nameof(Level.LevelCompleted), this, nameof(OnLevelComplete));
     }
 
     // private async void RestartPrototype()
@@ -77,5 +82,16 @@ public class Main : Node
     //     return level;
     // }
 
-    // private void OnLevelComplete() => RestartPrototype();
+    private void OnLevelComplete()
+    {
+        _gameDataManager.CurrentLevelIndex++;
+        if (_gameDataManager.CurrentLevel == null)
+        {
+            _gameDataManager.CurrentLevelIndex = 0;
+            LoadMainMenu();
+            return;
+        }
+        if (_gameDataManager.CurrentLevelIndex > _gameDataManager.HighestUnlockedLevelIndex) _gameDataManager.HighestUnlockedLevelIndex++;
+        LoadLevel(_gameDataManager.CurrentLevel, _gameDataManager.CurrentLevelIndex);
+    }
 }
