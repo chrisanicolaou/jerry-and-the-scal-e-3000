@@ -24,7 +24,7 @@ namespace ChiciStudios.GithubGameJam2023.Src.UI
         private void OnMouseEntered()
         {
             SetCursor(_hoverCursor);
-            _audioManager.PlaySfx(_hoverSfx);
+            if (_hoverSfx != null) _audioManager.PlaySfx(_hoverSfx);
         }
 
         private void OnMouseExited()
@@ -35,7 +35,7 @@ namespace ChiciStudios.GithubGameJam2023.Src.UI
         public override void _Pressed()
         {
             SetCursor(_pressedCursor);
-            _audioManager.PlaySfx(_pressedSfx);
+            if (_pressedSfx != null) _audioManager.PlaySfx(_pressedSfx);
         }
 
         public override void _ExitTree()

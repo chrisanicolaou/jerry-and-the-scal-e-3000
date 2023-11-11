@@ -1,8 +1,12 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/ui/mouse_cursors/MouseCursor.cs" type="Script" id=1]
 
+[sub_resource type="StreamTexture" id=1]
+load_path = "res://.import/cursor_test.png-00c746538525916c4fe9cee8305153f6.stex"
+
 [resource]
 script = ExtResource( 1 )
+Cursor = SubResource( 1 )
 Shape = 0
 Hotspot = Vector2( 0, 0 )

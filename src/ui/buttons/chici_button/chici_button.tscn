@@ -1,0 +1,14 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/ui/buttons/chici_button/ChiciButton.cs" type="Script" id=1]
+[ext_resource path="res://src/ui/mouse_cursors/cursor_default.tres" type="Resource" id=2]
+[ext_resource path="res://src/ui/mouse_cursors/cursor_press.tres" type="Resource" id=3]
+[ext_resource path="res://src/ui/mouse_cursors/cursor_hover.tres" type="Resource" id=4]
+
+[node name="ChiciButton" type="Button"]
+margin_right = 40.0
+margin_bottom = 14.0
+script = ExtResource( 1 )
+_defaultCursor = ExtResource( 2 )
+_hoverCursor = ExtResource( 4 )
+_pressedCursor = ExtResource( 3 )

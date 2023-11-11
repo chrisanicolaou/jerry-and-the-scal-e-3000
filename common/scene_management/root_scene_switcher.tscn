@@ -30,5 +30,3 @@ z_index = 100
 z_as_relative = false
 texture = ExtResource( 3 )
 centered = false
-
-[node name="Tween" type="Tween" parent="."]
