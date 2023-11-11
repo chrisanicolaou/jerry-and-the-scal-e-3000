@@ -1,0 +1,8 @@
+[gd_scene format=2]
+
+[node name="LevelCamera" type="Camera2D"]
+position = Vector2( 320, 180 )
+current = true
+__meta__ = {
+"_edit_lock_": true
+}

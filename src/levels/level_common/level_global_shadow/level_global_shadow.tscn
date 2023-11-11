@@ -1,0 +1,4 @@
+[gd_scene format=2]
+
+[node name="GlobalShadow" type="CanvasModulate"]
+color = Color( 0.490196, 0.490196, 0.490196, 1 )

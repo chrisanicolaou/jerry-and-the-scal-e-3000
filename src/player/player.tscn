@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/player/jerry_sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.cs" type="Script" id=2]
 [ext_resource path="res://src/player/player_gun/player_gun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/environment/light_textures/light_128.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
@@ -134,3 +135,9 @@ anims/enter_level = SubResource( 7 )
 anims/exit_level = SubResource( 6 )
 anims/idle = SubResource( 4 )
 anims/walk = SubResource( 5 )
+
+[node name="Light2D" type="Light2D" parent="."]
+texture = ExtResource( 4 )
+texture_scale = 2.0
+color = Color( 1, 0.933333, 0.815686, 1 )
+energy = 0.7
