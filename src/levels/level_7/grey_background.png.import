@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/light_sample.png-ed04dbb6781fde6fdf91012ae8ef0dc1.stex"
+path="res://.import/grey_background.png-c1dcea36762cd7b01b7b36bfeb4536ee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://src/levels/prototype_v2/light_sample.png"
-dest_files=[ "res://.import/light_sample.png-ed04dbb6781fde6fdf91012ae8ef0dc1.stex" ]
+source_file="res://src/levels/level_7/grey_background.png"
+dest_files=[ "res://.import/grey_background.png-c1dcea36762cd7b01b7b36bfeb4536ee.stex" ]
 
 [params]
 
