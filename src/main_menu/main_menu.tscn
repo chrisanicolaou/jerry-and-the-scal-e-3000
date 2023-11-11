@@ -72,6 +72,7 @@ margin_left = 6.0
 margin_right = 78.0
 margin_bottom = 16.0
 theme = ExtResource( 4 )
+disabled = true
 text = "Level Select"
 
 [node name="Options" type="CenterContainer" parent="ButtonContainer"]
@@ -84,6 +85,7 @@ margin_left = 15.0
 margin_right = 69.0
 margin_bottom = 16.0
 theme = ExtResource( 4 )
+disabled = true
 text = "Settings"
 
 [node name="Quit" type="CenterContainer" parent="ButtonContainer"]
@@ -99,4 +101,5 @@ margin_bottom = 16.0
 theme = ExtResource( 4 )
 custom_colors/font_color_hover = Color( 1, 0.439216, 0.368627, 1 )
 custom_colors/font_color_pressed = Color( 1, 0.294118, 0.294118, 1 )
+disabled = true
 text = "Quit"
