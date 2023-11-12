@@ -1,0 +1,107 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://src/ui/modal/icons/icon_size_test_32.png" type="Texture" id=1]
+[ext_resource path="res://src/ui/fonts/pixelify_18.tres" type="DynamicFont" id=2]
+[ext_resource path="res://src/ui/modal/Modal.cs" type="Script" id=3]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.843137, 0.843137, 0.843137, 1 )
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="ModalLarge" type="Control"]
+pause_mode = 2
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+_iconSpritePath = NodePath("Panel/InnardsContainer/IconTitleContainer/IconContainer/CenterContainer/Control/Sprite")
+_titleLabelPath = NodePath("Panel/InnardsContainer/IconTitleContainer/Title")
+_descriptionLabelPath = NodePath("Panel/InnardsContainer/BodyContainer/Label")
+_continueLabelPath = NodePath("Panel/InnardsContainer/CloseTextContainer/Label")
+
+[node name="Panel" type="Panel" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -106.5
+margin_top = -60.0
+margin_right = 106.5
+margin_bottom = 60.0
+
+[node name="InnardsContainer" type="Control" parent="Panel"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -101.5
+margin_top = -55.0
+margin_right = 104.5
+margin_bottom = 55.0
+
+[node name="IconTitleContainer" type="Control" parent="Panel/InnardsContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="IconContainer" type="Panel" parent="Panel/InnardsContainer/IconTitleContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="Panel/InnardsContainer/IconTitleContainer/IconContainer"]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="Control" type="Control" parent="Panel/InnardsContainer/IconTitleContainer/IconContainer/CenterContainer"]
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 20.0
+margin_bottom = 20.0
+
+[node name="Sprite" type="Sprite" parent="Panel/InnardsContainer/IconTitleContainer/IconContainer/CenterContainer/Control"]
+texture = ExtResource( 1 )
+
+[node name="Title" type="Label" parent="Panel/InnardsContainer/IconTitleContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 46.0
+margin_right = 1.0
+custom_fonts/font = ExtResource( 2 )
+text = "Scal-e 3000"
+valign = 1
+
+[node name="BodyContainer" type="Control" parent="Panel/InnardsContainer"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_top = -12.0
+margin_bottom = 35.0
+
+[node name="Label" type="Label" parent="Panel/InnardsContainer/BodyContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/line_spacing = 0
+text = "A gun capable of scaling up and down many things. I wonder what will happen if I write too much?"
+autowrap = true
+
+[node name="CloseTextContainer" type="Control" parent="Panel/InnardsContainer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -103.0
+margin_top = -16.0
+margin_right = 103.0
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Label" type="Label" parent="Panel/InnardsContainer/CloseTextContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color = Color( 0.654902, 0.654902, 0.654902, 1 )
+text = "- Click any button to continue -"
+align = 1
+valign = 1

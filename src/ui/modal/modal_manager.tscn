@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://src/ui/modal/modal_small.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/ui/modal/modal_large.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/ui/modal/ModalManager.cs" type="Script" id=3]
+
+[node name="ModalManager" type="CanvasLayer"]
+layer = 2
+script = ExtResource( 3 )
+_largeModalPath = NodePath("ModalLarge")
+_smallModalPath = NodePath("ModalSmall")
+
+[node name="ModalLarge" parent="." instance=ExtResource( 2 )]
+visible = false
+
+[node name="ModalSmall" parent="." instance=ExtResource( 1 )]

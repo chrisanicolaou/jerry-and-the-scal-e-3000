@@ -1,5 +1,7 @@
 using Godot;
 using System;
+using System.Threading.Tasks;
+using GithubGameJam2023.ui.modal;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
 
@@ -17,7 +19,11 @@ public class Level : Node2D
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
     [Export] private NodePath _gunPickupPath;
+    [Export] private ModalOptions _gunPickupModalOpts;
+    [Export(PropertyHint.Enum, "Small,Large")] private string _modalSizeAsStr;
 
+    private ModalManager _modalManager;
+    private ModalSize _modalSize;
     private Door _entranceDoor;
     private Door _exitDoor;
     private Player _player;
@@ -28,6 +34,8 @@ public class Level : Node2D
 
     public override void _Ready()
     {
+        _modalManager = GetNode<ModalManager>("/root/ModalManager");
+        Enum.TryParse(_modalSizeAsStr, out _modalSize);
         _entranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);
         _key = GetNode<Key>(_keyPath);
@@ -137,7 +145,15 @@ public class Level : Node2D
         AddChild(item);
     }
 
-    private void OnGunPickupRequested() => _player.PickupGun();
+    private void OnGunPickupRequested() => HandleGunPickup();
 
     private void OnRetryRequested() => EmitSignal(nameof(LevelCompleted));
+
+    private async void HandleGunPickup()
+    {
+        _player.PickupGun();
+        GetTree().Paused = true;
+        await _modalManager.ShowModal(_gunPickupModalOpts, _modalSize);
+        GetTree().Paused = false;
+    }
 }
