@@ -1,0 +1,59 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://src/levels/Level.cs" type="Script" id=1]
+[ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/levels/level_common/level_camera/level_camera.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/items/scalable/broken_pillar/broken_pillar_kinematic.tscn" type="PackedScene" id=7]
+[ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/player/player.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=10]
+[ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=11]
+
+[node name="LevelTwo" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+StartAutomatically = true
+_entranceDoorPath = NodePath("EntranceDoor")
+_exitDoorPath = NodePath("ExitDoor")
+_keyPath = NodePath("Key")
+_playerPath = NodePath("Player")
+_carryableItemPaths = [ NodePath("KinematicBody2D") ]
+_fallZonePaths = [  ]
+_levelUIPath = NodePath("UI")
+
+[node name="LevelBackground" parent="." instance=ExtResource( 2 )]
+
+[node name="LevelCamera" parent="." instance=ExtResource( 3 )]
+current = false
+
+[node name="BrickTileMap" parent="." instance=ExtResource( 4 )]
+tile_data = PoolIntArray( 327690, 37, 0, 327691, 37, 0, 327692, 37, 0, 327693, 37, 0, 327694, 37, 0, 327695, 37, 0, 327696, 37, 0, 327697, 37, 0, 327698, 37, 0, 327699, 37, 0, 327700, 37, 0, 327701, 37, 0, 327702, 37, 0, 327703, 37, 0, 327704, 37, 0, 327705, 37, 0, 327706, 37, 0, 327707, 37, 0, 327708, 37, 0, 327709, 37, 0, 393226, 37, 0, 393227, 37, 0, 393228, 37, 0, 393229, 37, 0, 393230, 37, 0, 393231, 37, 0, 393232, 37, 0, 393233, 37, 0, 393234, 37, 0, 393235, 37, 0, 393236, 37, 0, 393237, 37, 0, 393238, 37, 0, 393239, 37, 0, 393240, 37, 0, 393241, 37, 0, 393242, 37, 0, 393243, 37, 0, 393244, 37, 0, 393245, 37, 0, 458762, 37, 0, 458763, 47, 0, 458765, 40, 0, 458766, 40, 0, 458767, 40, 0, 458768, 40, 0, 458769, 40, 0, 458770, 40, 0, 458771, 40, 0, 458772, 40, 0, 458773, 40, 0, 458774, 40, 0, 458775, 40, 0, 458776, 40, 0, 458777, 40, 0, 458778, 40, 0, 458779, 49, 0, 458781, 37, 0, 524298, 37, 0, 524317, 37, 0, 589834, 37, 0, 589835, 52, 0, 589851, 51, 0, 589853, 37, 0, 655370, 37, 0, 655373, 34, 0, 655374, 34, 0, 655375, 34, 0, 655376, 34, 0, 655377, 34, 0, 655378, 34, 0, 655379, 35, 0, 655384, 33, 0, 655385, 34, 0, 655386, 34, 0, 655389, 37, 0, 720906, 37, 0, 720907, 47, 0, 720909, 40, 0, 720910, 40, 0, 720911, 40, 0, 720912, 40, 0, 720913, 40, 0, 720914, 40, 0, 720915, 39, 0, 720920, 41, 0, 720921, 40, 0, 720922, 40, 0, 720923, 49, 0, 720925, 37, 0, 786442, 37, 0, 786461, 37, 0, 851978, 37, 0, 851979, 38, 0, 851996, 36, 0, 851997, 37, 0, 917514, 37, 0, 917515, 52, 0, 917531, 51, 0, 917533, 37, 0, 983050, 37, 0, 983053, 34, 0, 983054, 34, 0, 983055, 34, 0, 983056, 34, 0, 983057, 34, 0, 983058, 34, 0, 983059, 34, 0, 983060, 34, 0, 983061, 34, 0, 983062, 34, 0, 983063, 34, 0, 983064, 34, 0, 983065, 34, 0, 983066, 34, 0, 983069, 37, 0, 1048586, 37, 0, 1048587, 37, 0, 1048588, 37, 0, 1048589, 37, 0, 1048590, 37, 0, 1048591, 37, 0, 1048592, 37, 0, 1048593, 37, 0, 1048594, 37, 0, 1048595, 37, 0, 1048596, 37, 0, 1048597, 37, 0, 1048598, 37, 0, 1048599, 37, 0, 1048600, 37, 0, 1048601, 37, 0, 1048602, 37, 0, 1048603, 37, 0, 1048604, 37, 0, 1048605, 37, 0, 1114122, 37, 0, 1114123, 40, 0, 1114124, 40, 0, 1114125, 40, 0, 1114126, 40, 0, 1114127, 40, 0, 1114128, 40, 0, 1114129, 40, 0, 1114130, 40, 0, 1114131, 40, 0, 1114132, 40, 0, 1114133, 40, 0, 1114134, 40, 0, 1114135, 40, 0, 1114136, 40, 0, 1114137, 40, 0, 1114138, 40, 0, 1114139, 40, 0, 1114140, 40, 0, 1114141, 37, 0 )
+
+[node name="GlobalShadow" parent="." instance=ExtResource( 5 )]
+
+[node name="EntranceDoor" parent="." instance=ExtResource( 6 )]
+position = Vector2( 230, 223 )
+
+[node name="ExitDoor" parent="." instance=ExtResource( 6 )]
+position = Vector2( 417, 223 )
+_isLocked = true
+
+[node name="KinematicBody2D" parent="." instance=ExtResource( 7 )]
+position = Vector2( 357, 224 )
+PhysicsBased = true
+DefaultScaleDuration = 3.0
+
+[node name="Key" parent="." instance=ExtResource( 8 )]
+position = Vector2( 419, 152 )
+
+[node name="Player" parent="." instance=ExtResource( 9 )]
+position = Vector2( 230, 224 )
+
+[node name="UI" parent="." instance=ExtResource( 10 )]
+
+[node name="LevelInputController" parent="." instance=ExtResource( 11 )]

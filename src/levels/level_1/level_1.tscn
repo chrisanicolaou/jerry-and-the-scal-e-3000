@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_camera/level_camera.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/items/scalable/boulder/boulder.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/levels/level_1/gun_pickup_modal_opts.tres" type="Resource" id=16]
+[ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=18]
 
 [node name="LevelOne" type="Node2D"]
@@ -69,6 +70,7 @@ position = Vector2( 338, 223 )
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( 213, 225 )
 _hasGun = false
+_trajectoryLinePath = NodePath("../TrajectoryLine")
 
 [node name="UI" parent="." instance=ExtResource( 12 )]
 
@@ -76,3 +78,5 @@ _hasGun = false
 position = Vector2( 279, 235 )
 
 [node name="LevelInputController" parent="." instance=ExtResource( 14 )]
+
+[node name="TrajectoryLine" parent="." instance=ExtResource( 17 )]

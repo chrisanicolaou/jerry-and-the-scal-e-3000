@@ -31,7 +31,7 @@ public class Player : KinematicBody2D
     
     public bool Freeze { get; set; }
     public ScalableItem ItemCarry { get; set; }
-    public int NumOfBullets { get; set; }
+    public int NumOfBullets { get; set; } = -2;
     public bool CanShoot => NumOfBullets > 0 || NumOfBullets < -1;
 
     public override void _Ready()

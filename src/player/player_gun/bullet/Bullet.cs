@@ -31,6 +31,10 @@ public class Bullet : KinematicBody2D
         {
             scalableItem.OnBulletCollide(Type);
         }
+        if (collision.Collider is ScalableItemV2 scalableItemV2)
+        {
+            scalableItemV2.OnBulletCollide(Type);
+        }
         QueueFree();
     }
 }

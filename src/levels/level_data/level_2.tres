@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/levels/level_data/LevelData.cs" type="Script" id=1]
+[ext_resource path="res://src/levels/level_2/level_2.tscn" type="PackedScene" id=2]
+
+[resource]
+script = ExtResource( 1 )
+DisplayName = "Patience"
+Scene = ExtResource( 2 )
