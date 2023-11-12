@@ -1,4 +1,4 @@
-﻿namespace GithubGameJam2023.player.player_gun
+namespace GithubGameJam2023.player.player_gun
 {
     public enum ScaleType
     {

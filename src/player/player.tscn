@@ -2,7 +2,7 @@
 
 [ext_resource path="res://src/player/jerry_sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.cs" type="Script" id=2]
-[ext_resource path="res://src/player/player_gun/player_gun.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/player/player_gun/gun/player_gun.tscn" type="PackedScene" id=3]
 [ext_resource path="res://src/environment/light_textures/light_128.png" type="Texture" id=4]
 
 [sub_resource type="CapsuleShape2D" id=1]
@@ -98,11 +98,6 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision/safe_margin = 0.5
 script = ExtResource( 2 )
-_speed = 100.0
-_jumpSpeed = 130.0
-_jumpFloatyness = 0.02
-_elongatedJumpMultiplier = 550.0
-_snappyFallMultiplier = 750.0
 _animPlayerPath = NodePath("AnimationPlayer")
 _spriteNodePath = NodePath("Graphic")
 _gunPath = NodePath("Gun")

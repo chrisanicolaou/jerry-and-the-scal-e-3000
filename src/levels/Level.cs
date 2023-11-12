@@ -7,7 +7,8 @@ public class Level : Node2D
 {
     [Signal] public delegate void LevelCompleted();
     [Export] public bool StartAutomatically;
-    [Export] private int _numOfBullets = 1;
+    // Negative numbers (except -1 to avoid spamming through multiple clicks) are for infinite bullets
+    [Export] private int _numOfBullets = -2;
     [Export] private NodePath _entranceDoorPath;
     [Export] private NodePath _exitDoorPath;
     [Export] private NodePath _keyPath;
@@ -15,6 +16,7 @@ public class Level : Node2D
     [Export] private Array<NodePath> _carryableItemPaths;
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
+    [Export] private NodePath _gunPickupPath;
 
     private Door _entranceDoor;
     private Door _exitDoor;
@@ -51,8 +53,14 @@ public class Level : Node2D
             var fallZone = GetNode<FallZone>(_fallZonePaths[i]);
             fallZone.Connect(nameof(FallZone.PlayerFell), this, nameof(OnPlayerFell));
         }
+
+        if (_gunPickupPath != null)
+        {
+            var gunPickup = GetNode<GunPickup>(_gunPickupPath);
+            gunPickup.Connect(nameof(GunPickup.GunPickupRequested), this, nameof(OnGunPickupRequested));
+        }
         
-        _levelUI.Initialise(1, _numOfBullets);
+        _levelUI.Initialise(1, _numOfBullets > 0 ? _numOfBullets : 0);
         _levelUI.Connect(nameof(LevelUI.RetryRequested), this, nameof(OnRetryRequested));
         
         if (StartAutomatically)
@@ -128,6 +136,8 @@ public class Level : Node2D
     {
         AddChild(item);
     }
+
+    private void OnGunPickupRequested() => _player.PickupGun();
 
     private void OnRetryRequested() => EmitSignal(nameof(LevelCompleted));
 }

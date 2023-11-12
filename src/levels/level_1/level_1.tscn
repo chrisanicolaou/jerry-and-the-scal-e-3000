@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_camera/level_camera.tscn" type="PackedScene" id=2]
@@ -12,6 +12,8 @@
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_cracks_tilemap.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=11]
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=12]
+[ext_resource path="res://src/player/player_gun/gun_pickup/gun_pickup.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=14]
 [ext_resource path="res://src/items/scalable/boulder/boulder.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=18]
 
@@ -25,6 +27,7 @@ _playerPath = NodePath("Player")
 _carryableItemPaths = [ NodePath("Boulder") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
+_gunPickupPath = NodePath("GunPickup")
 
 [node name="LevelBackground" parent="." instance=ExtResource( 1 )]
 
@@ -61,6 +64,12 @@ position = Vector2( 383, 233 )
 position = Vector2( 338, 223 )
 
 [node name="Player" parent="." instance=ExtResource( 8 )]
-position = Vector2( 224, 225 )
+position = Vector2( 213, 225 )
+_hasGun = false
 
 [node name="UI" parent="." instance=ExtResource( 12 )]
+
+[node name="GunPickup" parent="." instance=ExtResource( 13 )]
+position = Vector2( 279, 235 )
+
+[node name="LevelInputController" parent="." instance=ExtResource( 14 )]

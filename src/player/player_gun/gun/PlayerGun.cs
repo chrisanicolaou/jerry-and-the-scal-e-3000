@@ -13,6 +13,7 @@ public class PlayerGun : Node2D
     private float _radius;
     private Viewport _viewport;
     private Vector2 _aimDirection;
+    private bool _disabled;
     
     public TrajectoryLine TrajectoryLine { get; set; }
 
@@ -25,7 +26,7 @@ public class PlayerGun : Node2D
 
     public override void _Process(float delta)
     {
-        if (_player.Freeze) return;
+        if (_player.Freeze || _disabled) return;
         
         var mousePos = GetGlobalMousePosition();
         _aimDirection = _player.GlobalPosition.DirectionTo(mousePos);
@@ -53,5 +54,19 @@ public class PlayerGun : Node2D
     public void UpdateBulletTrajectory(Vector2 direction, float delta)
     {
         TrajectoryLine.UpdateLine(GlobalPosition, direction, delta);
+    }
+
+    public void Disable()
+    {
+        _disabled = true;
+        TrajectoryLine?.Hide();
+        Hide();
+    }
+
+    public void Enable()
+    {
+        _disabled = false;
+        TrajectoryLine?.Show();
+        Show();
     }
 }

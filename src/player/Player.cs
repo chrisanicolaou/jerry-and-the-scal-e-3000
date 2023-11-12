@@ -7,13 +7,14 @@ public class Player : KinematicBody2D
 {
     [Signal] public delegate void ShotsFired();
     [Signal] public delegate void ItemForcePutdown(ScalableItem item);
-    [Export] private float _speed = 1;
-    [Export] private float _jumpSpeed = 1;
+    [Export] private bool _hasGun = true;
+    [Export] private float _speed = 100;
+    [Export] private float _jumpSpeed = 130;
     [Export] private float _jumpPlatformForgiveness = 0.2f;
-    [Export] private float _jumpFloatyness = 0.1f;
+    [Export] private float _jumpFloatyness = 0.02f;
     [Export] private float _gravityMultiplier = 1;
-    [Export] private float _elongatedJumpMultiplier = 25;
-    [Export] private float _snappyFallMultiplier = 25;
+    [Export] private float _elongatedJumpMultiplier = 550;
+    [Export] private float _snappyFallMultiplier = 750;
     [Export] private float _snapLength = 0.2f;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
@@ -31,7 +32,7 @@ public class Player : KinematicBody2D
     public bool Freeze { get; set; }
     public ScalableItem ItemCarry { get; set; }
     public int NumOfBullets { get; set; }
-    public bool CanShoot => NumOfBullets > 0;
+    public bool CanShoot => NumOfBullets > 0 || NumOfBullets < -1;
 
     public override void _Ready()
     {
@@ -39,8 +40,21 @@ public class Player : KinematicBody2D
         _sprite = GetNode<Sprite>(_spriteNodePath);
         _gun = GetNode<PlayerGun>(_gunPath);
         if (_trajectoryLinePath != null) _gun.TrajectoryLine = GetNode<TrajectoryLine>(_trajectoryLinePath);
-        
+
+        if (!_hasGun) DisableGun();
         _animPlayer.Play("idle");
+    }
+
+    private void DisableGun()
+    {
+        _hasGun = false;
+        _gun.Disable();
+    }
+
+    private void EnableGun()
+    {
+        _hasGun = true;
+        _gun.Enable();
     }
 
     public async Task EnterLevel(Door door)
@@ -96,11 +110,17 @@ public class Player : KinematicBody2D
         return item;
     }
 
+    public void PickupGun()
+    {
+        // Some animation here maybe?
+        EnableGun();
+    }
+
     public override void _Process(float delta)
     {
         if (Freeze) return;
         
-        if (Input.IsActionJustPressed("shoot_big"))
+        if (Input.IsActionJustPressed("shoot_big") && _hasGun)
         {
             if (!CanShoot) return;
             var bullet = _gun.CreateBullet(ScaleType.Big);
@@ -109,7 +129,7 @@ public class Player : KinematicBody2D
             EmitSignal(nameof(ShotsFired));
         }
 
-        if (Input.IsActionJustPressed("shoot_small"))
+        if (Input.IsActionJustPressed("shoot_small") && _hasGun)
         {
             if (!CanShoot) return;
             var bullet = _gun.CreateBullet(ScaleType.Small);

@@ -45,6 +45,7 @@ public class LevelUI : CanvasLayer
 
     public void RemoveBullet()
     {
+        if (_bullets.Length <= 0) return;
         _bullets[_bullets.Length - ++_shotsFired].Sprite.Modulate = new Color(_bullets[_bullets.Length - _shotsFired].Sprite.Modulate, _transparency);
     }
 
