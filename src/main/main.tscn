@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/main_menu/main_menu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://common/scene_management/root_scene_switcher.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/main/Main.cs" type="Script" id=3]
+[ext_resource path="res://src/player/player_data/PlayerData.cs" type="Script" id=4]
 [ext_resource path="res://src/levels/pre_level/pre_level.tscn" type="PackedScene" id=5]
 
 [node name="Main" type="Node"]
@@ -10,5 +11,6 @@ script = ExtResource( 3 )
 _mainMenuScene = ExtResource( 1 )
 _preLevelScene = ExtResource( 5 )
 _sceneSwitcherPath = NodePath("RootSceneSwitcher")
+_playerDataResourceScript = ExtResource( 4 )
 
 [node name="RootSceneSwitcher" parent="." instance=ExtResource( 2 )]
