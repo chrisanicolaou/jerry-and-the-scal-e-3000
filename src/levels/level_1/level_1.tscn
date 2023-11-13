@@ -18,7 +18,7 @@
 [ext_resource path="res://src/levels/level_1/gun_pickup_modal_opts.tres" type="Resource" id=16]
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=18]
-[ext_resource path="res://src/items/scalable_two/boulder_v2.tscn" type="PackedScene" id=19]
+[ext_resource path="res://src/items/scalable_two/boulder/boulder_v2.tscn" type="PackedScene" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true

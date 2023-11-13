@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=1]
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=2]
@@ -6,10 +6,24 @@
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=5]
 [ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/items/scalable_two/pillar/pillar.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=10]
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=12]
+[ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=13]
+
+[sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 12 )
+shader_param/enabled = true
+shader_param/rainbow = false
+shader_param/line_color = Color( 1, 0.843137, 0, 1 )
+shader_param/line_scale = 1.0
+shader_param/frequency = 0.5
+shader_param/light_offset = 1e-05
+shader_param/alpha = 0.25
 
 [node name="LevelTwo" type="Node2D"]
 script = ExtResource( 1 )
@@ -21,7 +35,7 @@ _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_carryableItemPaths = [  ]
+_carryableItemPaths = [ NodePath("Pillar") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
 
@@ -47,7 +61,14 @@ position = Vector2( 419, 152 )
 
 [node name="Player" parent="." instance=ExtResource( 9 )]
 position = Vector2( 230, 224 )
+_trajectoryLinePath = NodePath("../TrajectoryLine")
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
 [node name="LevelInputController" parent="." instance=ExtResource( 11 )]
+
+[node name="Pillar" parent="." instance=ExtResource( 7 )]
+position = Vector2( 366, 224 )
+_outlineShaderMat = SubResource( 1 )
+
+[node name="TrajectoryLine" parent="." instance=ExtResource( 13 )]

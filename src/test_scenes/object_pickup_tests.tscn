@@ -10,7 +10,7 @@
 [ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=10]
-[ext_resource path="res://src/items/scalable_two/boulder_v2.tscn" type="PackedScene" id=11]
+[ext_resource path="res://src/items/scalable_two/boulder/boulder_v2.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true

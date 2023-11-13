@@ -18,7 +18,7 @@
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/environment/hazards/fall_zone/fall_zone.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/environment/backgrounds/wall_bricks_640x360.png" type="Texture" id=19]
-[ext_resource path="res://src/items/scalable_two/boulder_v2.tscn" type="PackedScene" id=20]
+[ext_resource path="res://src/items/scalable_two/boulder/boulder_v2.tscn" type="PackedScene" id=20]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
