@@ -14,6 +14,7 @@ public class PlayerGun : Node2D
     private Viewport _viewport;
     private Vector2 _aimDirection;
     private bool _disabled;
+    private ScalableItemV2 _itemInScope;
     
     public TrajectoryLine TrajectoryLine { get; set; }
 
@@ -53,7 +54,23 @@ public class PlayerGun : Node2D
 
     public void UpdateBulletTrajectory(Vector2 direction, float delta)
     {
-        TrajectoryLine.UpdateLine(GlobalPosition, direction, delta);
+        var collision = TrajectoryLine.UpdateLine(GlobalPosition, direction, delta);
+        if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutated)
+        {
+            SetScopeOnItem(scalableItem);
+        }
+        else
+        {
+            _itemInScope?.RemoveOutline();
+            _itemInScope = null;
+        }
+    }
+
+    private void SetScopeOnItem(ScalableItemV2 scalableItem)
+    {
+        if (_itemInScope != scalableItem) _itemInScope?.RemoveOutline();
+        _itemInScope = scalableItem;
+        _itemInScope.AddOutline();
     }
 
     public void Disable()

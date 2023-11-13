@@ -33,7 +33,7 @@ public class TrajectoryLine : Line2D
         _velocity = (1 / (float)_accuracy) * 25000;
     }
 
-    public void UpdateLine(Vector2 startPos, Vector2 direction, float delta)
+    public KinematicCollision2D UpdateLine(Vector2 startPos, Vector2 direction, float delta)
     {
         ClearPoints();
         EnableCollisions();
@@ -55,12 +55,13 @@ public class TrajectoryLine : Line2D
                 else
                 {
                     DisableCollisions();
-                    break;
+                    return collision;
                 }
             }
             pos += velocity;
             CollisionTestPosition = pos;
         }
+        return null;
     }
 
     public void DisableCollisions()

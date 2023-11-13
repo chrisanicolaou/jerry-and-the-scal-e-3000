@@ -12,6 +12,7 @@ public class ScalableItemV2 : RigidBody2D
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _interactionAreaPath;
     [Export] private ShaderMaterial _whiteShaderMat;
+    [Export] private ShaderMaterial _outlineShaderMat;
     
     [Export(PropertyHint.Range, "2,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 2f;
     [Export] public bool CanBeCarried { get; set; }
@@ -22,7 +23,7 @@ public class ScalableItemV2 : RigidBody2D
     private InteractionArea _interactionArea;
     private List<BreakableItem> _breakableItemsInContact = new List<BreakableItem>();
     
-    protected bool IsMutated { get; set; }
+    public bool IsMutated { get; set; }
 
     public override void _Ready()
     {
@@ -51,6 +52,16 @@ public class ScalableItemV2 : RigidBody2D
             IsMutated = true;
             ScaleDown();
         }
+    }
+
+    public void AddOutline()
+    {
+        _sprite.Material = _outlineShaderMat;
+    }
+
+    public void RemoveOutline()
+    {
+        _sprite.Material = null;
     }
 
     protected virtual void ScaleUp()
