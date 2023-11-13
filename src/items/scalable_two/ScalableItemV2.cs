@@ -14,7 +14,7 @@ public class ScalableItemV2 : RigidBody2D
     [Export] private ShaderMaterial _whiteShaderMat;
     [Export] private ShaderMaterial _outlineShaderMat;
     
-    [Export(PropertyHint.Range, "2,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 2f;
+    [Export(PropertyHint.Range, "5,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 4f;
     [Export] public bool CanBeCarried { get; set; }
     [Export] public Vector2 CarryOffset { get; set; }
 
@@ -80,13 +80,36 @@ public class ScalableItemV2 : RigidBody2D
         _animPlayer.Play(animName);
         await ToSignal(_animPlayer, "animation_finished");
         _interactionArea.SetDisabled(!CanBeCarried);
-        
+
+        PlayScaleDurationAnimation();
         await ToSignal(GetTree().CreateTimer(DefaultScaleDuration, false), "timeout");
         
         _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
         await ToSignal(_animPlayer, "animation_finished");
         _interactionArea.SetDisabled(!CanBeCarried);
         IsMutated = false;
+    }
+
+    private async void PlayScaleDurationAnimation()
+    {
+        var preFlashDuration = DefaultScaleDuration - 3.75f;
+        await ToSignal(GetTree().CreateTimer(preFlashDuration, false), "timeout");
+        await PlayWhiteFlash(0.5f);
+        await PlayWhiteFlash(0.5f);
+        await PlayWhiteFlash(0.25f);
+        await PlayWhiteFlash(0.25f);
+        await PlayWhiteFlash(0.125f);
+        await PlayWhiteFlash(0.125f);
+        await PlayWhiteFlash(0.125f);
+        await PlayWhiteFlash(0.125f);
+    }
+
+    private async Task PlayWhiteFlash(float duration)
+    {
+        _sprite.Material = _whiteShaderMat;
+        await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
+        _sprite.Material = null;
+        await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
     }
 
     public override void _PhysicsProcess(float delta)

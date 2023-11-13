@@ -52,7 +52,6 @@ shader_param/alpha = 0.25
 position = Vector2( -4, 1 )
 script = ExtResource( 14 )
 StartAutomatically = true
-_numOfBullets = 1
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")

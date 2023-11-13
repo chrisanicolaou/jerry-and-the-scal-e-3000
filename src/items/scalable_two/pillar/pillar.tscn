@@ -336,7 +336,6 @@ anims/scale_down = SubResource( 5 )
 anims/scale_up = SubResource( 2 )
 
 [node name="interactionArea" parent="." instance=ExtResource( 3 )]
-visible = false
 
 [node name="CollisionShape2D" parent="interactionArea" index="0"]
 shape = SubResource( 6 )
