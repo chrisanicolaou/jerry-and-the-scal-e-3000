@@ -98,6 +98,9 @@ tracks/0/keys = {
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 collision/safe_margin = 0.5
 script = ExtResource( 2 )
+_jumpSpeed = 100.0
+_jumpFloatyness = 0.025
+_elongatedJumpMultiplier = 250.0
 _animPlayerPath = NodePath("AnimationPlayer")
 _spriteNodePath = NodePath("Graphic")
 _gunPath = NodePath("Gun")

@@ -26,6 +26,6 @@ public class CameraFollow : Camera2D
         var clampedTargetPos = new Vector2(Mathf.Clamp(targetPos.x, _horizontalLevelBounds.x, _horizontalLevelBounds.y),
             Mathf.Clamp(targetPos.y, _verticalLevelBounds.x, _verticalLevelBounds.y));
 
-        GlobalPosition = GlobalPosition.LinearInterpolate(clampedTargetPos, delta * _lerpSpeed);
+        GlobalPosition = _lerpSpeed > 0 ? GlobalPosition.LinearInterpolate(clampedTargetPos, delta * _lerpSpeed) : clampedTargetPos;
     }
 }
