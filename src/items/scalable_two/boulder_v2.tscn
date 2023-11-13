@@ -1,9 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/items/scalable/boulder/boulder.png" type="Texture" id=1]
 [ext_resource path="res://src/items/scalable_two/ScalableItemV2.cs" type="Script" id=2]
 [ext_resource path="res://src/items/scalable/boulder/boulder_large.png" type="Texture" id=3]
+[ext_resource path="res://src/items/scalable/boulder/boulder_small.png" type="Texture" id=4]
 [ext_resource path="res://src/items/scalable_two/white_shader_mat.tres" type="Material" id=5]
+[ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -55,9 +57,45 @@ tracks/3/keys = {
 "update": 0,
 "values": [ PoolVector2Array( -24, 7, -10, 17, 17, 17, 22, 11, 23, -6, 14, -14, 0, -16, -6, -14, -12, -8, -18, -7, -23, -3 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 27.1662 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:CanBeCarried")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:mass")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 3.0 ]
+}
 
-[sub_resource type="Animation" id=3]
-resource_name = "scale_down_to_normal"
+[sub_resource type="Animation" id=4]
+resource_name = "scale_down"
 length = 0.4
 tracks/0/type = "value"
 tracks/0/path = NodePath("Sprite:scale")
@@ -69,7 +107,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 1, 1 ), Vector2( 1.75, 1.75 ), Vector2( 1.5, 1.5 ), Vector2( 1.25, 1.25 ), Vector2( 1, 1 ) ]
+"values": [ Vector2( 1, 1 ), Vector2( 0.85, 0.85 ), Vector2( 0.7, 0.7 ), Vector2( 0.55, 0.55 ), Vector2( 1, 1 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sprite:texture")
@@ -78,10 +116,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.1, 0.4 ),
+"times": PoolRealArray( 0, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 3 ), ExtResource( 1 ), ExtResource( 1 ) ]
+"values": [ ExtResource( 1 ), ExtResource( 1 ), ExtResource( 4 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:material")
@@ -105,7 +143,43 @@ tracks/3/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ PoolVector2Array( -44, 17, -20, 31, 35, 31, 46, 18, 46, -13, 27, -33, 19, -33, 0, -30, -14, -26, -23, -16, -38, -16, -48, -6, -49, 6 ), PoolVector2Array( -40, 15, -19, 30, 33, 29, 42, 18, 43, -13, 25, -28, 11, -29, -2, -26, -14, -21, -21, -15, -34, -13, -43, -4, -45, 7 ), PoolVector2Array( -33, 13, -16, 24, 28, 24, 36, 16, 36, -9, 22, -23, 9, -23, -2, -22, -10, -19, -18, -12, -30, -10, -35, -4, -37, 6 ), PoolVector2Array( -28, 12, -15, 22, 23, 22, 31, 14, 31, -9, 20, -20, 8, -21, -2, -19, -9, -17, -15, -11, -26, -9, -31, -4, -32, 6 ), PoolVector2Array( -19, 12, -10, 17, 17, 17, 24, 11, 24, -7, 14, -16, 1, -16, -4, -14, -9, -10, -19, -8, -24, -3, -24, 7 ) ]
+"values": [ PoolVector2Array( -24, 7, -10, 17, 17, 17, 22, 11, 23, -6, 14, -14, 0, -16, -6, -14, -12, -8, -18, -7, -23, -3 ), PoolVector2Array( -21, 6, -11, 15, 14, 15, 21, 9, 21, -7, 12, -14, 0, -14, -6, -12, -11, -9, -18, -6, -21, 0 ), PoolVector2Array( -18, 5, -8, 12, 14, 12, 18, 6, 17, -6, 10, -12, 0, -12, -4, -10, -8, -6, -14, -6, -17, -2 ), PoolVector2Array( -12, 5, -6, 10, 10, 10, 14, 6, 14, -4, 8, -9, 0, -9, -3, -8, -7, -5, -11, -5, -14, -1 ), PoolVector2Array( -6, 7, 8, 7, 10, 4, 10, -3, 6, -6, -2, -6, -10, 0, -10, 3, -6, 7 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 27.1662, 14.0 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:CanBeCarried")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:mass")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 3.0, 1.0 ]
 }
 
 [sub_resource type="Animation" id=1]
@@ -130,10 +204,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.4 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ ExtResource( 1 ), ExtResource( 3 ) ]
+"values": [ ExtResource( 1 ), ExtResource( 1 ), ExtResource( 3 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sprite:material")
@@ -159,13 +233,53 @@ tracks/3/keys = {
 "update": 1,
 "values": [ PoolVector2Array( -24, 7, -10, 17, 17, 17, 22, 11, 23, -6, 14, -14, 0, -16, -6, -14, -12, -8, -18, -7, -23, -3 ), PoolVector2Array( -29, 8, -12, 20, 20, 20, 28, 12, 28, -9, 18, -18, 0, -18, -8, -16, -14, -9, -23, -9, -28, -4 ), PoolVector2Array( -35, 10, -14, 24, 23, 24, 34, 15, 34, -9, 22, -21, 1, -21, -9, -18, -15, -12, -27, -9, -33, -5 ), PoolVector2Array( -41, 13, -18, 29, 28, 29, 40, 18, 40, -12, 26, -25, 0, -25, -10, -22, -18, -15, -31, -12, -40, -6 ), PoolVector2Array( -44, 17, -20, 31, 35, 31, 46, 18, 46, -13, 27, -33, 19, -33, 0, -30, -14, -26, -23, -16, -38, -16, -48, -6, -49, 6 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Area2D/CollisionShape2D:shape:radius")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 27.1662, 53.0094 ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath(".:CanBeCarried")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath(".:mass")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 3.0, 6.0 ]
+}
 
-[node name="BoulderV2" type="RigidBody2D"]
+[node name="Rigidbody" type="RigidBody2D"]
 mass = 3.0
+contacts_reported = 25
+contact_monitor = true
 script = ExtResource( 2 )
 DefaultScaleDuration = 5.0
+CarryOffset = Vector2( 20, -20 )
 _spritePath = NodePath("Sprite")
 _animPlayerPath = NodePath("AnimationPlayer")
+_interactionAreaPath = NodePath("Area2D")
 _whiteShaderMat = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -174,7 +288,11 @@ texture = ExtResource( 1 )
 [node name="NormalCollider" type="CollisionPolygon2D" parent="."]
 polygon = PoolVector2Array( -24, 7, -10, 17, 17, 17, 22, 11, 23, -6, 14, -14, 0, -16, -6, -14, -12, -8, -18, -7, -23, -3 )
 
+[node name="Area2D" parent="." instance=ExtResource( 6 )]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 2 )
-anims/scale_down_to_normal = SubResource( 3 )
+anims/scale_down = SubResource( 4 )
 anims/scale_up = SubResource( 1 )
+
+[editable path="Area2D"]

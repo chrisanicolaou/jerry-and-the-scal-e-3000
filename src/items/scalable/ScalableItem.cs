@@ -169,7 +169,7 @@ public class ScalableItem : KinematicBody2D
             var col = GetSlideCollision(i);
             if (col.Collider is BreakableItem breakableItem)
             {
-                if (ExertingForce.x >= breakableItem.ForceRequiredToBreak || ExertingForce.y >= breakableItem.ForceRequiredToBreak)
+                if (ExertingForce.x >= breakableItem.WeightRequiredToBreak || ExertingForce.y >= breakableItem.WeightRequiredToBreak)
                 {
                     breakableItem.Break();
                 }

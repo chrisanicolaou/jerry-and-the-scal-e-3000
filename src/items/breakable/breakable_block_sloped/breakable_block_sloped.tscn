@@ -10,7 +10,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-ForceRequiredToBreak = 50.0
+WeightRequiredToBreak = 50.0
 _spritePath = NodePath("Sprite")
 _collisionShapePath = NodePath("CollisionPolygon2D")
 _particlePath = NodePath("Particles2D")

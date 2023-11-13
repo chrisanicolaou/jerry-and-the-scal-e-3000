@@ -3,7 +3,7 @@ using System;
 
 public class BreakableItem : Node2D
 {
-    [Export] public float ForceRequiredToBreak { get; set; }
+    [Export] public float WeightRequiredToBreak { get; set; }
     [Export] private NodePath _spritePath;
     [Export] private NodePath _collisionShapePath;
     [Export] private NodePath _particlePath;

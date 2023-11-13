@@ -1,11 +1,9 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/items/scalable/broken_pillar/broken_pillar_kinematic.tscn" type="PackedScene" id=4]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=5]
-[ext_resource path="res://src/items/scalable/boulder/boulder.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=7]
 [ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=9]
@@ -19,12 +17,16 @@ _entranceDoorPath = NodePath("Door")
 _exitDoorPath = NodePath("Door2")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_carryableItemPaths = [ NodePath("KinematicBody2D"), NodePath("Boulder") ]
+_carryableItemPaths = [ NodePath("Rigidbody"), NodePath("Rigidbody2") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
 
+[node name="Rigidbody" parent="." instance=ExtResource( 11 )]
+position = Vector2( 136, -43 )
+
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 111, 296 )
+_itemThrowStrength = Vector2( 10, 0 )
 
 [node name="BrickTileMap" parent="." instance=ExtResource( 2 )]
 tile_data = PoolIntArray( 262149, 87, 0, 327687, 87, 0, 393225, 87, 0, 1376255, 34, 0, 1310720, 34, 0, 1310721, 34, 0, 1310722, 34, 0, 1310723, 34, 0, 1310724, 34, 0, 1310725, 34, 0, 1310726, 34, 0, 1310727, 34, 0, 1310728, 34, 0, 1310729, 34, 0, 1310730, 34, 0, 1310731, 34, 0, 1310732, 34, 0, 1310733, 34, 0, 1310734, 34, 0, 1310735, 34, 0, 1310736, 34, 0, 1310737, 34, 0, 1310738, 34, 0, 1310739, 34, 0, 1310740, 34, 0, 1310741, 34, 0, 1310742, 34, 0, 1310743, 34, 0, 1310744, 34, 0, 1310745, 34, 0, 1310746, 34, 0, 1310747, 34, 0, 1310748, 34, 0, 1310749, 34, 0, 1310750, 34, 0, 1310751, 34, 0, 1310752, 34, 0, 1310753, 34, 0, 1310754, 34, 0, 1310755, 34, 0, 1310756, 34, 0, 1310757, 34, 0, 1310758, 34, 0, 1310759, 34, 0, 1310760, 34, 0, 1376256, 37, 0, 1376257, 37, 0, 1376258, 37, 0, 1376259, 37, 0, 1376260, 37, 0, 1376261, 37, 0, 1376262, 37, 0, 1376263, 37, 0, 1376264, 37, 0, 1376265, 37, 0, 1376266, 37, 0, 1376267, 37, 0, 1376268, 37, 0, 1376269, 37, 0, 1376270, 37, 0, 1376271, 37, 0, 1376272, 37, 0, 1376273, 37, 0, 1376274, 37, 0, 1376275, 37, 0, 1376276, 37, 0, 1376277, 37, 0, 1376278, 37, 0, 1376279, 37, 0, 1376280, 37, 0, 1376281, 37, 0, 1376282, 37, 0, 1376283, 37, 0, 1376284, 37, 0, 1376285, 37, 0, 1376286, 37, 0, 1376287, 37, 0, 1376288, 37, 0, 1376289, 37, 0, 1376290, 37, 0, 1376291, 37, 0, 1376292, 37, 0, 1376293, 37, 0, 1376294, 37, 0, 1376295, 37, 0, 1441792, 37, 0, 1441793, 37, 0, 1441794, 37, 0, 1441795, 37, 0, 1441796, 37, 0, 1441797, 37, 0, 1441798, 37, 0, 1441799, 37, 0, 1441800, 37, 0, 1441801, 37, 0, 1441802, 37, 0, 1441803, 37, 0, 1441804, 37, 0, 1441805, 37, 0, 1441806, 37, 0, 1441807, 37, 0, 1441808, 37, 0, 1441809, 37, 0, 1441810, 37, 0, 1441811, 37, 0, 1441812, 37, 0, 1441813, 37, 0, 1441814, 37, 0, 1441815, 37, 0, 1441816, 37, 0, 1441817, 37, 0, 1441818, 37, 0, 1441819, 37, 0, 1441820, 37, 0, 1441821, 37, 0, 1441822, 37, 0, 1441823, 37, 0, 1441824, 37, 0, 1441825, 37, 0, 1441826, 37, 0, 1441827, 37, 0, 1441828, 37, 0, 1441829, 37, 0, 1441830, 37, 0, 1441831, 37, 0, 1507337, 37, 0, 1507338, 37, 0, 1507339, 37, 0, 1507340, 37, 0, 1507341, 37, 0, 1507342, 37, 0, 1507343, 37, 0, 1507344, 37, 0, 1507345, 37, 0, 1507346, 37, 0, 1507347, 37, 0, 1507348, 37, 0 )
@@ -32,12 +34,6 @@ tile_data = PoolIntArray( 262149, 87, 0, 327687, 87, 0, 393225, 87, 0, 1376255, 
 [node name="LevelInputController" parent="." instance=ExtResource( 3 )]
 
 [node name="GlobalShadow" parent="." instance=ExtResource( 5 )]
-
-[node name="KinematicBody2D" parent="." instance=ExtResource( 4 )]
-position = Vector2( 226, 301 )
-
-[node name="Boulder" parent="." instance=ExtResource( 6 )]
-position = Vector2( 417, 302 )
 
 [node name="Door" parent="." instance=ExtResource( 8 )]
 position = Vector2( 42, 305 )
@@ -51,5 +47,5 @@ position = Vector2( 384, 115 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
-[node name="BoulderV2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 105, 53 )
+[node name="Rigidbody2" parent="." instance=ExtResource( 11 )]
+position = Vector2( 395, 163 )

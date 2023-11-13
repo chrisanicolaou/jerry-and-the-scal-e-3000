@@ -16,6 +16,7 @@ public class Player : KinematicBody2D
     [Export] private float _elongatedJumpMultiplier = 550;
     [Export] private float _snappyFallMultiplier = 750;
     [Export] private float _snapLength = 0.2f;
+    [Export] private Vector2 _itemThrowStrength;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
     [Export] private NodePath _gunPath;
@@ -30,7 +31,7 @@ public class Player : KinematicBody2D
     private PlayerGun _gun;
     
     public bool Freeze { get; set; }
-    public ScalableItem ItemCarry { get; set; }
+    public ScalableItemV2 ItemCarry { get; set; }
     public int NumOfBullets { get; set; } = -2;
     public bool CanShoot => NumOfBullets > 0 || NumOfBullets < -1;
 
@@ -90,22 +91,24 @@ public class Player : KinematicBody2D
         await ToSignal(tween, "finished");
     }
 
-    public void PickupItem(ScalableItem item)
+    public void PickupItem(ScalableItemV2 item)
     {
         ItemCarry = item;
+        // ItemCarry.Mode = RigidBody2D.ModeEnum.Kinematic;
         _sprite.AddChild(item);
         ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
             _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
-        item.DisablePhysics = true;
     }
 
-    public ScalableItem PutdownItem()
+    public ScalableItemV2 PutdownItem()
     {
         var item = ItemCarry;
         _sprite.RemoveChild(item);
         item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
             _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
-        item.DisablePhysics = false;
+        item.Mode = RigidBody2D.ModeEnum.Rigid;
+        item.ApplyCentralImpulse(_sprite.FlipH ? -_itemThrowStrength : _itemThrowStrength);
+        // item.DisablePhysics = false;
         ItemCarry = null;
         return item;
     }
@@ -156,7 +159,7 @@ public class Player : KinematicBody2D
         
         if (ItemCarry != null)
         {
-            if (!ItemCarry.IsCurrentlyCarryable)
+            if (!ItemCarry.CanBeCarried)
             {
                 var item = PutdownItem();
                 EmitSignal(nameof(ItemForcePutdown), item);

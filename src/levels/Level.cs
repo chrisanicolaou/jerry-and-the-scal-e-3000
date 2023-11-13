@@ -30,7 +30,7 @@ public class Level : Node2D
     private Key _key;
     private bool _keyFound;
     private LevelUI _levelUI;
-    private ScalableItem[] _carryableItems;
+    private ScalableItemV2[] _carryableItems;
 
     public override void _Ready()
     {
@@ -50,11 +50,11 @@ public class Level : Node2D
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
-        _carryableItems = new ScalableItem[_carryableItemPaths.Count];
+        _carryableItems = new ScalableItemV2[_carryableItemPaths.Count];
         for (var i = 0; i < _carryableItemPaths.Count; i++)
         {
-            _carryableItems[i] = GetNode<ScalableItem>(_carryableItemPaths[i]);
-            _carryableItems[i].Connect(nameof(ScalableItem.ItemInteractionRequested), this, nameof(OnItemCarryRequested));
+            _carryableItems[i] = GetNode<ScalableItemV2>(_carryableItemPaths[i]);
+            _carryableItems[i].Connect(nameof(ScalableItemV2.ItemInteractionRequested), this, nameof(OnItemCarryRequested));
         }
         for (var i = 0; i < _fallZonePaths.Count; i++)
         {
@@ -113,7 +113,7 @@ public class Level : Node2D
         EmitSignal(nameof(LevelCompleted));
     }
 
-    private void OnItemCarryRequested(ScalableItem item)
+    private void OnItemCarryRequested(ScalableItemV2 item)
     {
         if (_player.ItemCarry != null)
         {
