@@ -8,7 +8,7 @@ public class Player : KinematicBody2D
     [Signal] public delegate void ShotsFired();
     [Signal] public delegate void ItemForcePutdown(ScalableItem item);
     [Export] private bool _hasGun = true;
-    [Export] private float _speed = 100;
+    [Export] private float _speed = 80;
     [Export] private float _jumpSpeed = 130;
     [Export] private float _jumpPlatformForgiveness = 0.2f;
     [Export] private float _jumpFloatyness = 0.02f;

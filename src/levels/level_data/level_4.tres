@@ -1,9 +1,9 @@
 [gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/levels/level_data/LevelData.cs" type="Script" id=1]
-[ext_resource path="res://src/levels/level_3/level_3.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/levels/level_4/level_4.tscn" type="PackedScene" id=2]
 
 [resource]
 script = ExtResource( 1 )
-DisplayName = "One shot?"
+DisplayName = "New heights"
 Scene = ExtResource( 2 )

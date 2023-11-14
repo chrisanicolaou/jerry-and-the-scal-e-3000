@@ -275,9 +275,9 @@ tracks/6/keys = {
 "values": [ 3.0, 6.0 ]
 }
 
-[node name="Rigidbody" type="RigidBody2D"]
+[node name="BoulderV2" type="RigidBody2D"]
 collision_layer = 5
-collision_mask = 10
+collision_mask = 14
 mass = 3.0
 contacts_reported = 25
 contact_monitor = true

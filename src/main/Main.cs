@@ -13,7 +13,6 @@ public class Main : Node
 
     private RootSceneSwitcher _sceneSwitcher;
     private GameDataManager _gameDataManager;
-    private PlayerData _playerData;
     private Node _currentRootScene;
     private string _playerDataResourceScriptPath;
 
@@ -22,7 +21,7 @@ public class Main : Node
         _sceneSwitcher = GetNode<RootSceneSwitcher>(_sceneSwitcherPath);
         _playerDataResourceScriptPath = _playerDataResourceScript.ResourcePath;
         _gameDataManager = GetNode<GameDataManager>("/root/GameDataManager");
-        _playerData = ResourceLoader.Load(PlayerDataSavePath) as PlayerData ?? GD.Load<CSharpScript>(_playerDataResourceScriptPath).New() as PlayerData;
+        _gameDataManager.PlayerData = ResourceLoader.Load(PlayerDataSavePath) as PlayerData ?? GD.Load<CSharpScript>(_playerDataResourceScriptPath).New() as PlayerData;
         StartGame();
         // RestartPrototype();
         // CreatePrototypeLevel();
@@ -37,17 +36,24 @@ public class Main : Node
     {
         var mainMenu = await SwitchRootScene<MainMenu>(_mainMenuScene);
         mainMenu.Connect(nameof(MainMenu.PlayRequested), this, nameof(OnPlayRequested));
+        mainMenu.Connect(nameof(MainMenu.LevelSelected), this, nameof(OnLevelSelected));
     }
 
     private void OnPlayRequested()
     {
-        var level = _gameDataManager.GetLevelData(_playerData.CurrentLevelIndex);
+        var level = _gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex);
         if (level == null)
         {
-            _playerData.CurrentLevelIndex = 0;
-            level = _gameDataManager.GetLevelData(_playerData.CurrentLevelIndex);
+            _gameDataManager.PlayerData.CurrentLevelIndex = 0;
+            level = _gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex);
         }
-        LoadLevel(level, _playerData.CurrentLevelIndex);
+        LoadLevel(level, _gameDataManager.PlayerData.CurrentLevelIndex);
+    }
+
+    private void OnLevelSelected(LevelData levelData)
+    {
+        _gameDataManager.PlayerData.CurrentLevelIndex = _gameDataManager.AllLevelsCollection.Levels.IndexOf(levelData);
+        LoadLevel(levelData, _gameDataManager.PlayerData.CurrentLevelIndex);
     }
 
     private async Task<T> SwitchRootScene<T>(PackedScene packedScene, bool fadeOut = true, bool fadeIn = true) where T : Node
@@ -96,16 +102,16 @@ public class Main : Node
 
     private void OnLevelComplete()
     {
-        _playerData.CurrentLevelIndex++;
-        if (_gameDataManager.GetLevelData(_playerData.CurrentLevelIndex) == null)
+        _gameDataManager.PlayerData.CurrentLevelIndex++;
+        if (_gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex) == null)
         {
-            _playerData.CurrentLevelIndex = 0;
+            _gameDataManager.PlayerData.CurrentLevelIndex = 0;
             LoadMainMenu();
         }
         else
         {
-            if (_playerData.CurrentLevelIndex > _playerData.HighestUnlockedLevelIndex) _playerData.HighestUnlockedLevelIndex++;
-            LoadLevel(_gameDataManager.GetLevelData(_playerData.CurrentLevelIndex), _playerData.CurrentLevelIndex);
+            if (_gameDataManager.PlayerData.CurrentLevelIndex > _gameDataManager.PlayerData.HighestUnlockedLevelIndex) _gameDataManager.PlayerData.HighestUnlockedLevelIndex++;
+            LoadLevel(_gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex), _gameDataManager.PlayerData.CurrentLevelIndex);
         }
 
         SavePlayerData();
@@ -119,6 +125,6 @@ public class Main : Node
             return;
         }
 
-        ResourceSaver.Save(PlayerDataSavePath, _playerData);
+        ResourceSaver.Save(PlayerDataSavePath, _gameDataManager.PlayerData);
     }
 }

@@ -51,6 +51,9 @@ shader_param/alpha = 0.25
 [node name="LevelThree" type="Node2D"]
 position = Vector2( -4, 1 )
 script = ExtResource( 14 )
+__meta__ = {
+"_edit_lock_": true
+}
 StartAutomatically = true
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
