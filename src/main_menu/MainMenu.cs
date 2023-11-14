@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 
 public class MainMenu : Control
 {
@@ -10,13 +11,17 @@ public class MainMenu : Control
     [Export] private NodePath _playButtonPath;
     [Export] private NodePath _levelSelectButtonPath;
     [Export] private NodePath _levelSelectModalPath;
+    [Export] private AudioStream _musicTrack;
 
     private Button _playButton;
     private Button _levelSelectButton;
     private LevelSelectModal _levelSelectModal;
+    private AudioManager _audioManager;
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
+        _audioManager.PlayMusic(_musicTrack);
         _levelSelectModal = GetNode<LevelSelectModal>(_levelSelectModalPath);
         _levelSelectModal.Connect(nameof(LevelSelectModal.LevelSelected), this, nameof(OnLevelSelected));
         _playButton = GetNode<Button>(_playButtonPath);
