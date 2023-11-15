@@ -30,9 +30,9 @@ public class ScalableItemV2 : RigidBody2D
         _sprite = GetNode<Sprite>(_spritePath);
         _sprite.Material = null;
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
-        _interactionArea = GetNode<InteractionArea>(_interactionAreaPath);
-        _interactionArea.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
-        _interactionArea.SetDisabled(!CanBeCarried);
+        if (_interactionAreaPath != null) _interactionArea = GetNode<InteractionArea>(_interactionAreaPath);
+        _interactionArea?.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
+        _interactionArea?.SetDisabled(!CanBeCarried);
         Connect("body_entered", this, nameof(OnBodyEntered));
         Connect("body_exited", this, nameof(OnBodyExited));
     }
@@ -79,14 +79,14 @@ public class ScalableItemV2 : RigidBody2D
         var animName = type == ScaleType.Big ? "scale_up" : "scale_down";
         _animPlayer.Play(animName);
         await ToSignal(_animPlayer, "animation_finished");
-        _interactionArea.SetDisabled(!CanBeCarried);
+        _interactionArea?.SetDisabled(!CanBeCarried);
 
         PlayScaleDurationAnimation();
         await ToSignal(GetTree().CreateTimer(DefaultScaleDuration, false), "timeout");
         
         _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
         await ToSignal(_animPlayer, "animation_finished");
-        _interactionArea.SetDisabled(!CanBeCarried);
+        _interactionArea?.SetDisabled(!CanBeCarried);
         IsMutated = false;
     }
 
@@ -114,7 +114,7 @@ public class ScalableItemV2 : RigidBody2D
 
     public override void _PhysicsProcess(float delta)
     {
-        _interactionArea.RotationDegrees = -RotationDegrees;
+        if (_interactionArea != null) _interactionArea.RotationDegrees = -RotationDegrees;
         if (_breakableItemsInContact.Count <= 0) return;
         
         foreach (var breakableItem in _breakableItemsInContact)

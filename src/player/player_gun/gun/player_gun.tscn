@@ -1,13 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/player/player_gun/gun/PlayerGun.cs" type="Script" id=1]
-[ext_resource path="res://src/player/player_gun/bullet/bullet.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/player/player_gun/gun/gun.png" type="Texture" id=3]
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 1 )
-BulletSpeed = 500.0
-_bulletScene = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 3 )

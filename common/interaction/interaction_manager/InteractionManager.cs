@@ -4,8 +4,7 @@ using System.Collections.Generic;
 
 public class InteractionManager : Node
 {
-    [Export(PropertyHint.Layers2dPhysics)] public uint InteractionCollisionMask { get; set; }
-    [Export] private string _interactionTargetGroupName;
+    [Export] private string _interactionTargetGroupName = "player";
     public Node2D InteractionTarget { get; private set; }
 
     private List<InteractionArea> _nearbyInteractionAreas = new List<InteractionArea>();

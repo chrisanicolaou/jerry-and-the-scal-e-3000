@@ -9,8 +9,9 @@
 extents = Vector2( 3.5, 7.5 )
 
 [node name="Key" type="RigidBody2D"]
-collision_layer = 0
-collision_mask = 5
+z_index = 8
+collision_layer = 1024
+collision_mask = 1217
 can_sleep = false
 script = ExtResource( 4 )
 _interactionAreaPath = NodePath("Area2D")

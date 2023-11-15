@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
@@ -14,8 +14,20 @@
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/camera/camera_follow/CameraFollow.cs" type="Script" id=13]
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/items/scalable_two/box_default/box_default.tscn" type="PackedScene" id=15]
 
 [sub_resource type="ShaderMaterial" id=1]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/enabled = true
+shader_param/rainbow = false
+shader_param/line_color = Color( 1, 0.843137, 0, 1 )
+shader_param/line_scale = 1.0
+shader_param/frequency = 0.5
+shader_param/light_offset = 1e-05
+shader_param/alpha = 0.25
+
+[sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
 shader = ExtResource( 6 )
 shader_param/enabled = true
@@ -36,7 +48,7 @@ _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_carryableItemPaths = [ NodePath("Pillar") ]
+_carryableItemPaths = [ NodePath("Pillar"), NodePath("BoxDefault") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
 
@@ -76,3 +88,7 @@ _trajectoryLinePath = NodePath("../TrajectoryLine")
 [node name="TrajectoryLine" parent="." instance=ExtResource( 11 )]
 
 [node name="LevelInputController" parent="." instance=ExtResource( 14 )]
+
+[node name="BoxDefault" parent="." instance=ExtResource( 15 )]
+position = Vector2( 377, 248 )
+_outlineShaderMat = SubResource( 2 )

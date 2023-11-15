@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/ui/level_ui/LevelUI.cs" type="Script" id=1]
 [ext_resource path="res://src/ui/level_ui/control_wrapped_sprite/control_wrapped_sprite.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/level_ui/bullet_ui.png" type="Texture" id=3]
 [ext_resource path="res://src/items/interactables/key/key.png" type="Texture" id=4]
+[ext_resource path="res://src/ui/menus/pause_menu/pause_menu.tscn" type="PackedScene" id=5]
 
 [node name="UI" type="CanvasLayer"]
 script = ExtResource( 1 )
@@ -68,3 +69,5 @@ margin_top = -22.0
 margin_right = 30.0
 margin_bottom = -10.0
 text = "Retry"
+
+[node name="PauseMenu" parent="." instance=ExtResource( 5 )]

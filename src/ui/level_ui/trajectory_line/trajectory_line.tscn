@@ -18,8 +18,8 @@ _visibilityNotifierPath = NodePath("KinematicBody2D/VisibilityNotifier2D")
 _emptyColLayer = 536870912
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
-collision_layer = 0
-collision_mask = 20
+collision_layer = 32
+collision_mask = 453
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 position = Vector2( -0.5, 0.5 )

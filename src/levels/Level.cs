@@ -16,6 +16,7 @@ public class Level : Node2D
     [Export] private NodePath _keyPath;
     [Export] private NodePath _playerPath;
     [Export] private Array<NodePath> _carryableItemPaths;
+    [Export] private Array<NodePath> _ammoPickupPaths;
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
     [Export] private NodePath _gunPickupPath;
@@ -58,6 +59,11 @@ public class Level : Node2D
         {
             var fallZone = GetNode<FallZone>(_fallZonePaths[i]);
             fallZone.Connect(nameof(FallZone.PlayerFell), this, nameof(OnPlayerFell));
+        }
+        for (var i = 0; i < _ammoPickupPaths?.Count; i++)
+        {
+            var ammoPickup = GetNode<AmmoPickup>(_ammoPickupPaths[i]);
+            ammoPickup.Connect(nameof(AmmoPickup.AmmoPickupFound), this, nameof(OnAmmoPickupFound), new Array { ammoPickup });
         }
 
         if (_gunPickupPath != null)
@@ -144,6 +150,7 @@ public class Level : Node2D
     }
 
     private void OnGunPickupRequested() => HandleGunPickup();
+    private void OnAmmoPickupFound(AmmoPickup ammoPickup) => HandleAmmoPickup(ammoPickup);
 
     private void OnRetryRequested() => EmitSignal(nameof(LevelCompleted));
 
@@ -153,5 +160,12 @@ public class Level : Node2D
         GetTree().Paused = true;
         await _modalManager.ShowModal(_gunPickupModalOpts, _modalSize);
         GetTree().Paused = false;
+    }
+
+    private async void HandleAmmoPickup(AmmoPickup ammoPickup)
+    {
+        ammoPickup?.QueueFree();
+        _levelUI.AddBonusBullet();
+        _player.NumOfBullets++;
     }
 }

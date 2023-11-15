@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public class TrajectoryLine : Line2D
 {
@@ -8,6 +9,8 @@ public class TrajectoryLine : Line2D
     [Export] private NodePath _visibilityNotifierPath;
     [Export(PropertyHint.Layers2dPhysics)] private uint _emptyColLayer;
     [Export] public int MaxPointsPerLine { get; set; } = 750;
+
+    public List<Vector2> CorePathPoints { get; private set; } = new List<Vector2>();
     
     private KinematicBody2D _kinematicBody;
     private uint _colLayer;
@@ -36,13 +39,18 @@ public class TrajectoryLine : Line2D
     public KinematicCollision2D UpdateLine(Vector2 startPos, Vector2 direction, float delta)
     {
         ClearPoints();
+        CorePathPoints.Clear();
         EnableCollisions();
         var pos = startPos;
         CollisionTestPosition = pos;
         var velocity = _velocity * direction * delta;
+        CorePathPoints.Add(pos);
         for (var i = 0; i < MaxPointsPerLine; i++)
         {
-            if (!IsOnScreen) break;
+            if (!IsOnScreen)
+            {
+                break;
+            }
             
             AddPoint(pos);
             var collision = TestCollision(velocity);
@@ -51,16 +59,19 @@ public class TrajectoryLine : Line2D
                 if (collision.Collider is BulletDeflector)
                 {
                     velocity = velocity.Bounce(collision.Normal);
+                    CorePathPoints.Add(pos + velocity);
                 }
                 else
                 {
                     DisableCollisions();
+                    CorePathPoints.Add(pos);
                     return collision;
                 }
             }
             pos += velocity;
             CollisionTestPosition = pos;
         }
+        if (CorePathPoints.Count < 2) CorePathPoints.Add(pos + (velocity * MaxPointsPerLine));
         return null;
     }
 

@@ -276,8 +276,9 @@ tracks/6/keys = {
 }
 
 [node name="BoulderV2" type="RigidBody2D"]
-collision_layer = 5
-collision_mask = 14
+z_index = 8
+collision_layer = 64
+collision_mask = 1267
 mass = 3.0
 contacts_reported = 25
 contact_monitor = true

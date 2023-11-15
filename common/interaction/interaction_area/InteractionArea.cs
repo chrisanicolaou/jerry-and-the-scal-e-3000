@@ -23,7 +23,6 @@ public class InteractionArea : Area2D
         Connect("area_entered", this, nameof(OnAreaEntered));
         Connect("area_exited", this, nameof(OnAreaExited));
         _interactionManager = GetNode<InteractionManager>($"/root/{nameof(InteractionManager)}");
-        CollisionMask = _interactionManager.InteractionCollisionMask;
         _collisionShape = GetNode<CollisionShape2D>(_collisionShapePath);
         _keyHint = GetNode<Control>(_keyHintPath);
         _keyHint.RectPosition += _keyHintOffset;

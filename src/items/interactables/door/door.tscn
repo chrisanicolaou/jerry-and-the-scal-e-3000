@@ -5,7 +5,7 @@
 [ext_resource path="res://src/items/interactables/door/Door.cs" type="Script" id=3]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 18, 19 )
+extents = Vector2( 12.5, 16 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -55,6 +55,7 @@ tracks/0/keys = {
 }
 
 [node name="Door" type="Node2D"]
+z_index = 7
 script = ExtResource( 3 )
 _interactionAreaPath = NodePath("Area2D")
 _animPlayerPath = NodePath("AnimationPlayer")
@@ -69,6 +70,7 @@ frame = 1
 UseKeyHint = false
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( 0.5, 1 )
 shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

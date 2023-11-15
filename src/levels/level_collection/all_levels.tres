@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=8 format=2]
+[gd_resource type="Resource" load_steps=10 format=2]
 
 [ext_resource path="res://src/levels/level_collection/LevelCollection.cs" type="Script" id=1]
 [ext_resource path="res://src/levels/level_data/level_6.tres" type="Resource" id=2]
@@ -7,7 +7,9 @@
 [ext_resource path="res://src/levels/level_data/level_3.tres" type="Resource" id=5]
 [ext_resource path="res://src/levels/level_data/level_4.tres" type="Resource" id=6]
 [ext_resource path="res://src/levels/level_data/level_5.tres" type="Resource" id=7]
+[ext_resource path="res://src/levels/level_data/level_7.tres" type="Resource" id=8]
+[ext_resource path="res://src/levels/level_data/level_8.tres" type="Resource" id=9]
 
 [resource]
 script = ExtResource( 1 )
-Levels = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ) ]
+Levels = [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 2 ), ExtResource( 8 ), ExtResource( 9 ) ]
