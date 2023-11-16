@@ -43,7 +43,8 @@ public class PlayerGun : Node2D
 
     public async Task Fire(ScaleType type)
     {
-        Laser.ActivateLaser(TrajectoryLine.CorePathPoints.ToArray());
+        // UpdateBulletTrajectory(_aimDirection, 0.001f, true);
+        Laser.ActivateLaser(TrajectoryLine.CorePathPoints);
         HandleCollision(type);
         // var bullet = _bulletScene.Instance<Bullet>();
         // bullet.Modulate = type == ScaleType.Big ? Colors.Aqua : Colors.Fuchsia;
@@ -59,9 +60,9 @@ public class PlayerGun : Node2D
         if (_itemInScope != null) _itemInScope.OnBulletCollide(type);
     }
 
-    public void UpdateBulletTrajectory(Vector2 direction, float delta)
+    public void UpdateBulletTrajectory(Vector2 direction, float delta, bool continueOffScreen = false)
     {
-        var collision = TrajectoryLine.UpdateLine(GlobalPosition, direction, delta);
+        var collision = TrajectoryLine.UpdateLine(GlobalPosition, direction, delta, continueOffScreen);
         if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutated)
         {
             SetScopeOnItem(scalableItem);

@@ -10,7 +10,7 @@ public class TrajectoryLine : Line2D
     [Export(PropertyHint.Layers2dPhysics)] private uint _emptyColLayer;
     [Export] public int MaxPointsPerLine { get; set; } = 750;
 
-    public List<Vector2> CorePathPoints { get; private set; } = new List<Vector2>();
+    public List<(Vector2, Vector2)> CorePathPoints { get; private set; } = new List<(Vector2 pos, Vector2 normal)>();
     
     private KinematicBody2D _kinematicBody;
     private uint _colLayer;
@@ -36,7 +36,7 @@ public class TrajectoryLine : Line2D
         _velocity = (1 / (float)_accuracy) * 25000;
     }
 
-    public KinematicCollision2D UpdateLine(Vector2 startPos, Vector2 direction, float delta)
+    public KinematicCollision2D UpdateLine(Vector2 startPos, Vector2 direction, float delta, bool continueOffScreen = false)
     {
         ClearPoints();
         CorePathPoints.Clear();
@@ -44,11 +44,12 @@ public class TrajectoryLine : Line2D
         var pos = startPos;
         CollisionTestPosition = pos;
         var velocity = _velocity * direction * delta;
-        CorePathPoints.Add(pos);
+        CorePathPoints.Add((pos, direction));
         for (var i = 0; i < MaxPointsPerLine; i++)
         {
-            if (!IsOnScreen)
+            if (!IsOnScreen && !continueOffScreen)
             {
+                CorePathPoints.Add((pos + (velocity * MaxPointsPerLine), Vector2.Zero));
                 break;
             }
             
@@ -59,19 +60,18 @@ public class TrajectoryLine : Line2D
                 if (collision.Collider is BulletDeflector)
                 {
                     velocity = velocity.Bounce(collision.Normal);
-                    CorePathPoints.Add(pos + velocity);
+                    CorePathPoints.Add((pos + velocity, collision.Normal));
                 }
                 else
                 {
                     DisableCollisions();
-                    CorePathPoints.Add(pos);
+                    CorePathPoints.Add((pos, collision.Normal));
                     return collision;
                 }
             }
             pos += velocity;
             CollisionTestPosition = pos;
         }
-        if (CorePathPoints.Count < 2) CorePathPoints.Add(pos + (velocity * MaxPointsPerLine));
         return null;
     }
 

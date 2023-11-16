@@ -84,7 +84,7 @@ position = Vector2( 531, 304 )
 _isLocked = true
 
 [node name="Key" parent="." instance=ExtResource( 9 )]
-position = Vector2( 29, 254 )
+position = Vector2( 112, 260 )
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
