@@ -60,7 +60,7 @@ public class PlayerGun : Node2D
 
     private void HandleCollision(ScaleType type)
     {
-        if (_itemInScope != null) _itemInScope.OnBulletCollide(type);
+        if (_itemInScope != null) _itemInScope.ChangeScale(type);
     }
 
     public void UpdateBulletTrajectory(Vector2 direction, float delta, bool continueOffScreen = false)

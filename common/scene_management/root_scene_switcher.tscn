@@ -10,7 +10,7 @@
 [ext_resource path="res://common/scene_management/saw_scene_transition_mat.tres" type="Material" id=8]
 
 [node name="RootSceneSwitcher" type="CanvasLayer"]
-layer = 2
+layer = 10
 script = ExtResource( 1 )
 _transitionSpritePath = NodePath("TransitionTarget")
 _defaultTransitionTex = ExtResource( 3 )

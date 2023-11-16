@@ -29,14 +29,24 @@ public class Main : Node
 
     private async void StartGame()
     {
-        await LoadMainMenu();
+        var mainMenu = _mainMenuScene.Instance<MainMenu>();
+        GD.Print($"Instance ID: {mainMenu.GetInstanceId()}");
+        _currentRootScene = mainMenu;
+        AddChild(mainMenu);
+        mainMenu.Connect(nameof(MainMenu.PlayRequested), this, nameof(OnPlayRequested));
+        mainMenu.Connect(nameof(MainMenu.LevelSelected), this, nameof(OnLevelSelected));
+        await _sceneSwitcher.Transition(new SceneTransitionOptions { Direction = SceneTransitionDirection.In });
+        mainMenu.FadeInStart();
     }
 
     private async Task LoadMainMenu()
     {
-        var mainMenu = await SwitchRootScene<MainMenu>(_mainMenuScene);
+        var mainMenu = await SwitchRootScene<MainMenu>(_mainMenuScene, fadeIn: false);
+        GD.Print($"Instance ID: {mainMenu.GetInstanceId()}");
         mainMenu.Connect(nameof(MainMenu.PlayRequested), this, nameof(OnPlayRequested));
         mainMenu.Connect(nameof(MainMenu.LevelSelected), this, nameof(OnLevelSelected));
+        mainMenu.Start();
+        _sceneSwitcher.Transition(SceneTransitionDirection.In);
     }
 
     private void OnPlayRequested()

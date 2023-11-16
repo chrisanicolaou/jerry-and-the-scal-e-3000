@@ -72,6 +72,7 @@ _playerPath = NodePath("Player")
 _carryableItemPaths = [ NodePath("Rigidbody2"), NodePath("BoulderRound"), NodePath("Pillar") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("LevelInputController2")
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 413, 306 )
@@ -87,7 +88,7 @@ tile_data = PoolIntArray( 262149, 87, 0, 327687, 87, 0, 393225, 87, 0, 1376255, 
 [node name="GlobalShadow" parent="." instance=ExtResource( 5 )]
 
 [node name="Door" parent="." instance=ExtResource( 8 )]
-position = Vector2( 42, 305 )
+position = Vector2( 596, 302 )
 
 [node name="Door2" parent="." instance=ExtResource( 8 )]
 position = Vector2( 531, 304 )
@@ -99,7 +100,7 @@ position = Vector2( 112, 260 )
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
 [node name="Rigidbody2" parent="." instance=ExtResource( 11 )]
-position = Vector2( 600, 239 )
+position = Vector2( 55, 239 )
 _outlineShaderMat = SubResource( 2 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 6 )]
@@ -107,55 +108,55 @@ points = PoolVector2Array( 712, 246 )
 _accuracy = 100
 
 [node name="BoxDefault" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault2" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault3" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault4" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault5" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault6" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault7" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault8" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault9" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault10" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault11" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 689, 118 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault12" parent="." instance=ExtResource( 12 )]
-position = Vector2( 341, 203 )
+position = Vector2( 948, 69 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault13" parent="." instance=ExtResource( 12 )]
-position = Vector2( 485, 310 )
+position = Vector2( 833, 225 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="Laser" parent="." instance=ExtResource( 13 )]
@@ -164,7 +165,7 @@ _outlineShaderMat = SubResource( 3 )
 position = Vector2( 439, 252 )
 
 [node name="BulletDeflector2" parent="." instance=ExtResource( 14 )]
-position = Vector2( 378, 253 )
+position = Vector2( 550, 248 )
 
 [node name="LevelBackground" parent="." instance=ExtResource( 15 )]
 
@@ -175,3 +176,5 @@ _outlineShaderMat = SubResource( 4 )
 [node name="Pillar" parent="." instance=ExtResource( 17 )]
 position = Vector2( 155, 302 )
 _outlineShaderMat = SubResource( 5 )
+
+[node name="LevelInputController2" parent="." instance=ExtResource( 3 )]

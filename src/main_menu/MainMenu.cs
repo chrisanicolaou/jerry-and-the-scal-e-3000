@@ -11,23 +11,48 @@ public class MainMenu : Control
     [Export] private NodePath _playButtonPath;
     [Export] private NodePath _levelSelectButtonPath;
     [Export] private NodePath _levelSelectModalPath;
+    [Export] private NodePath _uiExceptionFadeRectPath;
+    [Export] private NodePath _rollingBoulderPath;
     [Export] private AudioStream _musicTrack;
+    [Export] private Vector2 _rollingBoulderLinearVelocity = new Vector2(70, 0);
+    [Export] private float _rollingBoulderAngularVelocity = 3;
 
     private Button _playButton;
     private Button _levelSelectButton;
+    private ColorRect _uiExceptionFadeRect;
     private LevelSelectModal _levelSelectModal;
     private AudioManager _audioManager;
+    private ScalableItemV2 _rollingBoulder;
 
     public override void _Ready()
     {
+        _uiExceptionFadeRect = GetNode<ColorRect>(_uiExceptionFadeRectPath);
+        _uiExceptionFadeRect.Color = Colors.Black;
         _audioManager = GetNode<AudioManager>("/root/AudioManager");
-        _audioManager.PlayMusic(_musicTrack);
         _levelSelectModal = GetNode<LevelSelectModal>(_levelSelectModalPath);
         _levelSelectModal.Connect(nameof(LevelSelectModal.LevelSelected), this, nameof(OnLevelSelected));
         _playButton = GetNode<Button>(_playButtonPath);
         _playButton.Connect("pressed", this, nameof(OnPlayButtonPressed));
         _levelSelectButton = GetNode<Button>(_levelSelectButtonPath);
         _levelSelectButton.Connect("pressed", this, nameof(OnLevelSelectButtonPressed));
+        _rollingBoulder = GetNode<ScalableItemV2>(_rollingBoulderPath);
+    }
+
+    public void Start()
+    {
+        _uiExceptionFadeRect.Color = Colors.Transparent;
+        _audioManager.PlayMusic(_musicTrack);
+        _rollingBoulder.LinearVelocity = _rollingBoulderLinearVelocity;
+        _rollingBoulder.AngularVelocity = _rollingBoulderAngularVelocity;
+    }
+
+    public async void FadeInStart()
+    {
+        var tweenDuration = 2f;
+        var tween = GetTree().CreateTween();
+        tween.TweenProperty(_uiExceptionFadeRect, "color:a", 0f, tweenDuration).From(1f);
+        await ToSignal(GetTree().CreateTimer(tweenDuration / 2), "timeout");
+        _audioManager.PlayMusic(_musicTrack);
     }
 
     private void OnPlayButtonPressed() => EmitSignal(nameof(PlayRequested));

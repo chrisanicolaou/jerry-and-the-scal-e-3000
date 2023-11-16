@@ -3,11 +3,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using GithubGameJam2023.player.player_gun;
+using Godot.Collections;
+using Array = Godot.Collections.Array;
 
 public class ScalableItemV2 : RigidBody2D
 {
     [Signal] public delegate void ItemInteractionRequested(ScalableItemV2 item);
 
+    // ONLY to be used by the boulder in the main menu. this was the easiest way, trust me
+    [Export] private bool _continuousMovement;
+    [Export] private Vector2 _continuousMovementVector;
     [Export] private NodePath _spritePath;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _interactionAreaPath;
@@ -37,21 +42,11 @@ public class ScalableItemV2 : RigidBody2D
         Connect("body_exited", this, nameof(OnBodyExited));
     }
 
-    public void OnBulletCollide(ScaleType type)
+    public void ChangeScale(ScaleType type)
     {
         if (IsMutated) return;
-        
-        if (type == ScaleType.Big)
-        {
-            IsMutated = true;
-            ScaleUp();
-            return;
-        }
-        if (type == ScaleType.Small)
-        {
-            IsMutated = true;
-            ScaleDown();
-        }
+        IsMutated = true;
+        HandleScale(type);
     }
 
     public void AddOutline()
@@ -64,53 +59,75 @@ public class ScalableItemV2 : RigidBody2D
         _sprite.Material = null;
     }
 
-    protected virtual void ScaleUp()
-    {
-        HandleScale(ScaleType.Big);
-    }
-
-    protected virtual void ScaleDown()
-    {
-        HandleScale(ScaleType.Small);
-    }
-
     protected virtual async void HandleScale(ScaleType type)
     {
-        var animName = type == ScaleType.Big ? "scale_up" : "scale_down";
-        _animPlayer.Play(animName);
-        await ToSignal(_animPlayer, "animation_finished");
-        _interactionArea?.SetDisabled(!CanBeCarried);
+        string animName;
+        switch (type)
+        {
+            case ScaleType.Big:
+                animName = "scale_up";
+                break;
+            case ScaleType.BigPreserveMass:
+                animName = "scale_up_preserve_mass";
+                break;
+            case ScaleType.Small:
+                animName = "scale_down";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(type), type, null);
+        }
 
-        PlayScaleDurationAnimation();
-        await ToSignal(GetTree().CreateTimer(DefaultScaleDuration, false), "timeout");
+        _animPlayer.Play(animName);
+        _animPlayer.Connect("animation_finished", this, nameof(StartScaleDurationTimerAnimation));
         
+        GetTree().CreateTimer(DefaultScaleDuration, false).Connect("timeout", this, nameof(HandleScaleBackToNormal), new Array { animName });
+    }
+
+    private async void HandleScaleBackToNormal(string animName)
+    {
         _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
-        await ToSignal(_animPlayer, "animation_finished");
-        _interactionArea?.SetDisabled(!CanBeCarried);
+        _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
         IsMutated = false;
     }
 
-    private async void PlayScaleDurationAnimation()
+    public void StartScaleDurationTimerAnimation(string _)
     {
-        var preFlashDuration = DefaultScaleDuration - 3.75f;
-        await ToSignal(GetTree().CreateTimer(preFlashDuration, false), "timeout");
-        await PlayWhiteFlash(0.5f);
-        await PlayWhiteFlash(0.5f);
-        await PlayWhiteFlash(0.25f);
-        await PlayWhiteFlash(0.25f);
-        await PlayWhiteFlash(0.125f);
-        await PlayWhiteFlash(0.125f);
-        await PlayWhiteFlash(0.125f);
-        await PlayWhiteFlash(0.125f);
+        _animPlayer.Disconnect("animation_finished", this, nameof(StartScaleDurationTimerAnimation));
+        _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
+        _animPlayer.Play("white_flashes");
     }
 
-    private async Task PlayWhiteFlash(float duration)
-    {
-        _sprite.Material = _whiteShaderMat;
-        await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
-        _sprite.Material = null;
-        await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
-    }
+    // private async void PlayScaleDurationAnimation()
+    // {
+    //     var preFlashDuration = DefaultScaleDuration - 3.75f;
+    //     GetTree().CreateTimer(preFlashDuration, false).Connect("timeout", this, nameof(PlayWhiteFlashes));
+    // }
+
+    // private async void PlayWhiteFlashes()
+    // {
+    //     var duration = 1f;
+    //     for (var i = 0; i < 8; i++)
+    //     {
+    //         if (IsQueuedForDeletion()) return;
+    //         if (i % 2 == 0)
+    //         {
+    //             duration = Mathf.Max(0.125f, duration / 2);
+    //         }
+    //         await PlayWhiteFlash(duration);
+    //     }
+    // }
+    //
+    // private async Task PlayWhiteFlash(float duration)
+    // {
+    //     _sprite.Material = _whiteShaderMat;
+    //     GetTree().CreateTimer(duration, false).Connect("timeout", this, nameof(SetSpriteMaterial), new Array { null });
+    //     await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
+    // }
+    //
+    // private async void SetSpriteMaterial(ShaderMaterial mat)
+    // {
+    //     _sprite.Material = null;
+    // }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -137,5 +154,20 @@ public class ScalableItemV2 : RigidBody2D
     private void OnBodyExited(Node body)
     {
         if (body is BreakableItem breakableItem) _breakableItemsInContact.Remove(breakableItem);
+    }
+
+    public override void _IntegrateForces(Physics2DDirectBodyState state)
+    {
+        if (!_continuousMovement) return;
+        // state.
+    }
+
+    public override void _ExitTree()
+    {
+        if (_animPlayer.IsPlaying())
+        {
+            _animPlayer.Stop();
+            _animPlayer.Play("RESET");
+        }
     }
 }
