@@ -36,6 +36,7 @@ _playerPath = NodePath("Player")
 _carryableItemPaths = [ NodePath("Pillar") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("LevelInputController")
 
 [node name="LevelBackground" parent="." instance=ExtResource( 2 )]
 

@@ -6,6 +6,8 @@ using System.Linq;
 public class LevelUI : CanvasLayer
 {
     [Signal] public delegate void RetryRequested();
+    [Signal] public delegate void ResumeRequested();
+    [Signal] public delegate void QuitToMenuRequested();
     [Export(PropertyHint.Range, "0,1")] private float _transparency;
     [Export] private NodePath _keyContainerPath;
     [Export] private NodePath _bulletContainerPath;
@@ -13,9 +15,11 @@ public class LevelUI : CanvasLayer
     [Export] private Texture _keyTex;
     [Export] private Texture _bulletTex;
     [Export] private NodePath _retryButtonPath;
+    [Export] private NodePath _pauseMenuPath;
 
     private Control _keyContainer;
     private Control _bulletContainer;
+    private PauseMenu _pauseMenu;
     private int _keysCollected;
     private int _shotsFired;
     private ControlWrappedSprite[] _keys;
@@ -30,7 +34,13 @@ public class LevelUI : CanvasLayer
         RemoveAllChildren(_bulletContainer);
         
         var retryBtn = GetNode<Button>(_retryButtonPath);
-        retryBtn.Connect("pressed", this, nameof(OnRetryButtonPressed));
+        retryBtn.Connect("pressed", this, nameof(OnRetryRequested));
+        
+        _pauseMenu = GetNode<PauseMenu>(_pauseMenuPath);
+        _pauseMenu.Connect(nameof(PauseMenu.RetryRequested), this, nameof(OnRetryRequested));
+        _pauseMenu.Connect(nameof(PauseMenu.ResumeRequested), this, nameof(OnResumeRequested));
+        _pauseMenu.Connect(nameof(PauseMenu.QuitToMenuRequested), this, nameof(OnQuitToMenuRequested));
+        _pauseMenu.Hide();
     }
 
     public void Initialise(int numOfKeys, int numOfBullets)
@@ -55,6 +65,16 @@ public class LevelUI : CanvasLayer
         _bullets[_bullets.Count - ++_shotsFired].Sprite.Modulate = new Color(_bullets[_bullets.Count - _shotsFired].Sprite.Modulate, _transparency);
     }
 
+    public void OpenPauseMenu()
+    {
+        _pauseMenu.Show();
+    }
+
+    public void ClosePauseMenu()
+    {
+        _pauseMenu.Hide();
+    }
+
     // Lots of tight coupling here between specific sprite/sizes. NOT good
     private ControlWrappedSprite AddNewControlWrappedSprite(Texture tex, Node parent, bool transparent = true, bool doubleScale = true)
     {
@@ -75,5 +95,15 @@ public class LevelUI : CanvasLayer
         }
     }
 
-    private void OnRetryButtonPressed() => EmitSignal(nameof(RetryRequested));
+    private void OnResumeRequested()
+    {
+        EmitSignal(nameof(ResumeRequested));
+    }
+
+    private void OnQuitToMenuRequested()
+    {
+        EmitSignal(nameof(QuitToMenuRequested));
+    }
+    
+    private void OnRetryRequested() => EmitSignal(nameof(RetryRequested));
 }

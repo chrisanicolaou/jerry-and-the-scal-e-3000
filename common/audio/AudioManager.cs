@@ -20,7 +20,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Audio
 
         public override void _Ready()
         {
-            _musicPlayer = new AudioStreamPlayer { Name = "MusicPlayer" };
+            _musicPlayer = new AudioStreamPlayer { Name = "MusicPlayer", PauseMode = PauseModeEnum.Process };
             AddChild(_musicPlayer);
             for (var i = 0; i < _sfxPoolSize; i++)
             {

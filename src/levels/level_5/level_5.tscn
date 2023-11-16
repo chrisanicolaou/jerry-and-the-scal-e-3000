@@ -49,6 +49,7 @@ _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
 _carryableItemPaths = [ NodePath("BoulderV2"), NodePath("Pillar") ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("LevelInputController")
 
 [node name="LevelBackground" parent="." instance=ExtResource( 1 )]
 

@@ -109,6 +109,7 @@ public class Player : KinematicBody2D
         item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
             _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
         item.Mode = RigidBody2D.ModeEnum.Rigid;
+        item.LinearVelocity = Vector2.Zero;
         item.ApplyCentralImpulse(_sprite.FlipH ? -_itemThrowStrength : _itemThrowStrength);
         // item.DisablePhysics = false;
         ItemCarry = null;

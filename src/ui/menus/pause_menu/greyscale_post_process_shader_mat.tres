@@ -3,11 +3,15 @@
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 
+uniform float transparency;
+
 void fragment() {
 	COLOR = textureLod(SCREEN_TEXTURE, SCREEN_UV, 0.0);
     float avg = (COLOR.r + COLOR.g + COLOR.b) / 3.0;
     COLOR.rgb = vec3(avg);
+	COLOR.a = transparency;
 }"
 
 [resource]
 shader = SubResource( 1 )
+shader_param/transparency = 0.7

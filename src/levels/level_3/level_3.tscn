@@ -66,6 +66,7 @@ _carryableItemPaths = [ NodePath("Pillar"), NodePath("Pillar2"), NodePath("Pilla
 _ammoPickupPaths = [ NodePath("AmmoPickup"), NodePath("AmmoPickup2") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("LevelInputController")
 
 [node name="LevelBackground" parent="." instance=ExtResource( 1 )]
 

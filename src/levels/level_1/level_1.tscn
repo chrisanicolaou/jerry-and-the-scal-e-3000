@@ -33,6 +33,7 @@ shader_param/light_offset = 1e-05
 shader_param/alpha = 0.25
 
 [node name="LevelOne" type="Node2D"]
+pause_mode = 1
 script = ExtResource( 11 )
 __meta__ = {
 "_edit_lock_": true
@@ -45,6 +46,7 @@ _playerPath = NodePath("Player")
 _carryableItemPaths = [  ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("LevelInputController")
 _gunPickupPath = NodePath("GunPickup")
 _gunPickupModalOpts = ExtResource( 16 )
 _modalSizeAsStr = "Large"

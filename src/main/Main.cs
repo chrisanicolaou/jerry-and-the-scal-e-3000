@@ -61,6 +61,7 @@ public class Main : Node
         var instance = packedScene.Instance<T>();
         if (instance is Level level) level.StartAutomatically = false;
         if (fadeOut) await _sceneSwitcher.Transition(SceneTransitionDirection.Out);
+        RemoveChild(_currentRootScene);
         _currentRootScene?.QueueFree();
         AddChild(instance);
         _currentRootScene = instance;
@@ -68,14 +69,19 @@ public class Main : Node
         return instance;
     }
 
-    private async void LoadLevel(LevelData level, int levelIndex)
+    private async Task LoadLevel(LevelData level, int levelIndex, bool playPreLevel = true)
     {
-        var preLevel = await SwitchRootScene<PreLevel>(_preLevelScene, fadeIn: false);
-        preLevel.SetLevelLabels(levelIndex, level.DisplayName);
-        await _sceneSwitcher.Transition(SceneTransitionDirection.In);
-        await preLevel.HoldForDuration();
+        if (playPreLevel)
+        {
+            var preLevel = await SwitchRootScene<PreLevel>(_preLevelScene, fadeIn: false);
+            preLevel.SetLevelLabels(levelIndex, level.DisplayName);
+            await _sceneSwitcher.Transition(SceneTransitionDirection.In);
+            await preLevel.HoldForDuration();
+        }
         var levelInstance = await SwitchRootScene<Level>(level.Scene);
         levelInstance.Connect(nameof(Level.LevelCompleted), this, nameof(OnLevelComplete));
+        levelInstance.Connect(nameof(Level.RetryRequested), this, nameof(RetryLevel));
+        levelInstance.Connect(nameof(Level.QuitToMenuRequested), this, nameof(QuitToMenu));
         levelInstance.StartLevel();
     }
 
@@ -115,6 +121,18 @@ public class Main : Node
         }
 
         SavePlayerData();
+    }
+
+    private async void RetryLevel()
+    {
+        await LoadLevel(_gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex), _gameDataManager.PlayerData.CurrentLevelIndex, false);
+        GetTree().Paused = false;
+    }
+
+    private async void QuitToMenu()
+    {
+        await LoadMainMenu();
+        GetTree().Paused = false;
     }
 
     private void SavePlayerData()

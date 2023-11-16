@@ -142,6 +142,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.SceneManagement
         private SceneTreeTween CreateShaderParamTween(string property, object finalVal, float duration, object startVal = default, SceneTreeTween tween = default, float delay = default, Tween.TransitionType trans = Tween.TransitionType.Linear, Tween.EaseType ease = Tween.EaseType.InOut)
         {
             tween = tween ?? GetTree().CreateTween();
+            tween.SetPauseMode(SceneTreeTween.TweenPauseMode.Process);
             var propertyTween = tween.TweenProperty(_transitionSprite, $"material:shader_param/{property}", finalVal, duration).SetTrans(trans).SetEase(ease);
             if (startVal != null) propertyTween.From(startVal);
             if (delay > 0.001) propertyTween.SetDelay(delay);

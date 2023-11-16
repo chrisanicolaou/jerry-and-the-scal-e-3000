@@ -61,6 +61,7 @@ _playerPath = NodePath("Player")
 _carryableItemPaths = [ NodePath("BoulderV2"), NodePath("Pillar") ]
 _fallZonePaths = [ NodePath("FallZone") ]
 _levelUIPath = NodePath("UI")
+_inputControllerPath = NodePath("InputController")
 
 [node name="Background" type="Sprite" parent="."]
 texture = ExtResource( 19 )

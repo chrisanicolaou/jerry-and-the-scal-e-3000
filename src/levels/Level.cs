@@ -8,6 +8,8 @@ using Array = Godot.Collections.Array;
 public class Level : Node2D
 {
     [Signal] public delegate void LevelCompleted();
+    [Signal] public delegate void QuitToMenuRequested();
+    [Signal] public delegate void RetryRequested();
     [Export] public bool StartAutomatically;
     // Negative numbers (except -1 to avoid spamming through multiple clicks) are for infinite bullets
     [Export] private int _numOfBullets = -2;
@@ -19,6 +21,7 @@ public class Level : Node2D
     [Export] private Array<NodePath> _ammoPickupPaths;
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
+    [Export] private NodePath _inputControllerPath;
     [Export] private NodePath _gunPickupPath;
     [Export] private ModalOptions _gunPickupModalOpts;
     [Export(PropertyHint.Enum, "Small,Large")] private string _modalSizeAsStr;
@@ -30,6 +33,7 @@ public class Level : Node2D
     private Player _player;
     private Key _key;
     private bool _keyFound;
+    private LevelInputController _inputController;
     private LevelUI _levelUI;
 
     public override void _Ready()
@@ -44,6 +48,8 @@ public class Level : Node2D
         _levelUI = GetNode<LevelUI>(_levelUIPath);
         _player.Freeze = true;
         _player.Visible = false;
+        _inputController = GetNode<LevelInputController>(_inputControllerPath);
+        _inputController.Connect(nameof(LevelInputController.PauseRequested), this, nameof(OnPauseRequested));
 
         _player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
         _player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
@@ -73,7 +79,9 @@ public class Level : Node2D
         }
         
         _levelUI.Initialise(1, _numOfBullets > 0 ? _numOfBullets : 0);
+        _levelUI.Connect(nameof(LevelUI.ResumeRequested), this, nameof(OnResumeRequested));
         _levelUI.Connect(nameof(LevelUI.RetryRequested), this, nameof(OnRetryRequested));
+        _levelUI.Connect(nameof(LevelUI.QuitToMenuRequested), this, nameof(OnQuitToMenuRequested));
         
         if (StartAutomatically)
         {
@@ -136,7 +144,7 @@ public class Level : Node2D
 
     private void OnPlayerFell()
     {
-        EmitSignal(nameof(LevelCompleted));
+        EmitSignal(nameof(RetryRequested));
     }
 
     private void OnShotsFired()
@@ -152,8 +160,6 @@ public class Level : Node2D
     private void OnGunPickupRequested() => HandleGunPickup();
     private void OnAmmoPickupFound(AmmoPickup ammoPickup) => HandleAmmoPickup(ammoPickup);
 
-    private void OnRetryRequested() => EmitSignal(nameof(LevelCompleted));
-
     private async void HandleGunPickup()
     {
         _player.PickupGun();
@@ -167,5 +173,24 @@ public class Level : Node2D
         ammoPickup?.QueueFree();
         _levelUI.AddBonusBullet();
         _player.NumOfBullets++;
+    }
+
+    private void OnPauseRequested()
+    {
+        GetTree().Paused = true;
+        _levelUI.OpenPauseMenu();
+    }
+
+    private void OnResumeRequested()
+    {
+        _levelUI.ClosePauseMenu();
+        GetTree().Paused = false;
+    }
+
+    private void OnRetryRequested() => EmitSignal(nameof(RetryRequested));
+
+    private void OnQuitToMenuRequested()
+    {
+        EmitSignal(nameof(QuitToMenuRequested));
     }
 }

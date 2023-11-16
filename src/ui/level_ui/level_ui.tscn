@@ -7,6 +7,7 @@
 [ext_resource path="res://src/ui/menus/pause_menu/pause_menu.tscn" type="PackedScene" id=5]
 
 [node name="UI" type="CanvasLayer"]
+pause_mode = 2
 script = ExtResource( 1 )
 _transparency = 0.2
 _keyContainerPath = NodePath("BottomBar/KeyContainer")
@@ -15,6 +16,7 @@ _controlWrappedSpriteScene = ExtResource( 2 )
 _keyTex = ExtResource( 4 )
 _bulletTex = ExtResource( 3 )
 _retryButtonPath = NodePath("BottomBar/Button")
+_pauseMenuPath = NodePath("PauseMenu")
 
 [node name="BottomBar" type="Control" parent="."]
 anchor_top = 1.0
