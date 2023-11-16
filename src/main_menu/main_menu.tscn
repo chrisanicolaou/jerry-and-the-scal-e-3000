@@ -138,6 +138,9 @@ shader_param/color = Color( 1, 0.9, 0.65, 0.8 )
 shader_param/hdr = false
 shader_param/seed = 5.0
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 15.5 )
+
 [sub_resource type="PhysicsMaterial" id=5]
 friction = 0.0
 
@@ -152,12 +155,8 @@ shader_param/frequency = 0.5
 shader_param/light_offset = 1e-05
 shader_param/alpha = 0.25
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 10, 15.5 )
-
-[node name="MainMenu" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="MainMenu" type="Node2D"]
+pause_mode = 2
 script = ExtResource( 5 )
 _playButtonPath = NodePath("MainMenuUI/ButtonContainer/Play/ChiciButton")
 _levelSelectButtonPath = NodePath("MainMenuUI/ButtonContainer/LevelSelect/ChiciButton")
@@ -279,17 +278,6 @@ visible = false
 [node name="GlobalShadow" parent="." instance=ExtResource( 1 )]
 color = Color( 0.4, 0.4, 0.4, 1 )
 
-[node name="BoulderRound" parent="." instance=ExtResource( 12 )]
-position = Vector2( -221, 261 )
-physics_material_override = SubResource( 5 )
-gravity_scale = 2.0
-linear_velocity = Vector2( 70, 0 )
-linear_damp = 0.0
-angular_velocity = 3.0
-angular_damp = 0.0
-DefaultScaleDuration = 6.0
-_outlineShaderMat = SubResource( 4 )
-
 [node name="Area2D" type="Area2D" parent="."]
 position = Vector2( 114, 271 )
 collision_layer = 0
@@ -298,3 +286,14 @@ script = ExtResource( 13 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 2 )
+
+[node name="BoulderRound" parent="." instance=ExtResource( 12 )]
+position = Vector2( -209, 271 )
+physics_material_override = SubResource( 5 )
+gravity_scale = 10.0
+linear_velocity = Vector2( 70, 0 )
+linear_damp = 0.0
+angular_velocity = 3.0
+angular_damp = 0.0
+DefaultScaleDuration = 6.0
+_outlineShaderMat = SubResource( 4 )

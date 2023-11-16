@@ -2,7 +2,7 @@ using Godot;
 using System;
 using ChiciStudios.GithubGameJam2023.Common.Audio;
 
-public class MainMenu : Control
+public class MainMenu : Node2D
 {
     [Signal] public delegate void PlayRequested();
 
@@ -14,6 +14,7 @@ public class MainMenu : Control
     [Export] private NodePath _uiExceptionFadeRectPath;
     [Export] private NodePath _rollingBoulderPath;
     [Export] private AudioStream _musicTrack;
+    [Export] private Vector2 _rollingBoulderStartPosition = new Vector2(-209, 271);
     [Export] private Vector2 _rollingBoulderLinearVelocity = new Vector2(70, 0);
     [Export] private float _rollingBoulderAngularVelocity = 3;
 
@@ -42,8 +43,11 @@ public class MainMenu : Control
     {
         _uiExceptionFadeRect.Color = Colors.Transparent;
         _audioManager.PlayMusic(_musicTrack);
+        _rollingBoulderStartPosition = _rollingBoulderStartPosition;
         _rollingBoulder.LinearVelocity = _rollingBoulderLinearVelocity;
         _rollingBoulder.AngularVelocity = _rollingBoulderAngularVelocity;
+        _rollingBoulder.ApplyImpulse(Vector2.Zero, Vector2.Zero);
+        GetTree().CreateTimer(0.1f).Connect("timeout", this, nameof(StartRollingTheBoulderBecauseEvenThoughTheBoulderShouldBeInItsOriginalStateAfterThisSceneIsInstantiatedItIsSomeHowBeingAffectedByPriorInstantiationsOfThisSceneResultingInItHavingADifferentInitialVelocityToTheOneSetInTheInspector));
     }
 
     public async void FadeInStart()
@@ -53,6 +57,15 @@ public class MainMenu : Control
         tween.TweenProperty(_uiExceptionFadeRect, "color:a", 0f, tweenDuration).From(1f);
         await ToSignal(GetTree().CreateTimer(tweenDuration / 2), "timeout");
         _audioManager.PlayMusic(_musicTrack);
+        GetTree().CreateTimer(0.1f).Connect("timeout", this, nameof(StartRollingTheBoulderBecauseEvenThoughTheBoulderShouldBeInItsOriginalStateAfterThisSceneIsInstantiatedItIsSomeHowBeingAffectedByPriorInstantiationsOfThisSceneResultingInItHavingADifferentInitialVelocityToTheOneSetInTheInspector));
+    }
+
+    private void StartRollingTheBoulderBecauseEvenThoughTheBoulderShouldBeInItsOriginalStateAfterThisSceneIsInstantiatedItIsSomeHowBeingAffectedByPriorInstantiationsOfThisSceneResultingInItHavingADifferentInitialVelocityToTheOneSetInTheInspector()
+    {
+        _rollingBoulder.ContinuousMovement = true;
+        _rollingBoulder.ContinuousMovementStartPosition = _rollingBoulderStartPosition;
+        _rollingBoulder.ContinuousMovementLinearVelocity = _rollingBoulderLinearVelocity;
+        _rollingBoulder.ContinuousMovementAngularVelocity = _rollingBoulderAngularVelocity;
     }
 
     private void OnPlayButtonPressed() => EmitSignal(nameof(PlayRequested));

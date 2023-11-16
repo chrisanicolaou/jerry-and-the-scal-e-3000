@@ -10,9 +10,14 @@ public class ScalableItemV2 : RigidBody2D
 {
     [Signal] public delegate void ItemInteractionRequested(ScalableItemV2 item);
 
-    // ONLY to be used by the boulder in the main menu. this was the easiest way, trust me
-    [Export] private bool _continuousMovement;
-    [Export] private Vector2 _continuousMovementVector;
+    // THIS IS ONLY IN THE GAME BECAUSE GODOT DOESN'T CACHE SCENES PROPERLY ---- PLEASE IGNORE -------------------- //
+    private bool _continuousMovementCalled;
+    public bool ContinuousMovement { get; set; }
+    public Vector2 ContinuousMovementStartPosition = new Vector2(-209, 271);
+    public Vector2 ContinuousMovementLinearVelocity = new Vector2(70, 0);
+    public float ContinuousMovementAngularVelocity = 3;
+    // THIS IS ONLY IN THE GAME BECAUSE GODOT DOESN'T CACHE SCENES PROPERLY ---- PLEASE IGNORE -------------------- //
+    
     [Export] private NodePath _spritePath;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _interactionAreaPath;
@@ -29,6 +34,7 @@ public class ScalableItemV2 : RigidBody2D
     private List<BreakableItem> _breakableItemsInContact = new List<BreakableItem>();
     
     public bool IsMutated { get; set; }
+    
 
     public override void _Ready()
     {
@@ -158,16 +164,14 @@ public class ScalableItemV2 : RigidBody2D
 
     public override void _IntegrateForces(Physics2DDirectBodyState state)
     {
-        if (!_continuousMovement) return;
-        // state.
-    }
-
-    public override void _ExitTree()
-    {
-        if (_animPlayer.IsPlaying())
+        if (!ContinuousMovement) return;
+        if (!_continuousMovementCalled)
         {
-            _animPlayer.Stop();
+            Position = ContinuousMovementStartPosition;
             _animPlayer.Play("RESET");
         }
+        _continuousMovementCalled = true;
+        LinearVelocity = ContinuousMovementLinearVelocity;
+        AngularVelocity = ContinuousMovementAngularVelocity;
     }
 }

@@ -128,30 +128,6 @@ tracks/8/keys = {
 "update": 0,
 "values": [ false ]
 }
-tracks/9/type = "value"
-tracks/9/path = NodePath(".:linear_velocity")
-tracks/9/interp = 1
-tracks/9/loop_wrap = true
-tracks/9/imported = false
-tracks/9/enabled = false
-tracks/9/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Vector2( 0, 0 ) ]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath(".:angular_velocity")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = false
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 0.0 ]
-}
 
 [sub_resource type="Animation" id=5]
 resource_name = "scale_down"
@@ -482,7 +458,6 @@ tracks/0/keys = {
 }
 
 [node name="BoulderRound" type="RigidBody2D"]
-position = Vector2( 235, 262 )
 z_index = 8
 collision_layer = 64
 collision_mask = 1267
