@@ -326,6 +326,7 @@ _whiteShaderMat = ExtResource( 4 )
 _outlineShaderMat = ExtResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = ExtResource( 4 )
 texture = ExtResource( 2 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]

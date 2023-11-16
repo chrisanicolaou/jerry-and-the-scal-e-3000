@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=2]
@@ -14,17 +14,9 @@
 [ext_resource path="res://src/items/scalable_two/box_default/box_default.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/items/bullet_deflector/bullet_deflector.tscn" type="PackedScene" id=14]
-
-[sub_resource type="ShaderMaterial" id=1]
-resource_local_to_scene = true
-shader = ExtResource( 4 )
-shader_param/enabled = true
-shader_param/rainbow = false
-shader_param/line_color = Color( 1, 0.843137, 0, 1 )
-shader_param/line_scale = 1.0
-shader_param/frequency = 0.5
-shader_param/light_offset = 1e-05
-shader_param/alpha = 0.25
+[ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=15]
+[ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/items/scalable_two/pillar/pillar.tscn" type="PackedScene" id=17]
 
 [sub_resource type="ShaderMaterial" id=2]
 resource_local_to_scene = true
@@ -48,6 +40,28 @@ shader_param/frequency = 0.5
 shader_param/light_offset = 1e-05
 shader_param/alpha = 0.25
 
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/enabled = true
+shader_param/rainbow = false
+shader_param/line_color = Color( 1, 0.843137, 0, 1 )
+shader_param/line_scale = 1.0
+shader_param/frequency = 0.5
+shader_param/light_offset = 1e-05
+shader_param/alpha = 0.25
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 4 )
+shader_param/enabled = true
+shader_param/rainbow = false
+shader_param/line_color = Color( 1, 0.843137, 0, 1 )
+shader_param/line_scale = 1.0
+shader_param/frequency = 0.5
+shader_param/light_offset = 1e-05
+shader_param/alpha = 0.25
+
 [node name="Node2D" type="Node2D"]
 script = ExtResource( 7 )
 StartAutomatically = true
@@ -55,16 +69,12 @@ _entranceDoorPath = NodePath("Door")
 _exitDoorPath = NodePath("Door2")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_carryableItemPaths = [ NodePath("Rigidbody"), NodePath("Rigidbody2") ]
+_carryableItemPaths = [ NodePath("Rigidbody2"), NodePath("BoulderRound"), NodePath("Pillar") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
 
-[node name="Rigidbody" parent="." instance=ExtResource( 11 )]
-position = Vector2( 136, -43 )
-_outlineShaderMat = SubResource( 1 )
-
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 122, 301 )
+position = Vector2( 413, 306 )
 _itemThrowStrength = Vector2( 10, 0 )
 _trajectoryLinePath = NodePath("../TrajectoryLine")
 _laserPath = NodePath("../Laser")
@@ -93,6 +103,8 @@ position = Vector2( 600, 239 )
 _outlineShaderMat = SubResource( 2 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 6 )]
+points = PoolVector2Array( 712, 246 )
+_accuracy = 100
 
 [node name="BoxDefault" parent="." instance=ExtResource( 12 )]
 position = Vector2( 341, 203 )
@@ -153,3 +165,13 @@ position = Vector2( 439, 252 )
 
 [node name="BulletDeflector2" parent="." instance=ExtResource( 14 )]
 position = Vector2( 378, 253 )
+
+[node name="LevelBackground" parent="." instance=ExtResource( 15 )]
+
+[node name="BoulderRound" parent="." instance=ExtResource( 16 )]
+position = Vector2( 106, 45 )
+_outlineShaderMat = SubResource( 4 )
+
+[node name="Pillar" parent="." instance=ExtResource( 17 )]
+position = Vector2( 155, 302 )
+_outlineShaderMat = SubResource( 5 )

@@ -1,14 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
 [ext_resource path="res://src/player/player_gun/laser/laser_beam_particles_mat.tres" type="Material" id=1]
-
-[sub_resource type="StreamTexture" id=7]
-load_path = "res://.import/laser_particle.png-b3f5a25721d0df163855f07447918abb.stex"
+[ext_resource path="res://src/player/player_gun/laser/laser_particle_s.png" type="Texture" id=2]
 
 [node name="LaserBeamParticles" type="Particles2D"]
 use_parent_material = true
+amount = 32
 lifetime = 0.4
 explosiveness = 0.5
 local_coords = false
 process_material = ExtResource( 1 )
-texture = SubResource( 7 )
+texture = ExtResource( 2 )

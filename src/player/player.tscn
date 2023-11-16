@@ -623,11 +623,14 @@ anims/idle = SubResource( 4 )
 anims/walk = SubResource( 5 )
 
 [node name="Light2D" type="Light2D" parent="."]
-visible = false
 texture = ExtResource( 4 )
 texture_scale = 2.0
 color = Color( 1, 0.933333, 0.815686, 1 )
 energy = 0.7
+shadow_enabled = true
+shadow_gradient_length = 1.0
+shadow_filter = 3
+shadow_filter_smooth = 5.0
 
 [node name="PlayerScalableBody" type="RigidBody2D" parent="."]
 collision_layer = 4

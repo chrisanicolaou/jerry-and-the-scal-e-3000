@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using GithubGameJam2023.player.player_gun;
@@ -57,7 +58,9 @@ public class Laser : Line2D
                 var beamParticle = _laserBeamParticlesScene.Instance<Particles2D>();
                 beamParticle.Position = (prevPoint.Item1 + point.Item1) / 2;
                 beamParticle.GlobalRotation = prevPoint.Item2.Angle();
-                beamParticle.ProcessMaterial.Set("emission_box_extents", new Vector3(point.Item2.DistanceTo(prevPoint.Item1) / 4, Width, 1));
+                var distFactor = point.Item1.DistanceTo(prevPoint.Item1) / 2;
+                // GD.Print($"previous point: {prevPoint.Item1}. point: {point.Item1}. distance: {point.Item2.DistanceTo(prevPoint.Item1)}. distFactor: {distFactor}");
+                beamParticle.ProcessMaterial.Set("emission_box_extents", new Vector3(distFactor, Width, 1));
                 beamParticle.ProcessMaterial.Set("color", color);
                 AddChild(beamParticle);
                 beamParticle.OneShot = true;
