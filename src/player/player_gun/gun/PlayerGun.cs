@@ -8,12 +8,14 @@ public class PlayerGun : Node2D
     [Signal] public delegate void ShotFired();
     [Export] private NodePath _playerPath;
     [Export] private Vector2 _playerOffset;
+    [Export] private NodePath _trajectoryLinePointPath;
 
     private Player _player;
     private Viewport _viewport;
     private Vector2 _aimDirection;
     private bool _disabled;
     private ScalableItemV2 _itemInScope;
+    private Node2D _trajectoryLinePoint;
     
     public TrajectoryLine TrajectoryLine { get; set; }
     public Laser Laser { get; set; }
@@ -21,6 +23,7 @@ public class PlayerGun : Node2D
     public override void _Ready()
     {
         _player = GetNode<Player>(_playerPath);
+        _trajectoryLinePoint = GetNode<Node2D>(_trajectoryLinePointPath);
         _viewport = GetViewport();
     }
 
@@ -44,7 +47,7 @@ public class PlayerGun : Node2D
     public async Task Fire(ScaleType type)
     {
         // UpdateBulletTrajectory(_aimDirection, 0.001f, true);
-        Laser.ActivateLaser(TrajectoryLine.CorePathPoints);
+        Laser.ActivateLaser(TrajectoryLine.CorePathPoints, type);
         HandleCollision(type);
         // var bullet = _bulletScene.Instance<Bullet>();
         // bullet.Modulate = type == ScaleType.Big ? Colors.Aqua : Colors.Fuchsia;
@@ -62,7 +65,7 @@ public class PlayerGun : Node2D
 
     public void UpdateBulletTrajectory(Vector2 direction, float delta, bool continueOffScreen = false)
     {
-        var collision = TrajectoryLine.UpdateLine(GlobalPosition, direction, delta, continueOffScreen);
+        var collision = TrajectoryLine.UpdateLine(_trajectoryLinePoint.GlobalPosition, direction, delta, continueOffScreen);
         if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutated)
         {
             SetScopeOnItem(scalableItem);

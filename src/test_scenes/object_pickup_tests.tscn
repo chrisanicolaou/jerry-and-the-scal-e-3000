@@ -147,10 +147,6 @@ position = Vector2( 485, 310 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="Laser" parent="." instance=ExtResource( 13 )]
-_width = 5.0
-_holdDuration = 0.25
-_powerUpDuration = 0.1
-_particleStartDelay = 0.0
 
 [node name="BulletDeflector" parent="." instance=ExtResource( 14 )]
 position = Vector2( 439, 252 )

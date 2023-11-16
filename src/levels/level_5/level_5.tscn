@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
@@ -16,6 +16,7 @@
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=14]
 [ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=15]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=17]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -72,6 +73,7 @@ _verticalLevelBounds = Vector2( 140, 190 )
 [node name="Player" parent="." instance=ExtResource( 8 )]
 position = Vector2( 326, 226 )
 _trajectoryLinePath = NodePath("../TrajectoryLine")
+_laserPath = NodePath("../Laser")
 
 [node name="BreakablePlatformMed" parent="." instance=ExtResource( 10 )]
 position = Vector2( 320, 136 )
@@ -94,3 +96,5 @@ _isLocked = true
 [node name="Pillar" parent="." instance=ExtResource( 16 )]
 position = Vector2( 263, 240 )
 _outlineShaderMat = SubResource( 2 )
+
+[node name="Laser" parent="." instance=ExtResource( 17 )]

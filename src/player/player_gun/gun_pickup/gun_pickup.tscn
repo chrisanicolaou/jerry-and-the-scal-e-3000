@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=1]
-[ext_resource path="res://src/player/player_gun/gun/gun.png" type="Texture" id=2]
+[ext_resource path="res://src/player/player_gun/gun/laser_gun.png" type="Texture" id=2]
 [ext_resource path="res://src/player/player_gun/gun_pickup/GunPickup.cs" type="Script" id=3]
 
 [node name="GunPickup" type="Node2D"]
@@ -9,7 +9,7 @@ script = ExtResource( 3 )
 _interactionAreaPath = NodePath("Area2D")
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 2, 2 )
+z_index = 8
 texture = ExtResource( 2 )
 
 [node name="Area2D" parent="." instance=ExtResource( 1 )]

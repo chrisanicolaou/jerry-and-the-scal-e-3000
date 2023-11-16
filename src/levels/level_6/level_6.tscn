@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://src/environment/props/wall_torch/wall_torch.tscn" type="PackedScene" id=18]
 [ext_resource path="res://src/environment/backgrounds/wall_bricks_640x360.png" type="Texture" id=19]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar.tscn" type="PackedScene" id=20]
+[ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=21]
 
 [sub_resource type="PhysicsMaterial" id=3]
 friction = 0.1
@@ -133,6 +134,7 @@ z_index = 2
 position = Vector2( 91, 273 )
 z_index = 3
 _trajectoryLinePath = NodePath("../TrajectoryLine")
+_laserPath = NodePath("../Laser")
 
 [node name="UI" parent="." instance=ExtResource( 15 )]
 
@@ -237,6 +239,8 @@ _outlineShaderMat = SubResource( 1 )
 position = Vector2( 299, 241 )
 DefaultScaleDuration = 6.0
 _outlineShaderMat = SubResource( 2 )
+
+[node name="Laser" parent="." instance=ExtResource( 21 )]
 
 [editable path="Deflector"]
 [editable path="FallZone"]

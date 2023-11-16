@@ -589,6 +589,7 @@ _elongatedJumpMultiplier = 250.0
 _animPlayerPath = NodePath("AnimationPlayer")
 _spriteNodePath = NodePath("Graphic")
 _gunPath = NodePath("Gun")
+_laserPath = NodePath("")
 
 [node name="Graphic" type="Sprite" parent="."]
 texture = ExtResource( 1 )

@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=1]
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=12]
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=13]
+[ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=14]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -59,6 +60,7 @@ position = Vector2( 419, 152 )
 [node name="Player" parent="." instance=ExtResource( 9 )]
 position = Vector2( 230, 224 )
 _trajectoryLinePath = NodePath("../TrajectoryLine")
+_laserPath = NodePath("../Laser")
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
 
@@ -69,3 +71,5 @@ position = Vector2( 366, 224 )
 _outlineShaderMat = SubResource( 1 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 13 )]
+
+[node name="Laser" parent="." instance=ExtResource( 14 )]

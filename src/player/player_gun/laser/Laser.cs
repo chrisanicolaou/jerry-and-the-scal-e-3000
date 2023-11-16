@@ -3,9 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using GithubGameJam2023.player.player_gun;
 
 public class Laser : Line2D
 {
+    [Export] private Color _scaleUpCol;
+    [Export] private Color _scaleDownCol;
     [Export] private float _width = 10f;
     [Export] private float _holdDuration = 0.5f;
     [Export] private float _powerUpDuration = 0.3f;
@@ -26,9 +29,11 @@ public class Laser : Line2D
         Hide();
     }
 
-    public async Task ActivateLaser(List<(Vector2, Vector2)> corePathPoints)
+    public async Task ActivateLaser(List<(Vector2, Vector2)> corePathPoints, ScaleType type)
     {
         Show();
+        var color = type == ScaleType.Big ? _scaleUpCol : _scaleDownCol;
+        DefaultColor = color;
         Points = corePathPoints.Select(cp => cp.Item1).ToArray();
         var tween = GetTree().CreateTween().SetTrans(_transType).SetEase(_ease);
         tween.TweenProperty(this, "width", _width, _powerUpDuration).From(0f);
@@ -40,6 +45,7 @@ public class Laser : Line2D
             var particle = _laserContactParticlesScene.Instance<Particles2D>();
             particle.Position = point.Item1;
             particle.ProcessMaterial = previousPoint == null ? _laserContactParticleMat : _laserContactParticleCollisionMat;
+            particle.ProcessMaterial.Set("color", color);
             AddChild(particle);
             particle.OneShot = true;
             particle.Emitting = true;
