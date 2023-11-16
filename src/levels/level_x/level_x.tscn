@@ -1,0 +1,166 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=1]
+[ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
+[ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=3]
+[ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=4]
+[ext_resource path="res://src/levels/level_common/level_camera/level_camera.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/player/player.tscn" type="PackedScene" id=6]
+[ext_resource path="res://src/camera/camera_follow/CameraFollow.cs" type="Script" id=7]
+
+[sub_resource type="Shader" id=1]
+code = "/*
+Shader from Godot Shaders - the free shader library.
+godotshaders.com/shader/god-rays
+
+Feel free to use, improve and change this shader according to your needs
+and consider sharing the modified result on godotshaders.com.
+*/
+
+shader_type canvas_item;
+
+uniform float angle = -0.3;
+uniform float position = -0.2;
+uniform float spread : hint_range(0.0, 1.0) = 0.5;
+uniform float cutoff : hint_range(-1.0, 1.0) = 0.1;
+uniform float falloff : hint_range(0.0, 1.0) = 0.2;
+uniform float edge_fade : hint_range(0.0, 1.0) = 0.15;
+
+uniform float speed = 1.0;
+uniform float ray1_density = 8.0;
+uniform float ray2_density = 30.0;
+uniform float ray2_intensity : hint_range(0.0, 1.0) = 0.3;
+
+uniform vec4 color : hint_color = vec4(1.0, 0.9, 0.65, 0.8);
+
+uniform bool hdr = false;
+uniform float seed = 5.0;
+
+// Random and noise functions from Book of Shader's chapter on Noise.
+float random(vec2 _uv) {
+    return fract(sin(dot(_uv.xy,
+                         vec2(12.9898, 78.233))) *
+        43758.5453123);
+}
+
+float noise (in vec2 uv) {
+    vec2 i = floor(uv);
+    vec2 f = fract(uv);
+
+    // Four corners in 2D of a tile
+    float a = random(i);
+    float b = random(i + vec2(1.0, 0.0));
+    float c = random(i + vec2(0.0, 1.0));
+    float d = random(i + vec2(1.0, 1.0));
+
+
+    // Smooth Interpolation
+
+    // Cubic Hermine Curve. Same as SmoothStep()
+    vec2 u = f * f * (3.0-2.0 * f);
+
+    // Mix 4 coorners percentages
+    return mix(a, b, u.x) +
+            (c - a)* u.y * (1.0 - u.x) +
+            (d - b) * u.x * u.y;
+}
+
+mat2 rotate(float _angle){
+    return mat2(vec2(cos(_angle), -sin(_angle)),
+                vec2(sin(_angle), cos(_angle)));
+}
+
+vec4 screen(vec4 base, vec4 blend){
+	return 1.0 - (1.0 - base) * (1.0 - blend);
+}
+
+void fragment()
+{
+	
+	// Rotate, skew and move the UVs
+	vec2 transformed_uv = ( rotate(angle) * (UV - position) )  / ( (UV.y + spread) - (UV.y * spread) );
+	
+	// Animate the ray according the the new transformed UVs
+	vec2 ray1 = vec2(transformed_uv.x * ray1_density + sin(TIME * 0.1 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	vec2 ray2 = vec2(transformed_uv.x * ray2_density + sin(TIME * 0.2 * speed) * (ray1_density * 0.2) + seed, 1.0);
+	
+	// Cut off the ray's edges
+	float cut = step(cutoff, transformed_uv.x) * step(cutoff, 1.0 - transformed_uv.x);
+	ray1 *= cut;
+	ray2 *= cut;
+	
+	// Apply the noise pattern (i.e. create the rays)
+	float rays;
+	
+	if (hdr){
+		// This is not really HDR, but check this to not clamp the two merged rays making 
+		// their values go over 1.0. Can make for some nice effect
+		rays = noise(ray1) + (noise(ray2) * ray2_intensity);
+	}
+	else{
+		 rays = clamp(noise(ray1) + (noise(ray2) * ray2_intensity), 0., 1.);
+	}
+	
+	// Fade out edges
+	rays *= smoothstep(0.0, falloff, (1.0 - UV.y)); // Bottom
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, transformed_uv.x); // Left
+	rays *= smoothstep(0.0 + cutoff, edge_fade + cutoff, 1.0 - transformed_uv.x); // Right
+	
+	// Color to the rays
+	vec3 shine = vec3(rays) * color.rgb;
+
+	// Try different blending modes for a nicer effect. \"Screen\" is included in the code,
+	// but take a look at https://godotshaders.com/snippet/blending-modes/ for more.
+	// With \"Screen\" blend mode:
+	shine = screen(texture(SCREEN_TEXTURE, SCREEN_UV), vec4(color)).rgb;
+	
+	COLOR = vec4(shine, rays * color.a);
+}"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/angle = -0.3
+shader_param/position = -0.2
+shader_param/spread = 0.5
+shader_param/cutoff = 0.1
+shader_param/falloff = 0.418
+shader_param/edge_fade = 0.15
+shader_param/speed = 1.5
+shader_param/ray1_density = 8.0
+shader_param/ray2_density = 30.0
+shader_param/ray2_intensity = 0.3
+shader_param/color = Color( 1, 0.9, 0.65, 0.8 )
+shader_param/hdr = false
+shader_param/seed = 5.0
+
+[node name="LevelX" type="Node2D"]
+
+[node name="LevelBackground" parent="." instance=ExtResource( 3 )]
+
+[node name="GlobalShadow" parent="." instance=ExtResource( 2 )]
+
+[node name="Laser" parent="." instance=ExtResource( 1 )]
+position = Vector2( -452, -285 )
+
+[node name="BrickTileMap" parent="." instance=ExtResource( 4 )]
+tile_data = PoolIntArray( 983050, 33, 0, 983051, 34, 0, 983052, 34, 0, 983053, 34, 0, 983054, 34, 0, 983055, 34, 0, 983056, 34, 0, 983057, 34, 0, 983058, 34, 0, 983059, 34, 0, 983060, 34, 0, 983061, 34, 0, 983062, 34, 0, 983063, 34, 0, 983064, 34, 0, 983065, 34, 0, 983066, 34, 0, 983067, 34, 0, 983068, 34, 0, 983069, 35, 0, 1048586, 36, 0, 1048587, 37, 0, 1048588, 37, 0, 1048589, 37, 0, 1048590, 37, 0, 1048591, 37, 0, 1048592, 37, 0, 1048593, 37, 0, 1048594, 37, 0, 1048595, 37, 0, 1048596, 37, 0, 1048597, 37, 0, 1048598, 37, 0, 1048599, 37, 0, 1048600, 37, 0, 1048601, 37, 0, 1048602, 37, 0, 1048603, 37, 0, 1048604, 37, 0, 1048605, 38, 0, 1114122, 36, 0, 1114123, 37, 0, 1114124, 37, 0, 1114125, 37, 0, 1114126, 37, 0, 1114127, 37, 0, 1114128, 37, 0, 1114129, 37, 0, 1114130, 37, 0, 1114131, 37, 0, 1114132, 37, 0, 1114133, 37, 0, 1114134, 37, 0, 1114135, 37, 0, 1114136, 37, 0, 1114137, 37, 0, 1114138, 37, 0, 1114139, 37, 0, 1114140, 37, 0, 1114141, 38, 0, 1179658, 36, 0, 1179659, 37, 0, 1179660, 37, 0, 1179661, 37, 0, 1179662, 37, 0, 1179663, 37, 0, 1179664, 37, 0, 1179665, 37, 0, 1179666, 37, 0, 1179667, 37, 0, 1179668, 37, 0, 1179669, 37, 0, 1179670, 37, 0, 1179671, 37, 0, 1179672, 37, 0, 1179673, 37, 0, 1179674, 37, 0, 1179675, 37, 0, 1179676, 37, 0, 1179677, 38, 0, 1245194, 36, 0, 1245195, 37, 0, 1245196, 37, 0, 1245197, 37, 0, 1245198, 37, 0, 1245199, 37, 0, 1245200, 37, 0, 1245201, 37, 0, 1245202, 37, 0, 1245203, 37, 0, 1245204, 37, 0, 1245205, 37, 0, 1245206, 37, 0, 1245207, 37, 0, 1245208, 37, 0, 1245209, 37, 0, 1245210, 37, 0, 1245211, 37, 0, 1245212, 37, 0, 1245213, 38, 0 )
+
+[node name="LevelCamera" parent="." instance=ExtResource( 5 )]
+zoom = Vector2( 0.5, 0.5 )
+script = ExtResource( 7 )
+_followTargetPath = NodePath("../Player")
+_horizontalLevelBounds = Vector2( 300, 340 )
+_verticalLevelBounds = Vector2( 140, 190 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enable = true
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+material = SubResource( 2 )
+margin_left = 159.0
+margin_top = 89.0
+margin_right = 323.0
+margin_bottom = 253.0
+
+[node name="Player" parent="." instance=ExtResource( 6 )]
+position = Vector2( 217, 226 )
