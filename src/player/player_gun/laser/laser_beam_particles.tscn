@@ -1,37 +1,14 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=3 format=2]
 
-[sub_resource type="Gradient" id=2]
-colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
-
-[sub_resource type="GradientTexture" id=3]
-gradient = SubResource( 2 )
-
-[sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.595506, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.859551, 0 ), 0.0, 0.0, 0, 0 ]
-
-[sub_resource type="CurveTexture" id=5]
-curve = SubResource( 4 )
-
-[sub_resource type="ParticlesMaterial" id=6]
-emission_shape = 2
-emission_box_extents = Vector3( 10, 30, 1 )
-flag_disable_z = true
-direction = Vector3( -1, 0, 0 )
-gravity = Vector3( 0, 0, 0 )
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-tangential_accel = 100.0
-tangential_accel_random = 1.0
-scale_curve = SubResource( 5 )
-color = Color( 0.556863, 0.976471, 1, 1 )
-color_ramp = SubResource( 3 )
+[ext_resource path="res://src/player/player_gun/laser/laser_beam_particles_mat.tres" type="Material" id=1]
 
 [sub_resource type="StreamTexture" id=7]
 load_path = "res://.import/laser_particle.png-b3f5a25721d0df163855f07447918abb.stex"
 
 [node name="LaserBeamParticles" type="Particles2D"]
 use_parent_material = true
-lifetime = 0.3
+lifetime = 0.4
+explosiveness = 0.5
 local_coords = false
-process_material = SubResource( 6 )
+process_material = ExtResource( 1 )
 texture = SubResource( 7 )

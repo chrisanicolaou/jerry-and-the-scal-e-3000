@@ -21,8 +21,8 @@ public class Laser : Line2D
     [Export] private ParticlesMaterial _laserContactParticleCollisionMat;
     [Export] private PackedScene _laserBeamParticlesScene;
     [Export] private bool _enableBeamParticles;
-    [Export] private float _beamParticleTravelDuration = 0.1f;
-    [Export] private int _beamParticleAmount = 32;
+    // [Export] private float _beamParticleTravelDuration = 0.1f;
+    // [Export] private int _beamParticleAmount = 32;
 
     public override void _Ready()
     {
@@ -39,7 +39,7 @@ public class Laser : Line2D
         tween.TweenProperty(this, "width", _width, _powerUpDuration).From(0f);
         await ToSignal(GetTree().CreateTimer(_particleStartDelay, false), "timeout");
         var particles = new List<Particles2D>();
-        Vector2? previousPoint = null;
+        (Vector2, Vector2)? previousPoint = null;
         foreach (var point in corePathPoints)
         {
             var particle = _laserContactParticlesScene.Instance<Particles2D>();
@@ -53,17 +53,18 @@ public class Laser : Line2D
             particles.Add(particle);
             if (previousPoint != null && _enableBeamParticles)
             {
+                var prevPoint = previousPoint.Value;
                 var beamParticle = _laserBeamParticlesScene.Instance<Particles2D>();
+                beamParticle.Position = (prevPoint.Item1 + point.Item1) / 2;
+                beamParticle.GlobalRotation = prevPoint.Item2.Angle();
+                beamParticle.ProcessMaterial.Set("emission_box_extents", new Vector3(point.Item2.DistanceTo(prevPoint.Item1) / 4, Width, 1));
+                beamParticle.ProcessMaterial.Set("color", color);
                 AddChild(beamParticle);
                 beamParticle.OneShot = true;
                 beamParticle.Emitting = true;
-                beamParticle.Amount = _beamParticleAmount;
                 particles.Add(beamParticle);
-                var beamTween = GetTree().CreateTween().SetTrans(_transType).SetEase(_ease);
-                var targetPos = new Vector2(point.Item1);
-                beamTween.TweenProperty(beamParticle, "position", targetPos, _beamParticleTravelDuration).From(new Vector2((Vector2)previousPoint));
             }
-            previousPoint = point.Item1;
+            previousPoint = point;
         }
         await ToSignal(GetTree().CreateTimer(_holdDuration, false), "timeout");
         tween = GetTree().CreateTween().SetTrans(_transType).SetEase(_ease);

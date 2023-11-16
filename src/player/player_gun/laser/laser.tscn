@@ -39,8 +39,7 @@ _laserContactParticlesScene = ExtResource( 1 )
 _laserContactParticleMat = ExtResource( 5 )
 _laserContactParticleCollisionMat = ExtResource( 4 )
 _laserBeamParticlesScene = ExtResource( 3 )
-_beamParticleTravelDuration = 0.0
-_beamParticleAmount = 16
+_enableBeamParticles = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )

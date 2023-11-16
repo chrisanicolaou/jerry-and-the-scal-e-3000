@@ -7,17 +7,21 @@ colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
 gradient = SubResource( 2 )
 
 [sub_resource type="Curve" id=4]
-_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.595506, 1 ), 0.0, 0.0, 0, 0, Vector2( 0.859551, 0 ), 0.0, 0.0, 0, 0 ]
+_data = [ Vector2( 0, 0.720455 ), 0.0, 0.0, 0, 0, Vector2( 0.601124, 0.720455 ), 0.0, 0.0, 0, 0, Vector2( 0.859551, 0 ), 0.0, 0.0, 0, 0 ]
 
 [sub_resource type="CurveTexture" id=5]
 curve = SubResource( 4 )
 
 [resource]
+emission_shape = 2
+emission_box_extents = Vector3( 200, 10, 1 )
 flag_disable_z = true
+spread = 90.0
 gravity = Vector3( 0, 0, 0 )
-initial_velocity = 200.0
+initial_velocity = 100.0
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
+tangential_accel = 100.0
 scale_curve = SubResource( 5 )
 color = Color( 0.556863, 1, 0.835294, 1 )
 color_ramp = SubResource( 3 )
