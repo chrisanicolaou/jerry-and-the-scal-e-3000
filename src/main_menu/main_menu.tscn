@@ -290,10 +290,8 @@ shape = SubResource( 2 )
 [node name="BoulderRound" parent="." instance=ExtResource( 12 )]
 position = Vector2( -209, 271 )
 physics_material_override = SubResource( 5 )
-gravity_scale = 10.0
-linear_velocity = Vector2( 70, 0 )
+gravity_scale = 20.0
 linear_damp = 0.0
-angular_velocity = 3.0
 angular_damp = 0.0
 DefaultScaleDuration = 6.0
 _outlineShaderMat = SubResource( 4 )
