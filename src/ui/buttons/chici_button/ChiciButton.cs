@@ -43,6 +43,9 @@ namespace ChiciStudios.GithubGameJam2023.Src.UI
             SetCursor(_defaultCursor);
         }
 
-        private void SetCursor(MouseCursor cursor) => Input.SetCustomMouseCursor(cursor.Cursor, cursor.Shape, cursor.Hotspot);
+        private void SetCursor(MouseCursor cursor)
+        {
+            if (cursor != null) Input.SetCustomMouseCursor(cursor.Cursor, cursor.Shape, cursor.Hotspot);
+        }
     }
 }
