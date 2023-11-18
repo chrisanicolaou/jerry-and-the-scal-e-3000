@@ -4,12 +4,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 using GithubGameJam2023.player.player_gun;
 
 public class Laser : Line2D
 {
     [Export] private Color _scaleUpCol;
+    [Export] private AudioStream _scaleUpSfx;
     [Export] private Color _scaleDownCol;
+    [Export] private AudioStream _scaleDownSfx;
     [Export] private float _width = 10f;
     [Export] private float _holdDuration = 0.5f;
     [Export] private float _powerUpDuration = 0.3f;
@@ -22,17 +25,19 @@ public class Laser : Line2D
     [Export] private ParticlesMaterial _laserContactParticleCollisionMat;
     [Export] private PackedScene _laserBeamParticlesScene;
     [Export] private bool _enableBeamParticles;
-    // [Export] private float _beamParticleTravelDuration = 0.1f;
-    // [Export] private int _beamParticleAmount = 32;
+
+    private AudioManager _audioManager;
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         Hide();
     }
 
     public async Task ActivateLaser(List<(Vector2, Vector2)> corePathPoints, ScaleType type)
     {
         Show();
+        _audioManager.PlaySfx(type == ScaleType.Big ? _scaleUpSfx : _scaleDownSfx);
         var color = type == ScaleType.Big ? _scaleUpCol : _scaleDownCol;
         DefaultColor = color;
         Points = corePathPoints.Select(cp => cp.Item1).ToArray();

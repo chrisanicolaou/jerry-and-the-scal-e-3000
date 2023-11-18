@@ -1,12 +1,16 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 using GithubGameJam2023.player.player_gun;
+using Godot.Collections;
 
 public class Player : KinematicBody2D
 {
     [Signal] public delegate void ShotsFired();
     [Signal] public delegate void ItemForcePutdown(ScalableItem item);
+
+    [Export] private Array<AudioStream> _jumpSfx;
     [Export] private bool _hasGun = true;
     [Export] private float _speed = 80;
     [Export] private float _jumpSpeed = 130;
@@ -22,7 +26,8 @@ public class Player : KinematicBody2D
     [Export] private NodePath _gunPath;
     [Export] private NodePath _trajectoryLinePath;
     [Export] private NodePath _laserPath;
-    
+
+    private AudioManager _audioManager;
     private Vector2 _velocity;
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
     private float _timeInAir;
@@ -39,6 +44,7 @@ public class Player : KinematicBody2D
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         _sprite = GetNode<Sprite>(_spriteNodePath);
         _gun = GetNode<PlayerGun>(_gunPath);
@@ -246,6 +252,7 @@ public class Player : KinematicBody2D
 
     private void Jump()
     {
+        _audioManager.PlaySfx(_jumpSfx[(int)(GD.Randi() % _jumpSfx.Count)]);
         _velocity.y = -_jumpSpeed;
         _timeInAir = 0;
         _hasJustJumped = true;
