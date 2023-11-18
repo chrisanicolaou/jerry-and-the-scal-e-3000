@@ -24,7 +24,7 @@ public class ScalableItemV2 : RigidBody2D
     [Export] private ShaderMaterial _whiteShaderMat;
     [Export] private ShaderMaterial _outlineShaderMat;
     
-    [Export(PropertyHint.Range, "5,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 4f;
+    [Export(PropertyHint.Range, "5,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 5f;
     [Export] public bool CanBeCarried { get; set; }
     [Export] public Vector2 CarryOffset { get; set; }
 
@@ -101,6 +101,11 @@ public class ScalableItemV2 : RigidBody2D
     {
         _animPlayer.Disconnect("animation_finished", this, nameof(StartScaleDurationTimerAnimation));
         _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
+        GetTree().CreateTimer(DefaultScaleDuration - 4f, false).Connect("timeout", this, nameof(PlayWhiteFlashes));
+    }
+
+    public void PlayWhiteFlashes()
+    {
         _animPlayer.Play("white_flashes");
     }
 

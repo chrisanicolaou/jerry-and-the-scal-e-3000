@@ -7,6 +7,7 @@
 [ext_resource path="res://src/items/shader_mats/white_shader_mat.tres" type="Material" id=5]
 [ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round_L.png" type="Texture" id=6]
 [ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round_S.png" type="Texture" id=7]
+[ext_resource path="res://src/items/scalable_two/white_flashes.tres" type="Animation" id=8]
 
 [sub_resource type="PhysicsMaterial" id=6]
 friction = 0.5
@@ -441,22 +442,6 @@ tracks/9/keys = {
 "values": [ 3.0, 4.0 ]
 }
 
-[sub_resource type="Animation" id=8]
-resource_name = "white_flashes"
-length = 8.0
-tracks/0/type = "value"
-tracks/0/path = NodePath("Sprite:material")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 4, 4.5, 5, 5.5, 6, 6.25, 6.5, 6.75, 7, 7.13, 7.25, 7.38, 7.5, 7.63, 7.75, 7.88 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
-"update": 1,
-"values": [ null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null, ExtResource( 5 ), null ]
-}
-
 [node name="BoulderRound" type="RigidBody2D"]
 z_index = 8
 collision_layer = 64
@@ -467,8 +452,8 @@ continuous_cd = 1
 contacts_reported = 25
 contact_monitor = true
 can_sleep = false
-linear_velocity = Vector2( 76, 100 )
-angular_velocity = 4.0
+linear_velocity = Vector2( 70, 100 )
+angular_velocity = 3.0
 script = ExtResource( 3 )
 CarryOffset = Vector2( 10, -10 )
 _spritePath = NodePath("Sprite")
@@ -498,6 +483,6 @@ anims/RESET = SubResource( 4 )
 anims/scale_down = SubResource( 5 )
 anims/scale_up = SubResource( 3 )
 anims/scale_up_preserve_mass = SubResource( 7 )
-anims/white_flashes = SubResource( 8 )
+anims/white_flashes = ExtResource( 8 )
 
 [editable path="interactionArea"]
