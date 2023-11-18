@@ -17,7 +17,7 @@ public class Door : Node2D
     {
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         _sprite = GetNode<Sprite>(_spritePath);
-        if (_isLocked) _sprite.Frame = 0;
+        if (_isLocked) _sprite.Frame = _isLocked ? 0 : 4;
         InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
         InteractionArea.Connect(nameof(InteractionArea.InteractionAreaActivated), this, nameof(OnInteractionAreaActivated));
     }
@@ -43,6 +43,7 @@ public class Door : Node2D
     public async Task Unlock()
     {
         _isLocked = false;
-        _sprite.Frame = 1;
+        _animPlayer.Play("door_unlock");
+        await ToSignal(_animPlayer, "animation_finished");
     }
 }
