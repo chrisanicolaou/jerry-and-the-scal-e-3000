@@ -1,9 +1,8 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://src/player/player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=2]
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=3]
-[ext_resource path="res://src/environment/light_textures/light_128.png" type="Texture" id=4]
 [ext_resource path="res://src/environment/light_textures/light_line_256_hard.png" type="Texture" id=5]
 [ext_resource path="res://src/environment/light_textures/light_line_hard.png" type="Texture" id=6]
 [ext_resource path="res://src/environment/tiles/tilesets/brick_tiles.tres" type="TileSet" id=7]
@@ -169,13 +168,6 @@ _emptyColLayer = 2147483648
 position = Vector2( 23, 59 )
 z_index = 2
 
-[node name="Light2D" type="Light2D" parent="WallTorch"]
-position = Vector2( 6, -9 )
-texture = ExtResource( 4 )
-texture_scale = 0.25
-color = Color( 0.756863, 0.521569, 0.117647, 1 )
-energy = 0.75
-
 [node name="BorderShadow" type="Light2D" parent="."]
 visible = false
 position = Vector2( -116, 182 )
@@ -198,7 +190,8 @@ texture = ExtResource( 6 )
 mode = 1
 
 [node name="BorderShadow4" type="Light2D" parent="."]
-position = Vector2( 259, 384 )
+visible = false
+position = Vector2( 260, 396 )
 rotation = -1.5708
 scale = Vector2( 1, 2 )
 texture = ExtResource( 5 )
@@ -208,32 +201,17 @@ mode = 1
 position = Vector2( 224, 450 )
 
 [node name="CollisionShape2D" parent="FallZone" index="0"]
-position = Vector2( 60, 8 )
-
-[node name="WallTorch2" parent="." instance=ExtResource( 18 )]
-position = Vector2( 554, 60 )
-scale = Vector2( -1, 1 )
-z_index = 2
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Light2D" type="Light2D" parent="WallTorch2"]
-position = Vector2( 6, -9 )
-texture = ExtResource( 4 )
-texture_scale = 0.25
-color = Color( 0.756863, 0.521569, 0.117647, 1 )
-energy = 0.75
+position = Vector2( 59, -31 )
 
 [node name="Pillar" parent="." instance=ExtResource( 20 )]
-position = Vector2( 278, 255 )
+position = Vector2( 286, 256 )
 DefaultScaleDuration = 6.0
 _outlineShaderMat = SubResource( 2 )
 
 [node name="Laser" parent="." instance=ExtResource( 21 )]
 
 [node name="BoulderRound" parent="." instance=ExtResource( 14 )]
-position = Vector2( 114, 86 )
+position = Vector2( 115, 90 )
 physics_material_override = SubResource( 4 )
 DefaultScaleDuration = 8.0
 _outlineShaderMat = SubResource( 3 )
@@ -243,6 +221,10 @@ script = ExtResource( 10 )
 _followTargetPath = NodePath("../Player")
 _horizontalLevelBounds = Vector2( 250, 310 )
 _verticalLevelBounds = Vector2( 0, 170 )
+
+[node name="WallTorch2" parent="." instance=ExtResource( 18 )]
+position = Vector2( 506, 86 )
+scale = Vector2( -1, 1 )
 
 [editable path="Deflector"]
 [editable path="FallZone"]

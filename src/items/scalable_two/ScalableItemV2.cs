@@ -41,6 +41,7 @@ public class ScalableItemV2 : RigidBody2D
         _sprite = GetNode<Sprite>(_spritePath);
         _sprite.Material = null;
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
+        _animPlayer.Play("RESET");
         if (_interactionAreaPath != null) _interactionArea = GetNode<InteractionArea>(_interactionAreaPath);
         _interactionArea?.Connect(nameof(InteractionArea.InteractionAreaTriggered), this, nameof(OnInteractionAreaTriggered));
         _interactionArea?.SetDisabled(!CanBeCarried);

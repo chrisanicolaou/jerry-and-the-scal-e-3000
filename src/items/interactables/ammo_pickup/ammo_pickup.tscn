@@ -38,5 +38,6 @@ shape = SubResource( 1 )
 texture = SubResource( 2 )
 texture_scale = 0.3
 color = Color( 0.254902, 1, 0.913725, 1 )
+energy = 0.5
 
 [editable path="interactionArea"]

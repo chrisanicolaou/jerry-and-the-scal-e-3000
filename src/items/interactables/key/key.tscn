@@ -29,3 +29,5 @@ shape = SubResource( 2 )
 texture = ExtResource( 2 )
 texture_scale = 0.3
 color = Color( 1, 0.952941, 0.254902, 1 )
+energy = 0.5
+shadow_enabled = true
