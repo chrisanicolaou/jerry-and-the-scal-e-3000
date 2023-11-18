@@ -27,6 +27,7 @@ public class Player : KinematicBody2D
     private float _gravity = Convert.ToInt32(ProjectSettings.GetSetting("physics/2d/default_gravity"));
     private float _timeInAir;
     private bool _hasJustJumped;
+    private bool _holdingJump;
     private AnimationPlayer _animPlayer;
     private Sprite _sprite;
     private PlayerGun _gun;
@@ -122,11 +123,11 @@ public class Player : KinematicBody2D
         EnableGun();
     }
 
-    public override void _Process(float delta)
+    public override void _UnhandledInput(InputEvent inputEvent)
     {
         if (Freeze) return;
         
-        if (Input.IsActionJustPressed("shoot_big") && _hasGun)
+        if (inputEvent.IsActionPressed("shoot_big") && _hasGun)
         {
             if (!CanShoot) return;
             _gun.Fire(ScaleType.Big);
@@ -135,7 +136,7 @@ public class Player : KinematicBody2D
             EmitSignal(nameof(ShotsFired));
         }
 
-        if (Input.IsActionJustPressed("shoot_small") && _hasGun)
+        if (inputEvent.IsActionPressed("shoot_small") && _hasGun)
         {
             if (!CanShoot) return;
             _gun.Fire(ScaleType.Small);
@@ -143,6 +144,14 @@ public class Player : KinematicBody2D
             NumOfBullets--;
             EmitSignal(nameof(ShotsFired));
         }
+
+        if (inputEvent.IsActionPressed("jump"))
+        {
+            if (_timeInAir < _jumpPlatformForgiveness && !_hasJustJumped) Jump();
+            _holdingJump = true;
+        }
+
+        if (inputEvent.IsActionReleased("jump")) _holdingJump = false;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -196,7 +205,7 @@ public class Player : KinematicBody2D
             _velocity.y += _gravity * _gravityMultiplier * delta;
             if (_velocity.y < 0)
             {
-                if (Input.IsActionPressed("jump"))
+                if (_holdingJump)
                 {
                     _velocity.y -= _elongatedJumpMultiplier * delta;
                 }
@@ -205,24 +214,25 @@ public class Player : KinematicBody2D
             else
             {
                 _velocity.y += _snappyFallMultiplier * delta;
-                if (Input.IsActionPressed("jump") && _timeInAir < _jumpPlatformForgiveness && !_hasJustJumped)
-                {
-                    Jump();
-                }
+                // if (Input.IsActionPressed("jump") && _timeInAir < _jumpPlatformForgiveness && !_hasJustJumped)
+                // {
+                //     Jump();
+                // }
             }
         }
         else
         {
             _timeInAir = 0;
             _hasJustJumped = false;
-            if (Input.IsActionPressed("jump"))
-            {
-                Jump();
-            }
-            else
-            {
-                _velocity.y = 0;
-            }
+            // _velocity.y = 0;
+            // if (Input.IsActionPressed("jump"))
+            // {
+            //     Jump();
+            // }
+            // else
+            // {
+            //     _velocity.y = 0;
+            // }
         }
         
         MoveAndSlide(_velocity, Vector2.Up, true, infiniteInertia: false);

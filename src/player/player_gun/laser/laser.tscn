@@ -26,7 +26,6 @@ glow_bicubic_upscale = true
 [node name="Laser" type="Line2D"]
 material = SubResource( 2 )
 z_index = 10
-points = PoolVector2Array( 56, 150, 332, 150 )
 default_color = Color( 0.435294, 1, 0.231373, 1 )
 begin_cap_mode = 2
 end_cap_mode = 2
