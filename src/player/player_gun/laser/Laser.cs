@@ -21,8 +21,6 @@ public class Laser : Line2D
     [Export] private float _particleStartDelay = 0.1f;
     [Export] private float _particleImpactMultiplier = 1.5f;
     [Export] private PackedScene _laserContactParticlesScene;
-    [Export] private ParticlesMaterial _laserContactParticleMat;
-    [Export] private ParticlesMaterial _laserContactParticleCollisionMat;
     [Export] private PackedScene _laserBeamParticlesScene;
     [Export] private bool _enableBeamParticles;
 
@@ -44,14 +42,15 @@ public class Laser : Line2D
         var tween = GetTree().CreateTween().SetTrans(_transType).SetEase(_ease);
         tween.TweenProperty(this, "width", _width, _powerUpDuration).From(0f);
         await ToSignal(GetTree().CreateTimer(_particleStartDelay, false), "timeout");
-        var particles = new List<Particles2D>();
+        var particles = new List<CPUParticles2D>();
         (Vector2, Vector2)? previousPoint = null;
         foreach (var point in corePathPoints)
         {
-            var particle = _laserContactParticlesScene.Instance<Particles2D>();
+            var particle = _laserContactParticlesScene.Instance<CPUParticles2D>();
             particle.Position = point.Item1;
-            particle.ProcessMaterial = previousPoint == null ? _laserContactParticleMat : _laserContactParticleCollisionMat;
-            particle.ProcessMaterial.Set("color", color);
+            particle.InitialVelocity = previousPoint == null ? 100 : 200;
+            // particle.ProcessMaterial.Set("color", color);
+            particle.Color = color;
             AddChild(particle);
             particle.OneShot = true;
             particle.Emitting = true;
@@ -60,13 +59,12 @@ public class Laser : Line2D
             if (previousPoint != null && _enableBeamParticles)
             {
                 var prevPoint = previousPoint.Value;
-                var beamParticle = _laserBeamParticlesScene.Instance<Particles2D>();
+                var beamParticle = _laserBeamParticlesScene.Instance<CPUParticles2D>();
                 beamParticle.Position = (prevPoint.Item1 + point.Item1) / 2;
                 beamParticle.GlobalRotation = prevPoint.Item2.Angle();
                 var distFactor = point.Item1.DistanceTo(prevPoint.Item1) / 2;
-                // GD.Print($"previous point: {prevPoint.Item1}. point: {point.Item1}. distance: {point.Item2.DistanceTo(prevPoint.Item1)}. distFactor: {distFactor}");
-                beamParticle.ProcessMaterial.Set("emission_box_extents", new Vector3(distFactor, Width, 1));
-                beamParticle.ProcessMaterial.Set("color", color);
+                beamParticle.EmissionRectExtents = new Vector2(distFactor, Width);
+                beamParticle.Color = color;
                 AddChild(beamParticle);
                 beamParticle.OneShot = true;
                 beamParticle.Emitting = true;
