@@ -108,47 +108,47 @@ points = PoolVector2Array( 712, 246 )
 _accuracy = 100
 
 [node name="BoxDefault" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 476, 268 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault2" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 614, 98 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault3" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 604, 135 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault4" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 620, 188 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault5" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 607, 184 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault6" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 625, 135 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault7" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 615, 156 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault8" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 600, 109 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault9" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 583, 148 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault10" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 585, 135 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault11" parent="." instance=ExtResource( 12 )]
-position = Vector2( 570, 148 )
+position = Vector2( 590, 166 )
 _outlineShaderMat = SubResource( 3 )
 
 [node name="BoxDefault12" parent="." instance=ExtResource( 12 )]

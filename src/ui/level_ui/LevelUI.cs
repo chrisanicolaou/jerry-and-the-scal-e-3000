@@ -14,7 +14,6 @@ public class LevelUI : CanvasLayer
     [Export] private PackedScene _controlWrappedSpriteScene;
     [Export] private Texture _keyTex;
     [Export] private Texture _bulletTex;
-    [Export] private NodePath _retryButtonPath;
     [Export] private NodePath _pauseMenuPath;
 
     private Control _keyContainer;
@@ -32,9 +31,6 @@ public class LevelUI : CanvasLayer
         // Lets us leave placeholders in the UI for testing
         RemoveAllChildren(_keyContainer);
         RemoveAllChildren(_bulletContainer);
-        
-        var retryBtn = GetNode<Button>(_retryButtonPath);
-        retryBtn.Connect("pressed", this, nameof(OnRetryRequested));
         
         _pauseMenu = GetNode<PauseMenu>(_pauseMenuPath);
         _pauseMenu.Connect(nameof(PauseMenu.RetryRequested), this, nameof(OnRetryRequested));

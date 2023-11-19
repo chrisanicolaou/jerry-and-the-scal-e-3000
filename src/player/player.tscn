@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://src/player/jerry_sheet.png" type="Texture" id=1]
 [ext_resource path="res://src/player/Player.cs" type="Script" id=2]
@@ -581,6 +581,22 @@ tracks/12/keys = {
 "values": [ PoolVector2Array( -2, 10.7115, 4, 10.7115, 4, 5.84263, 5, -9.73771, 4, -11.6853, -3, -11.6853, -4, -10.7115, -4, -5.84263, -3, -1.94754, -4, -0.973772, -3, 6.8164 ), PoolVector2Array( -3, 13.6328, 5, 13.6328, 7, 6.8164, 8, -11.6853, 5, -18.5017, -3, -18.5017, -7, -11.6853, -5, -5.84263, -3, -1.94754, -6, -0.973772, -6, 6.8164 ), PoolVector2Array( -3, 13.6328, 5, 13.6328, 7, 6.8164, 10, -17.5279, 6, -25.3181, -4, -25.3181, -9, -17.5279, -7, -5.84263, -7, -1.94754, -7, 0, -6, 6.8164 ), PoolVector2Array( -3, 13.6328, 5, 13.6328, 10, 1.94754, 12, -25.3181, 7, -32.1345, -5, -33.1082, -10, -26.2918, -8, -5.84263, -8, -1.94754, -8, 2.92131, -7, 8.76394 ), PoolVector2Array( 10, 9.73771, 12, 0, 13, -14.6066, 14, -35.0558, 8, -38.9509, -6, -38.9509, -12, -35.0558, -10, 0, -8, 9.73771, -3, 13.6328, 6, 13.6328 ) ]
 }
 
+[sub_resource type="Animation" id=11]
+resource_name = "white_flashes"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("../Graphic:material")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 2, 2.25, 2.5, 2.75, 3, 3.13, 3.25, 3.38, 3.5, 3.63, 3.75, 3.88, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ), null, ExtResource( 6 ) ]
+}
+
 [node name="Player" type="KinematicBody2D" groups=["player"]]
 z_index = 20
 collision_layer = 2
@@ -652,6 +668,7 @@ _outlineShaderMat = ExtResource( 5 )
 anims/RESET = SubResource( 9 )
 anims/scale_down = SubResource( 10 )
 anims/scale_up = SubResource( 8 )
+anims/white_flashes = SubResource( 11 )
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="PlayerScalableBody"]
 scale = Vector2( 1, 1.02693 )

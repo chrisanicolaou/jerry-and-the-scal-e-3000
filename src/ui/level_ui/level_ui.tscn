@@ -15,7 +15,6 @@ _bulletContainerPath = NodePath("BottomBar/BulletContainer")
 _controlWrappedSpriteScene = ExtResource( 2 )
 _keyTex = ExtResource( 4 )
 _bulletTex = ExtResource( 3 )
-_retryButtonPath = NodePath("BottomBar/Button")
 _pauseMenuPath = NodePath("PauseMenu")
 
 [node name="BottomBar" type="Control" parent="."]
@@ -60,16 +59,5 @@ margin_bottom = 17.0
 
 [node name="Sprite" type="Sprite" parent="BottomBar/BulletContainer/Bullet"]
 texture = ExtResource( 3 )
-
-[node name="Button" type="Button" parent="BottomBar"]
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-margin_left = -30.0
-margin_top = -22.0
-margin_right = 30.0
-margin_bottom = -10.0
-text = "Retry"
 
 [node name="PauseMenu" parent="." instance=ExtResource( 5 )]
