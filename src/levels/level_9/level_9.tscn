@@ -79,7 +79,7 @@ _trajectoryLinePath = NodePath("../TrajectoryLine")
 _laserPath = NodePath("../Laser")
 
 [node name="EntranceDoor" parent="." instance=ExtResource( 18 )]
-position = Vector2( 82, 80 )
+position = Vector2( 75, 80 )
 
 [node name="BreakablePlatformMed" parent="." instance=ExtResource( 20 )]
 position = Vector2( 199, 139 )
@@ -94,7 +94,7 @@ position = Vector2( 427, 139 )
 position = Vector2( 491, 240 )
 
 [node name="BoulderRound" parent="." instance=ExtResource( 17 )]
-position = Vector2( 127, 78 )
+position = Vector2( 117, 78 )
 DefaultScaleDuration = 8.0
 _outlineShaderMat = SubResource( 1 )
 

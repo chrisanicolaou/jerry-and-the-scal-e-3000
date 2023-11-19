@@ -101,6 +101,15 @@ public class LevelSelectModal : Panel
             }
             previousFocusNode = newNode;
         }
+        
+        // Add excess (empty) nodes to pad final page grid sizing
+        var emptyNodesRequired = 4 - (levelsData.Count % 4 == 0 ? 4 : levelsData.Count % 4);
+        for (var i = 0; i < emptyNodesRequired; i++)
+        {
+            var newNode = _levelNodeScene.Instance<LevelSelectNode>();
+            currentPage.AddChild(newNode);
+            newNode.Modulate = Colors.Transparent;
+        }
 
         _scrollContainer.ScrollHorizontal = 0;
         UpdateButtons();
