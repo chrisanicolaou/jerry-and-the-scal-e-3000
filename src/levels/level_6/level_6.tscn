@@ -138,7 +138,6 @@ _trajectoryLinePath = NodePath("../TrajectoryLine")
 _laserPath = NodePath("../Laser")
 
 [node name="UI" parent="." instance=ExtResource( 15 )]
-visible = false
 
 [node name="InputController" parent="." instance=ExtResource( 8 )]
 

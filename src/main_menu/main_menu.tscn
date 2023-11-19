@@ -291,6 +291,7 @@ shape = SubResource( 2 )
 position = Vector2( -209, 271 )
 physics_material_override = SubResource( 5 )
 gravity_scale = 20.0
+linear_velocity = Vector2( 70, 100 )
 linear_damp = 0.0
 angular_damp = 0.0
 DefaultScaleDuration = 6.0

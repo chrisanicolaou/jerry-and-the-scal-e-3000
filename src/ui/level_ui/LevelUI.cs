@@ -41,6 +41,7 @@ public class LevelUI : CanvasLayer
         _pauseMenu.Connect(nameof(PauseMenu.ResumeRequested), this, nameof(OnResumeRequested));
         _pauseMenu.Connect(nameof(PauseMenu.QuitToMenuRequested), this, nameof(OnQuitToMenuRequested));
         _pauseMenu.Hide();
+        Show();
     }
 
     public void Initialise(int numOfKeys, int numOfBullets)

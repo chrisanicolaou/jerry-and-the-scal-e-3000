@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://src/levels/level_data/LevelData.cs" type="Script" id=1]
+[ext_resource path="res://src/levels/level_9/level_9.tscn" type="PackedScene" id=2]
+
+[resource]
+script = ExtResource( 1 )
+DisplayName = "In a glass house"
+Scene = ExtResource( 2 )
