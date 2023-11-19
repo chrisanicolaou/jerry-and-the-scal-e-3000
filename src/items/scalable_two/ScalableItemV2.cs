@@ -93,6 +93,12 @@ public class ScalableItemV2 : RigidBody2D
     private async void HandleScaleBackToNormal(string animName)
     {
         _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
+        _animPlayer.Connect("animation_finished", this, nameof(HandlePostScaleCleanUp));
+    }
+
+    private void HandlePostScaleCleanUp(string _)
+    {
+        _animPlayer.Disconnect("animation_finished", this, nameof(HandlePostScaleCleanUp));
         _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
         IsMutated = false;
     }

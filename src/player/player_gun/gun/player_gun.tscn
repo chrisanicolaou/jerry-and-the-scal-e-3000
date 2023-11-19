@@ -12,4 +12,4 @@ texture = ExtResource( 2 )
 flip_h = true
 
 [node name="TrajectoryLinePoint" type="Node2D" parent="."]
-position = Vector2( 8, 0 )
+position = Vector2( 7, 0 )

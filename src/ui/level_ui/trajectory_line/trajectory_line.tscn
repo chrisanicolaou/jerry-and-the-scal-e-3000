@@ -6,7 +6,7 @@
 extents = Vector2( 1.5, 0.5 )
 
 [node name="TrajectoryLine" type="Line2D"]
-z_index = 6
+z_index = 30
 width = 1.0
 default_color = Color( 1, 0, 0, 0.235294 )
 joint_mode = 2
