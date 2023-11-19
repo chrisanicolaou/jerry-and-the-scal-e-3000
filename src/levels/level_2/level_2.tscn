@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=1]
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=2]
@@ -14,6 +14,8 @@
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=12]
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=14]
+[ext_resource path="res://src/levels/level_2/scale_duration_modal_opts.tres" type="Resource" id=15]
+[ext_resource path="res://src/levels/level_2/scale_duration_dialog_prompt.tres" type="Resource" id=16]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -37,6 +39,8 @@ _carryableItemPaths = [ NodePath("Pillar") ]
 _fallZonePaths = [  ]
 _levelUIPath = NodePath("UI")
 _inputControllerPath = NodePath("LevelInputController")
+_tutorialModalOpts = ExtResource( 15 )
+_dialogPrompt = ExtResource( 16 )
 
 [node name="LevelBackground" parent="." instance=ExtResource( 2 )]
 
@@ -64,11 +68,12 @@ _trajectoryLinePath = NodePath("../TrajectoryLine")
 _laserPath = NodePath("../Laser")
 
 [node name="UI" parent="." instance=ExtResource( 10 )]
+visible = false
 
 [node name="LevelInputController" parent="." instance=ExtResource( 11 )]
 
 [node name="Pillar" parent="." instance=ExtResource( 7 )]
-position = Vector2( 366, 224 )
+position = Vector2( 359, 224 )
 _outlineShaderMat = SubResource( 1 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 13 )]

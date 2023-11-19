@@ -32,7 +32,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Dialog
         private Task _currentTextTweenTask;
         private CancellationTokenSource _cancellationTokenSource;
 
-        public bool CanAdvance => _currentPrompt != null && _currentPromptIndex < _currentPrompt.Texts.Length;
+        public bool CanAdvance => _currentPrompt != null && _currentPromptIndex < _currentPrompt.Texts.Count;
 
         public override void _Ready()
         {
@@ -52,7 +52,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Dialog
 
         public async Task Show(DialogPrompt prompt)
         {
-            if (prompt.Texts.Length < 1)
+            if (prompt.Texts.Count < 1)
             {
                 GD.PrintErr($"Attempting to show dialog with no text! {prompt}");
                 return;
@@ -60,12 +60,12 @@ namespace ChiciStudios.GithubGameJam2023.Common.Dialog
             _currentPrompt = prompt;
             _currentPromptIndex = 0;
             _titleLabel.Text = !prompt.Title.Empty() ? prompt.Title : DefaultTitle;
-            _border.SelfModulate = prompt.BorderColor ?? DefaultBorderColor;
-            _fill.SelfModulate = prompt.FillColor ?? DefaultFillColor;
+            _border.SelfModulate = prompt.BorderColor == Colors.Transparent ? DefaultBorderColor : prompt.BorderColor;
+            _fill.SelfModulate = prompt.FillColor == Colors.Transparent ? DefaultFillColor : prompt.FillColor;
             _icon.Texture = prompt.Icon ?? _defaultIcon;
             _textLabel.Text = "";
             Show();
-            var tween = GetTree().CreateTween();
+            var tween = GetTree().CreateTween().SetPauseMode(SceneTreeTween.TweenPauseMode.Process);
             tween.TweenProperty(this, "rect_scale", Vector2.One, 0.25f).From(Vector2.Zero);
             await ToSignal(tween, "finished");
             _currentTextTweenTask = TweenText(prompt.Texts[_currentPromptIndex], speed: prompt.TextSpeed ?? _defaultTextSpeed);
@@ -87,7 +87,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Dialog
                 return;
             }
 
-            if (++_currentPromptIndex >= _currentPrompt.Texts.Length)
+            if (++_currentPromptIndex >= _currentPrompt.Texts.Count)
             {
                 GD.PrintErr("Trying to advance a dialog that has completed. Closing instead");
                 await Close();

@@ -29,11 +29,11 @@ public class DialogBoxTest : Control
     {
         _dialogBox = GetNode<DialogBox>(_dialogBoxPath);
         _showButton = GetNode<Button>(_showButtonPath);
-        _showButton.Connect("pressed", this, nameof(OnPressed));
-        _advanceButton = GetNode<Button>(_advanceButtonPath);
-        _advanceButton.Connect("pressed", this, nameof(OnAdvancePressed));
-        _closeButton = GetNode<Button>(_closeButtonPath);
-        _closeButton.Connect("pressed", this, nameof(OnClosePressed));
+        // _showButton.Connect("pressed", this, nameof(OnPressed));
+        // _advanceButton = GetNode<Button>(_advanceButtonPath);
+        // _advanceButton.Connect("pressed", this, nameof(OnAdvancePressed));
+        // _closeButton = GetNode<Button>(_closeButtonPath);
+        // _closeButton.Connect("pressed", this, nameof(OnClosePressed));
         _fillColorPicker = GetNode<ColorPicker>(_fillColorPickerPath);
         _fillColorPicker.Color = _dialogBox.DefaultFillColor;
         _borderColorPicker = GetNode<ColorPicker>(_borderColorPickerPath);
@@ -44,20 +44,20 @@ public class DialogBoxTest : Control
         _textPicker.Text = "This is a dialog prompt! - Dashes mean new prompts! - :D";
         _textSpeedOption = GetNode<OptionButton>(_textSpeedPickerPath);
     }
-
-    private void OnPressed()
-    {
-        Enum.TryParse<TextSpeed>(_textSpeedOption.Text, out var textSpeed);
-        _dialogBox.Show(new DialogPrompt(_textPicker.Text.Split('-'), _titleTextPicker.Text, fillColor: _fillColorPicker.Color, borderColor: _borderColorPicker.Color, textSpeed: textSpeed));
-    }
-
-    private void OnAdvancePressed()
-    {
-        _dialogBox.AdvancePrompt();
-    }
-
-    private void OnClosePressed()
-    {
-        _dialogBox.Close();
-    }
+    //
+    // private void OnPressed()
+    // {
+    //     Enum.TryParse<TextSpeed>(_textSpeedOption.Text, out var textSpeed);
+    //     _dialogBox.Show(new DialogPrompt(_textPicker.Text.Split('-'), _titleTextPicker.Text, fillColor: _fillColorPicker.Color, borderColor: _borderColorPicker.Color, textSpeed: textSpeed));
+    // }
+    //
+    // private void OnAdvancePressed()
+    // {
+    //     _dialogBox.AdvancePrompt();
+    // }
+    //
+    // private void OnClosePressed()
+    // {
+    //     _dialogBox.Close();
+    // }
 }

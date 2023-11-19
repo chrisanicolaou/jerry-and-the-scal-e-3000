@@ -22,6 +22,7 @@ AudioManager="*res://common/audio/audio_manager.tscn"
 InteractionManager="*res://common/interaction/interaction_manager/interaction_manager.tscn"
 GameDataManager="*res://src/game_data_manager/game_data_manager.tscn"
 ModalManager="*res://src/ui/modal/modal_manager.tscn"
+DialogBoxCanvas="*res://common/dialog/dialog_box_canvas.tscn"
 
 [display]
 

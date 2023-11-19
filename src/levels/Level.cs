@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Dialog;
 using GithubGameJam2023.ui.modal;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
@@ -25,7 +26,10 @@ public class Level : Node2D
     [Export] private NodePath _gunPickupPath;
     [Export] private ModalOptions _gunPickupModalOpts;
     [Export(PropertyHint.Enum, "Small,Large")] private string _modalSizeAsStr;
+    [Export] private ModalOptions _tutorialModalOpts;
+    [Export] private DialogPrompt _dialogPrompt;
 
+    private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
     private ModalSize _modalSize;
     private Door _entranceDoor;
@@ -39,6 +43,7 @@ public class Level : Node2D
     public override void _Ready()
     {
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
+        _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         Enum.TryParse(_modalSizeAsStr, out _modalSize);
         _entranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);
@@ -96,7 +101,18 @@ public class Level : Node2D
         _player.Visible = true;
         await _player.EnterLevel(_entranceDoor);
         await _entranceDoor.Close();
-        _player.Freeze = false;
+
+        if (_tutorialModalOpts == null && _dialogPrompt == null) _player.Freeze = false;
+        
+        if (_tutorialModalOpts != null)
+        {
+            await ShowModal(_tutorialModalOpts, ModalSize.Large);
+        }
+
+        // if (_dialogPrompt != null)
+        // {
+        //     await ShowDialogPrompt(_dialogPrompt);
+        // }
     }
 
     private async void OnKeyFound()
@@ -163,9 +179,7 @@ public class Level : Node2D
     private async void HandleGunPickup()
     {
         _player.PickupGun();
-        GetTree().Paused = true;
-        await _modalManager.ShowModal(_gunPickupModalOpts, _modalSize);
-        GetTree().Paused = false;
+        ShowModal(_gunPickupModalOpts, _modalSize);
     }
 
     private async void HandleAmmoPickup(AmmoPickup ammoPickup)
@@ -192,5 +206,32 @@ public class Level : Node2D
     private void OnQuitToMenuRequested()
     {
         EmitSignal(nameof(QuitToMenuRequested));
+    }
+
+    private async Task ShowModal(ModalOptions opts, ModalSize size)
+    {
+        GetTree().Paused = true;
+        await _modalManager.ShowModal(opts, size);
+        GetTree().Paused = false;
+        _player.Freeze = false;
+    }
+
+    private async Task ShowDialogPrompt(DialogPrompt prompt)
+    {
+        _dialogBoxCanvas.DialogBox.Show(prompt);
+        _dialogBoxCanvas.Connect(nameof(DialogBoxCanvas.AdvanceRequested), this, nameof(OnDialogAdvanceRequested));
+    }
+
+    private void OnDialogAdvanceRequested()
+    {
+        if (_dialogBoxCanvas.DialogBox.CanAdvance)
+        {
+            _dialogBoxCanvas.DialogBox.AdvancePrompt();
+        }
+        else
+        {
+            GetTree().Paused = false;
+            _player.Freeze = false;
+        }
     }
 }
