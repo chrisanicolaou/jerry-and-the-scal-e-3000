@@ -21,7 +21,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 1 ]
+"values": [ 0 ]
 }
 
 [sub_resource type="Animation" id=2]
@@ -84,7 +84,6 @@ _spritePath = NodePath("Sprite")
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
 hframes = 8
-frame = 1
 
 [node name="Area2D" parent="." instance=ExtResource( 1 )]
 UseKeyHint = false

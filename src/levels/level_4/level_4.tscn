@@ -46,6 +46,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 StartAutomatically = true
+_numOfBullets = 2
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
@@ -75,6 +76,7 @@ position = Vector2( 202, 239 )
 
 [node name="ExitDoor" parent="." instance=ExtResource( 5 )]
 position = Vector2( 434, 239 )
+_isLocked = true
 
 [node name="Pillar" parent="." instance=ExtResource( 7 )]
 position = Vector2( 272, 240 )

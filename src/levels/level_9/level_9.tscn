@@ -36,6 +36,7 @@ shader_param/alpha = 0.25
 [node name="LevelNine" type="Node2D"]
 script = ExtResource( 19 )
 StartAutomatically = true
+_numOfBullets = 1
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("Door")
 _keyPath = NodePath("Key")
@@ -88,10 +89,11 @@ scale = Vector2( 1.8, 1 )
 WeightRequiredToBreak = 190.0
 
 [node name="Key" parent="." instance=ExtResource( 16 )]
-position = Vector2( 427, 139 )
+position = Vector2( 429, 138 )
 
 [node name="Door" parent="." instance=ExtResource( 18 )]
-position = Vector2( 491, 240 )
+position = Vector2( 97, 240 )
+_isLocked = true
 
 [node name="BoulderRound" parent="." instance=ExtResource( 17 )]
 position = Vector2( 117, 78 )

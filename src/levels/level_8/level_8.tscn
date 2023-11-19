@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
@@ -15,9 +15,10 @@
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=13]
 [ext_resource path="res://src/levels/Level.cs" type="Script" id=14]
 [ext_resource path="res://src/items/breakable/breakable_platforms/breakable_platform_medium/breakable_platform_medium.tscn" type="PackedScene" id=15]
-[ext_resource path="res://src/items/scalable_two/boulder/boulder_v2.tscn" type="PackedScene" id=16]
+[ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round.tscn" type="PackedScene" id=16]
 [ext_resource path="res://src/items/bullet_deflector/bullet_deflector.tscn" type="PackedScene" id=17]
 [ext_resource path="res://src/player/player_gun/laser/laser.tscn" type="PackedScene" id=18]
+[ext_resource path="res://src/items/interactables/ammo_pickup/ammo_pickup.tscn" type="PackedScene" id=19]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -44,11 +45,13 @@ shader_param/alpha = 0.25
 [node name="LevelEight" type="Node2D"]
 script = ExtResource( 14 )
 StartAutomatically = true
+_numOfBullets = 2
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
 _playerPath = NodePath("Player")
-_carryableItemPaths = [ NodePath("Pillar") ]
+_carryableItemPaths = [ NodePath("Pillar"), NodePath("BoulderRound") ]
+_ammoPickupPaths = [ NodePath("AmmoPickup"), NodePath("AmmoPickup2") ]
 _levelUIPath = NodePath("UI")
 _inputControllerPath = NodePath("LevelInputController")
 
@@ -69,6 +72,7 @@ points = PoolVector2Array( 383, 241 )
 _accuracy = 100
 
 [node name="UI" parent="." instance=ExtResource( 7 )]
+visible = false
 
 [node name="LevelInputController" parent="." instance=ExtResource( 6 )]
 
@@ -96,11 +100,7 @@ position = Vector2( 213, 151 )
 
 [node name="BreakablePlatformMed" parent="." instance=ExtResource( 15 )]
 position = Vector2( 244, 168 )
-WeightRequiredToBreak = 50.0
-
-[node name="BoulderV2" parent="." instance=ExtResource( 16 )]
-position = Vector2( 252, 143 )
-_outlineShaderMat = SubResource( 2 )
+WeightRequiredToBreak = 200.0
 
 [node name="BulletDeflector" parent="." instance=ExtResource( 17 )]
 position = Vector2( 127, 156 )
@@ -110,3 +110,13 @@ position = Vector2( 184, 95 )
 rotation = 1.5708
 
 [node name="Laser" parent="." instance=ExtResource( 18 )]
+
+[node name="BoulderRound" parent="." instance=ExtResource( 16 )]
+position = Vector2( 256, 143 )
+_outlineShaderMat = SubResource( 2 )
+
+[node name="AmmoPickup" parent="." instance=ExtResource( 19 )]
+position = Vector2( 226, 153 )
+
+[node name="AmmoPickup2" parent="." instance=ExtResource( 19 )]
+position = Vector2( 220, 153 )

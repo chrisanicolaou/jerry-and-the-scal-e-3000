@@ -43,6 +43,7 @@ shader_param/alpha = 0.25
 [node name="LevelFive" type="Node2D"]
 script = ExtResource( 14 )
 StartAutomatically = true
+_numOfBullets = 1
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")

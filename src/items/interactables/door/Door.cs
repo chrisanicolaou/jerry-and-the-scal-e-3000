@@ -22,7 +22,7 @@ public class Door : Node2D
         _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         _sprite = GetNode<Sprite>(_spritePath);
-        if (_isLocked) _sprite.Frame = _isLocked ? 0 : 4;
+        _sprite.Frame = _isLocked ? 0 : 4;
         InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
         InteractionArea.Connect(nameof(InteractionArea.InteractionAreaActivated), this, nameof(OnInteractionAreaActivated));
     }
