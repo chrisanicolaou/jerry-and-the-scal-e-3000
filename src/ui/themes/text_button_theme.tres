@@ -11,6 +11,7 @@
 [sub_resource type="StyleBoxEmpty" id=5]
 
 [resource]
+Button/colors/font_color_focus = Color( 1, 0.823529, 0.482353, 1 )
 Button/colors/font_color_hover = Color( 1, 0.823529, 0.482353, 1 )
 Button/colors/font_color_pressed = Color( 0.992157, 0.737255, 0.294118, 1 )
 Button/styles/disabled = SubResource( 2 )

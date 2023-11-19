@@ -30,6 +30,12 @@ public class PauseMenu : Control
         _quitToMenuButton.Connect("pressed", this, nameof(OnQuitToMenuButtonPressed));
     }
 
+    public void ShowAndFocus()
+    {
+        Show();
+        _resumeButton.CallDeferred("grab_focus");
+    }
+
     private void OnResumeButtonPressed()
     {
         GD.Print("Button workin");

@@ -65,6 +65,7 @@ custom_constants/separation = 10
 [node name="ResumeButton" parent="Panel/VBoxContainer/OptionsContainer/Options" instance=ExtResource( 2 )]
 margin_right = 160.0
 margin_bottom = 16.0
+focus_neighbour_bottom = NodePath("../RetryButton")
 theme = ExtResource( 3 )
 text = "Resume"
 
@@ -72,6 +73,8 @@ text = "Resume"
 margin_top = 26.0
 margin_right = 160.0
 margin_bottom = 42.0
+focus_neighbour_top = NodePath("../ResumeButton")
+focus_neighbour_bottom = NodePath("../OptionsButton")
 theme = ExtResource( 3 )
 text = "Retry level"
 
@@ -79,6 +82,8 @@ text = "Retry level"
 margin_top = 52.0
 margin_right = 160.0
 margin_bottom = 68.0
+focus_neighbour_top = NodePath("../RetryButton")
+focus_neighbour_bottom = NodePath("../QuitToMenuButton")
 theme = ExtResource( 3 )
 text = "Options"
 
@@ -86,5 +91,6 @@ text = "Options"
 margin_top = 78.0
 margin_right = 160.0
 margin_bottom = 94.0
+focus_neighbour_top = NodePath("../OptionsButton")
 theme = ExtResource( 3 )
 text = "Quit to menu"

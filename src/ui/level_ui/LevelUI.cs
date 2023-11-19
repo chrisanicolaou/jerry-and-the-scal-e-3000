@@ -67,7 +67,7 @@ public class LevelUI : CanvasLayer
 
     public void OpenPauseMenu()
     {
-        _pauseMenu.Show();
+        _pauseMenu.ShowAndFocus();
     }
 
     public void ClosePauseMenu()

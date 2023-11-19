@@ -13,6 +13,8 @@ public class PageButton : TextureButton
         _defaultColor = Modulate;
         Connect("mouse_entered", this, nameof(OnMouseEntered));
         Connect("mouse_exited", this, nameof(OnMouseExited));
+        Connect("focus_entered", this, nameof(OnMouseEntered));
+        Connect("focus_exited", this, nameof(OnMouseExited));
         Connect("button_down", this, nameof(OnButtonDown));
         Connect("button_up", this, nameof(OnButtonUp));
     }

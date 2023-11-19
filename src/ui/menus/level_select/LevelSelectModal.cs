@@ -7,6 +7,8 @@ using Array = Godot.Collections.Array;
 public class LevelSelectModal : Panel
 {
     [Signal] public delegate void LevelSelected(LevelData levelData);
+
+    [Signal] public delegate void PanelClosed();
     
     [Export] private float _scrollAnimationDuration = 0.4f;
     [Export] private Tween.TransitionType _transType = Tween.TransitionType.Cubic;
@@ -45,24 +47,45 @@ public class LevelSelectModal : Panel
         _pageIndex = -1;
         NavigateToPage();
         Show();
+        (_pagesContainer.GetChild(0).GetChild(0) as Control).GrabFocus();
     }
 
     private void OnInputEvent(InputEvent inputEvent)
     {
         // Shroud was clicked
-        if (inputEvent is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.ButtonIndex == 1) Hide();
+        if ((inputEvent is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.ButtonIndex == 1))
+        {
+            Hide();
+            EmitSignal(nameof(PanelClosed));
+        }
+    }
+
+    public override void _Input(InputEvent inputEvent)
+    {
+        if (inputEvent is InputEventKey keyEvent && keyEvent.IsActionPressed("ui_cancel"))
+        {
+            GetTree().SetInputAsHandled();
+            Hide();
+            EmitSignal(nameof(PanelClosed));
+        }
     }
 
     private void SetupPages()
     {
         var levelsData = _gameDataManager.AllLevelsCollection.Levels;
         var currentPage = new Control(); // Initializing to new control to silence rider "this has not been initialized" errors
+        var previousFocusNode = new Control();
         for (var i = 0; i < levelsData.Count; i++)
         {
             if (i % 4 == 0)
             {
+                if (i > 0)
+                {
+                    previousFocusNode.FocusNext = _nextPageButtonPath;
+                }
                 var newPage = _pageScene.Instance<Control>();
                 _pagesContainer.AddChild(newPage);
+                previousFocusNode = _previousPageButton;
                 currentPage = newPage;
                 _numOfPages++;
             }
@@ -71,6 +94,12 @@ public class LevelSelectModal : Panel
             currentPage.AddChild(newNode);
             newNode.Initialize(levelsData[i], i, _gameDataManager.PlayerData.HighestUnlockedLevelIndex < i);
             newNode.Connect(nameof(LevelSelectNode.LevelNodeSelected), this, nameof(OnLevelNodeSelected), new Array { levelsData[i] });
+            if (i > 0)
+            {
+                newNode.FocusPrevious = previousFocusNode.GetPath();
+                previousFocusNode.FocusNext = newNode.GetPath();
+            }
+            previousFocusNode = newNode;
         }
 
         _scrollContainer.ScrollHorizontal = 0;
@@ -93,6 +122,7 @@ public class LevelSelectModal : Panel
         var tween = GetTree().CreateTween().SetTrans(_transType).SetEase(_easeType);
         tween.TweenProperty(_scrollContainer, "scroll_horizontal", targetScrollAmount, _scrollAnimationDuration);
         UpdateButtons();
+        (_pagesContainer.GetChild(_pageIndex).GetChild(0) as Control).GrabFocus();
     }
 
     private void UpdateButtons()

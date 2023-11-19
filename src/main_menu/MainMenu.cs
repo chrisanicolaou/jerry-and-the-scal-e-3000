@@ -32,11 +32,13 @@ public class MainMenu : Node2D
         _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _levelSelectModal = GetNode<LevelSelectModal>(_levelSelectModalPath);
         _levelSelectModal.Connect(nameof(LevelSelectModal.LevelSelected), this, nameof(OnLevelSelected));
+        _levelSelectModal.Connect(nameof(LevelSelectModal.PanelClosed), this, nameof(OnNavigateBackToMainMenu));
         _playButton = GetNode<Button>(_playButtonPath);
         _playButton.Connect("pressed", this, nameof(OnPlayButtonPressed));
         _levelSelectButton = GetNode<Button>(_levelSelectButtonPath);
         _levelSelectButton.Connect("pressed", this, nameof(OnLevelSelectButtonPressed));
         _rollingBoulder = GetNode<ScalableItemV2>(_rollingBoulderPath);
+        _playButton.CallDeferred("grab_focus");
     }
 
     public void Start()
@@ -73,4 +75,6 @@ public class MainMenu : Node2D
     private void OnLevelSelectButtonPressed() => _levelSelectModal.ShowModal();
 
     private void OnLevelSelected(LevelData levelData) => EmitSignal(nameof(LevelSelected), levelData);
+
+    private void OnNavigateBackToMainMenu() => _playButton.GrabFocus();
 }
