@@ -5,6 +5,7 @@
 
 [node name="Gun" type="Node2D"]
 script = ExtResource( 1 )
+_playerOffset = Vector2( 13, 0 )
 _trajectoryLinePointPath = NodePath("TrajectoryLinePoint")
 
 [node name="Sprite" type="Sprite" parent="."]

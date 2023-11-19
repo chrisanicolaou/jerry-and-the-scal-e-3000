@@ -18,8 +18,8 @@ public class Player : KinematicBody2D
     [Export] private float _jumpFloatyness = 0.02f;
     [Export] private float _gravityMultiplier = 1;
     [Export] private float _elongatedJumpMultiplier = 550;
+    [Export] private float _maxFallSpeed = 250;
     [Export] private float _snappyFallMultiplier = 750;
-    [Export] private float _snapLength = 0.2f;
     [Export] private Vector2 _itemThrowStrength;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
@@ -219,7 +219,7 @@ public class Player : KinematicBody2D
             }
             else
             {
-                _velocity.y += _snappyFallMultiplier * delta;
+                _velocity.y = Mathf.Min(_velocity.y + _snappyFallMultiplier * delta, _maxFallSpeed);
                 // if (Input.IsActionPressed("jump") && _timeInAir < _jumpPlatformForgiveness && !_hasJustJumped)
                 // {
                 //     Jump();

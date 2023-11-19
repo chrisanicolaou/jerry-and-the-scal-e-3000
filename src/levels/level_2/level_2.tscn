@@ -73,7 +73,7 @@ visible = false
 [node name="LevelInputController" parent="." instance=ExtResource( 11 )]
 
 [node name="Pillar" parent="." instance=ExtResource( 7 )]
-position = Vector2( 359, 224 )
+position = Vector2( 369, 224 )
 _outlineShaderMat = SubResource( 1 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 13 )]

@@ -246,7 +246,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( 17, 0 ) ]
+"values": [ Vector2( 13, 0 ) ]
 }
 tracks/12/type = "value"
 tracks/12/path = NodePath("CollisionPolygon2D:polygon")
@@ -406,7 +406,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 17, 0 ), Vector2( 12, 7 ) ]
+"values": [ Vector2( 13, 0 ), Vector2( 12, 7 ) ]
 }
 tracks/12/type = "value"
 tracks/12/path = NodePath("CollisionPolygon2D:polygon")
@@ -566,7 +566,7 @@ tracks/11/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ Vector2( 17, 0 ), Vector2( 34, -12 ) ]
+"values": [ Vector2( 13, 0 ), Vector2( 34, -12 ) ]
 }
 tracks/12/type = "value"
 tracks/12/path = NodePath("CollisionPolygon2D:polygon")
@@ -632,9 +632,8 @@ collision_mask = 512
 shape = SubResource( 2 )
 
 [node name="Gun" parent="." instance=ExtResource( 3 )]
-position = Vector2( 17, 0 )
+position = Vector2( 13, 0 )
 _playerPath = NodePath("..")
-_playerOffset = Vector2( 17, 0 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 anims/RESET = SubResource( 3 )
