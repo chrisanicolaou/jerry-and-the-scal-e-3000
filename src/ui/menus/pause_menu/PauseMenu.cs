@@ -33,7 +33,7 @@ public class PauseMenu : Control
     public void ShowAndFocus()
     {
         Show();
-        _resumeButton.CallDeferred("grab_focus");
+        // _resumeButton.CallDeferred("grab_focus");
     }
 
     private void OnResumeButtonPressed()

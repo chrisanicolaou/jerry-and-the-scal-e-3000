@@ -43,7 +43,7 @@ public class Level : Node2D
     public override void _Ready()
     {
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
-        _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
+        // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         Enum.TryParse(_modalSizeAsStr, out _modalSize);
         _entranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);

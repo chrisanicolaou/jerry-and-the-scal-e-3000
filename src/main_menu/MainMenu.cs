@@ -38,7 +38,7 @@ public class MainMenu : Node2D
         _levelSelectButton = GetNode<Button>(_levelSelectButtonPath);
         _levelSelectButton.Connect("pressed", this, nameof(OnLevelSelectButtonPressed));
         _rollingBoulder = GetNode<ScalableItemV2>(_rollingBoulderPath);
-        _playButton.CallDeferred("grab_focus");
+        // _playButton.CallDeferred("grab_focus");
     }
 
     public void Start()
@@ -76,5 +76,8 @@ public class MainMenu : Node2D
 
     private void OnLevelSelected(LevelData levelData) => EmitSignal(nameof(LevelSelected), levelData);
 
-    private void OnNavigateBackToMainMenu() => _playButton.GrabFocus();
+    private void OnNavigateBackToMainMenu()
+    {
+        // _playButton.GrabFocus();
+    }
 }

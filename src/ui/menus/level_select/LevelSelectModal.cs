@@ -47,7 +47,7 @@ public class LevelSelectModal : Panel
         _pageIndex = -1;
         NavigateToPage();
         Show();
-        (_pagesContainer.GetChild(0).GetChild(0) as Control).GrabFocus();
+        // (_pagesContainer.GetChild(0).GetChild(0) as Control).GrabFocus();
     }
 
     private void OnInputEvent(InputEvent inputEvent)
@@ -131,7 +131,7 @@ public class LevelSelectModal : Panel
         var tween = GetTree().CreateTween().SetTrans(_transType).SetEase(_easeType);
         tween.TweenProperty(_scrollContainer, "scroll_horizontal", targetScrollAmount, _scrollAnimationDuration);
         UpdateButtons();
-        (_pagesContainer.GetChild(_pageIndex).GetChild(0) as Control).GrabFocus();
+        // (_pagesContainer.GetChild(_pageIndex).GetChild(0) as Control).GrabFocus();
     }
 
     private void UpdateButtons()

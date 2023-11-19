@@ -38,6 +38,7 @@ public class Modal : Control
         _continueLabel.Show();
         _shouldReceiveInput = true;
         await ToSignal(this, nameof(ModalCloseRequested));
+        _shouldReceiveInput = false;
         Hide();
     }
 
@@ -48,6 +49,7 @@ public class Modal : Control
         if (@event is InputEventKey || @event is InputEventMouseButton)
         {
             EmitSignal(nameof(ModalCloseRequested));
+            GetTree().SetInputAsHandled();
         }
     }
 }
