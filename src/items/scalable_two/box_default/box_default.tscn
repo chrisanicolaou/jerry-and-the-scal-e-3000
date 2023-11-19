@@ -314,6 +314,7 @@ _whiteShaderMat = ExtResource( 5 )
 _outlineShaderMat = SubResource( 1 )
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource( 5 )
 
 [node name="Sprite" type="Sprite" parent="."]
