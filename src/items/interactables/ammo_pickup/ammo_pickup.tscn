@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=2]
 
-[ext_resource path="res://src/ui/level_ui/bullet_ui.png" type="Texture" id=1]
+[ext_resource path="res://src/items/interactables/ammo_pickup/energy_cell_full.png" type="Texture" id=1]
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/items/interactables/ammo_pickup/AmmoPickup.cs" type="Script" id=3]
 
@@ -8,7 +8,7 @@
 resource_local_to_scene = true
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3, 7 )
+extents = Vector2( 5, 6.25 )
 
 [sub_resource type="StreamTexture" id=2]
 load_path = "res://.import/light_128.png-507ed83555116ea2208ce46d3f2f8be2.stex"
@@ -31,13 +31,13 @@ texture = ExtResource( 1 )
 shape = SubResource( 3 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -1 )
+position = Vector2( 0, 0.25 )
 shape = SubResource( 1 )
 
 [node name="Light2D" type="Light2D" parent="."]
 texture = SubResource( 2 )
 texture_scale = 0.3
-color = Color( 0.254902, 1, 0.913725, 1 )
+color = Color( 0.945098, 1, 0, 1 )
 energy = 0.5
 
 [editable path="interactionArea"]

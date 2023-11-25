@@ -10,6 +10,7 @@ using Array = Godot.Collections.Array;
 public class ScalableItemV2 : RigidBody2D
 {
     [Signal] public delegate void ItemInteractionRequested(ScalableItemV2 item);
+    [Signal] public delegate void ChangedScale(ScalableItemSize newSize);
 
     // THIS IS ONLY IN THE GAME BECAUSE GODOT DOESN'T CACHE SCENES PROPERLY ---- PLEASE IGNORE -------------------- //
     private bool _continuousMovementCalled;
@@ -90,6 +91,7 @@ public class ScalableItemV2 : RigidBody2D
         Size = GetSizeFromScaleType(type);
         _animPlayer.Play(animName, customSpeed: fromEnd ? -1 : 1, fromEnd: fromEnd);
         _animPlayer.Connect("animation_finished", this, nameof(HandleScaleAnimationFinished));
+        EmitSignal(nameof(ChangedScale), Size);
     }
 
     // private async void HandleScaleBackToNormal(string animName)

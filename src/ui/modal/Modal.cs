@@ -46,7 +46,7 @@ public class Modal : Control
     {
         if (!_shouldReceiveInput) return;
 
-        if (@event is InputEventKey || @event is InputEventMouseButton)
+        if (@event is InputEventKey)
         {
             EmitSignal(nameof(ModalCloseRequested));
             GetTree().SetInputAsHandled();

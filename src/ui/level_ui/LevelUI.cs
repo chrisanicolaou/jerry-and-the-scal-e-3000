@@ -13,7 +13,8 @@ public class LevelUI : CanvasLayer
     [Export] private NodePath _bulletContainerPath;
     [Export] private PackedScene _controlWrappedSpriteScene;
     [Export] private Texture _keyTex;
-    [Export] private Texture _bulletTex;
+    [Export] private Texture _fullEnergyCellTex;
+    [Export] private Texture _emptyEnergyCellTex;
     [Export] private NodePath _pauseMenuPath;
 
     private Control _keyContainer;
@@ -43,7 +44,7 @@ public class LevelUI : CanvasLayer
     public void Initialise(int numOfKeys, int numOfBullets)
     {
         _keys = Enumerable.Range(0, numOfKeys).Select(_ => AddNewControlWrappedSprite(_keyTex, _keyContainer)).ToArray();
-        _bullets = Enumerable.Range(0, numOfBullets).Select(_ => AddNewControlWrappedSprite(_bulletTex, _bulletContainer, false, false)).ToList();
+        _bullets = Enumerable.Range(0, numOfBullets).Select(_ => AddNewControlWrappedSprite(_fullEnergyCellTex, _bulletContainer, false, false)).ToList();
     }
 
     public void AddCollectedKey()
@@ -53,13 +54,15 @@ public class LevelUI : CanvasLayer
 
     public void AddBonusBullet()
     {
-        _bullets.Add(AddNewControlWrappedSprite(_bulletTex, _bulletContainer, false, false));
+        _bullets.Insert(0, AddNewControlWrappedSprite(_fullEnergyCellTex, _bulletContainer, false, false));
     }
 
     public void RemoveBullet()
     {
         if (_bullets.Count <= 0) return;
-        _bullets[_bullets.Count - ++_shotsFired].Sprite.Modulate = new Color(_bullets[_bullets.Count - _shotsFired].Sprite.Modulate, _transparency);
+        var bulletControlSprite = _bullets[_bullets.Count - ++_shotsFired];
+        bulletControlSprite.Sprite.Texture = _emptyEnergyCellTex;
+        bulletControlSprite.Sprite.Modulate = new Color(bulletControlSprite.Sprite.Modulate, _transparency);
     }
 
     public void OpenPauseMenu()

@@ -23,35 +23,30 @@ public class Level : Node2D
     [Export] private Array<NodePath> _fallZonePaths;
     [Export] private NodePath _levelUIPath;
     [Export] private NodePath _inputControllerPath;
-    [Export] private NodePath _gunPickupPath;
-    [Export] private ModalOptions _gunPickupModalOpts;
-    [Export(PropertyHint.Enum, "Small,Large")] private string _modalSizeAsStr;
     [Export] private ModalOptions _tutorialModalOpts;
     [Export] private DialogPrompt _dialogPrompt;
 
     private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
-    private ModalSize _modalSize;
     private Door _exitDoor;
     private Key _key;
     private bool _keyFound;
     private LevelInputController _inputController;
-    private LevelUI _levelUI;
     
     protected Door EntranceDoor { get; private set; }
     protected Player Player { get; private set; }
+    protected LevelUI UI { get; private set; }
 
     public override void _Ready()
     {
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
         // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
-        Enum.TryParse(_modalSizeAsStr, out _modalSize);
         EntranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);
         _key = GetNode<Key>(_keyPath);
         Player = GetNode<Player>(_playerPath);
         Player.NumOfBullets = _numOfBullets;
-        _levelUI = GetNode<LevelUI>(_levelUIPath);
+        UI = GetNode<LevelUI>(_levelUIPath);
         Player.Freeze = true;
         Player.Visible = false;
         _inputController = GetNode<LevelInputController>(_inputControllerPath);
@@ -77,17 +72,11 @@ public class Level : Node2D
             var ammoPickup = GetNode<AmmoPickup>(_ammoPickupPaths[i]);
             ammoPickup.Connect(nameof(AmmoPickup.AmmoPickupFound), this, nameof(OnAmmoPickupFound), new Array { ammoPickup });
         }
-
-        if (_gunPickupPath != null)
-        {
-            var gunPickup = GetNode<GunPickup>(_gunPickupPath);
-            gunPickup.Connect(nameof(GunPickup.GunPickupRequested), this, nameof(OnGunPickupRequested));
-        }
         
-        _levelUI.Initialise(1, _numOfBullets > 0 ? _numOfBullets : 0);
-        _levelUI.Connect(nameof(LevelUI.ResumeRequested), this, nameof(OnResumeRequested));
-        _levelUI.Connect(nameof(LevelUI.RetryRequested), this, nameof(OnRetryRequested));
-        _levelUI.Connect(nameof(LevelUI.QuitToMenuRequested), this, nameof(OnQuitToMenuRequested));
+        UI.Initialise(1, _numOfBullets > 0 ? _numOfBullets : 0);
+        UI.Connect(nameof(LevelUI.ResumeRequested), this, nameof(OnResumeRequested));
+        UI.Connect(nameof(LevelUI.RetryRequested), this, nameof(OnRetryRequested));
+        UI.Connect(nameof(LevelUI.QuitToMenuRequested), this, nameof(OnQuitToMenuRequested));
         
         if (StartAutomatically)
         {
@@ -107,7 +96,7 @@ public class Level : Node2D
         
         if (_tutorialModalOpts != null)
         {
-            await ShowModal(_tutorialModalOpts, ModalSize.Large);
+            await ShowModal(_tutorialModalOpts);
         }
 
         // if (_dialogPrompt != null)
@@ -120,7 +109,7 @@ public class Level : Node2D
     {
         _keyFound = true;
         _key.QueueFree();
-        _levelUI.AddCollectedKey();
+        UI.AddCollectedKey();
     }
 
     private async void OnExitDoorReached()
@@ -166,39 +155,31 @@ public class Level : Node2D
 
     private void OnShotsFired()
     {
-        _levelUI.RemoveBullet();
+        UI.RemoveBullet();
     }
 
     private void OnItemForcePutdown(ScalableItem item)
     {
         AddChild(item);
     }
-
-    private void OnGunPickupRequested() => HandleGunPickup();
     private void OnAmmoPickupFound(AmmoPickup ammoPickup) => HandleAmmoPickup(ammoPickup);
-
-    private async void HandleGunPickup()
-    {
-        Player.PickupGun();
-        ShowModal(_gunPickupModalOpts, _modalSize);
-    }
 
     private async void HandleAmmoPickup(AmmoPickup ammoPickup)
     {
         ammoPickup?.QueueFree();
-        _levelUI.AddBonusBullet();
+        UI.AddBonusBullet();
         Player.NumOfBullets++;
     }
 
     private void OnPauseRequested()
     {
         GetTree().Paused = true;
-        _levelUI.OpenPauseMenu();
+        UI.OpenPauseMenu();
     }
 
     private void OnResumeRequested()
     {
-        _levelUI.ClosePauseMenu();
+        UI.ClosePauseMenu();
         GetTree().Paused = false;
     }
 
@@ -209,10 +190,10 @@ public class Level : Node2D
         EmitSignal(nameof(QuitToMenuRequested));
     }
 
-    private async Task ShowModal(ModalOptions opts, ModalSize size)
+    protected async Task ShowModal(ModalOptions opts)
     {
         GetTree().Paused = true;
-        await _modalManager.ShowModal(opts, size);
+        await _modalManager.ShowModal(opts, ModalSize.Large);
         GetTree().Paused = false;
         Player.Freeze = false;
     }
