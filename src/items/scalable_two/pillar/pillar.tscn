@@ -111,7 +111,7 @@ tracks/8/path = NodePath(".:mass")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
-tracks/8/enabled = true
+tracks/8/enabled = false
 tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
@@ -223,7 +223,7 @@ tracks/8/path = NodePath(".:mass")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
-tracks/8/enabled = true
+tracks/8/enabled = false
 tracks/8/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -299,7 +299,7 @@ tracks/5/path = NodePath(".:mass")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
-tracks/5/enabled = true
+tracks/5/enabled = false
 tracks/5/keys = {
 "times": PoolRealArray( 0, 0.6 ),
 "transitions": PoolRealArray( 1, 1 ),
@@ -315,7 +315,6 @@ z_index = 8
 collision_layer = 64
 collision_mask = 1267
 mode = 1
-mass = 10.0
 script = ExtResource( 1 )
 CarryOffset = Vector2( 25, -30 )
 _spritePath = NodePath("Sprite")

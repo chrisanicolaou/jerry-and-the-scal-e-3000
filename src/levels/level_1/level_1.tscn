@@ -121,7 +121,6 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="Pillar" parent="." instance=ExtResource( 19 )]
 position = Vector2( 323, 224 )
-mass = 10.0
 _outlineShaderMat = SubResource( 1 )
 
 [node name="interactionArea" parent="Pillar" index="3"]
