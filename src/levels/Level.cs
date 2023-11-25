@@ -29,7 +29,7 @@ public class Level : Node2D
     private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
     private Door _exitDoor;
-    private Key _key;
+    protected Key Key { get; private set; }
     private bool _keyFound;
     private LevelInputController _inputController;
     
@@ -43,7 +43,7 @@ public class Level : Node2D
         // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         EntranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);
-        _key = GetNode<Key>(_keyPath);
+        Key = GetNode<Key>(_keyPath);
         Player = GetNode<Player>(_playerPath);
         Player.NumOfBullets = _numOfBullets;
         UI = GetNode<LevelUI>(_levelUIPath);
@@ -54,7 +54,7 @@ public class Level : Node2D
 
         Player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
         Player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
-        _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
+        Key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
         for (var i = 0; i < _carryableItemPaths?.Count; i++)
@@ -105,10 +105,10 @@ public class Level : Node2D
         // }
     }
 
-    private async void OnKeyFound()
+    protected virtual async void OnKeyFound()
     {
         _keyFound = true;
-        _key.QueueFree();
+        Key.QueueFree();
         UI.AddCollectedKey();
     }
 

@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Key : Node2D
+public class Key : RigidBody2D
 {
     [Signal] public delegate void KeyFound();
     [Export] private NodePath _interactionAreaPath;

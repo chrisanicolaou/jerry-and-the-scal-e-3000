@@ -36,7 +36,7 @@ shader_param/alpha = 0.25
 [node name="LevelNine" type="Node2D"]
 script = ExtResource( 19 )
 StartAutomatically = true
-_numOfBullets = 1
+_numOfBullets = 2
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("Door")
 _keyPath = NodePath("Key")

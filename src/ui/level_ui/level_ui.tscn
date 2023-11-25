@@ -49,7 +49,7 @@ anchor_bottom = 1.0
 margin_left = -159.0
 margin_top = -17.0
 margin_right = -23.0
-custom_constants/separation = 20
+custom_constants/separation = 25
 alignment = 2
 __meta__ = {
 "_edit_group_": true

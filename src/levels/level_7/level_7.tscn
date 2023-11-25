@@ -34,7 +34,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 StartAutomatically = true
-_numOfBullets = 3
+_numOfBullets = 5
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
@@ -52,6 +52,10 @@ tile_data = PoolIntArray( 196609, 536870949, 0, 196610, 536870949, 0, 196611, 53
 
 [node name="BulletDeflector" parent="." instance=ExtResource( 5 )]
 position = Vector2( 47, 210 )
+
+[node name="BulletDeflector2" parent="." instance=ExtResource( 5 )]
+position = Vector2( 481, 241 )
+scale = Vector2( -1, 1 )
 
 [node name="TrajectoryLine" parent="." instance=ExtResource( 6 )]
 
@@ -82,6 +86,7 @@ position = Vector2( 420, 239 )
 _isLocked = true
 
 [node name="UI" parent="." instance=ExtResource( 15 )]
+visible = false
 
 [node name="LevelInputController" parent="." instance=ExtResource( 13 )]
 

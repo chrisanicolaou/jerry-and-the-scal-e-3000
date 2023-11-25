@@ -46,7 +46,7 @@ __meta__ = {
 "_edit_lock_": true
 }
 StartAutomatically = true
-_numOfBullets = 2
+_numOfBullets = 1
 _entranceDoorPath = NodePath("EntranceDoor")
 _exitDoorPath = NodePath("ExitDoor")
 _keyPath = NodePath("Key")
