@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://src/items/scalable_two/ScalableItemV2.cs" type="Script" id=1]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar_medium.png" type="Texture" id=2]
@@ -7,7 +7,6 @@
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.tres" type="Material" id=5]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar_big.png" type="Texture" id=6]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar_small.png" type="Texture" id=7]
-[ext_resource path="res://src/items/scalable_two/white_flashes.tres" type="Animation" id=8]
 
 [sub_resource type="Animation" id=3]
 length = 0.001
@@ -336,7 +335,6 @@ polygon = PoolVector2Array( -14, 16, 13, 16, 13, 11, 11, 9, 9, 9, 9, -12, 5, -15
 anims/RESET = SubResource( 3 )
 anims/scale_down = SubResource( 5 )
 anims/scale_up = SubResource( 2 )
-anims/white_flashes = ExtResource( 8 )
 
 [node name="interactionArea" parent="." instance=ExtResource( 3 )]
 

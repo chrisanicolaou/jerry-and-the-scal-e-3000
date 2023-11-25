@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://src/items/scalable_two/box_default/box_default_medium.png" type="Texture" id=1]
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=2]
@@ -6,7 +6,6 @@
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=4]
 [ext_resource path="res://src/items/shader_mats/white_shader_mat.tres" type="Material" id=5]
 [ext_resource path="res://src/items/scalable_two/box_default/box_default_big.png" type="Texture" id=6]
-[ext_resource path="res://src/items/scalable_two/white_flashes.tres" type="Animation" id=7]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -332,7 +331,6 @@ polygon = PoolVector2Array( -8, -7, 7, -7, 7, 8, -8, 8 )
 anims/RESET = SubResource( 3 )
 anims/scale_down = SubResource( 4 )
 anims/scale_up = SubResource( 2 )
-anims/white_flashes = ExtResource( 7 )
 
 [node name="interactionArea" parent="." instance=ExtResource( 2 )]
 

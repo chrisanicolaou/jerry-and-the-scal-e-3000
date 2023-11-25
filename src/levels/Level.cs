@@ -158,7 +158,7 @@ public class Level : Node2D
         UI.RemoveBullet();
     }
 
-    private void OnItemForcePutdown(ScalableItem item)
+    private void OnItemForcePutdown(ScalableItemV2 item)
     {
         AddChild(item);
     }

@@ -8,7 +8,7 @@ using Godot.Collections;
 public class Player : KinematicBody2D
 {
     [Signal] public delegate void ShotsFired();
-    [Signal] public delegate void ItemForcePutdown(ScalableItem item);
+    [Signal] public delegate void ItemForcePutdown(ScalableItemV2 item);
 
     [Export] private Array<AudioStream> _jumpSfx;
     [Export] private bool _hasGun = true;
