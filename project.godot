@@ -12,6 +12,7 @@ config_version=4
 
 config/name="Github Game Jam 2023"
 run/main_scene="res://src/main/main.tscn"
+boot_splash/image="res://src/main/splash/chici_studios_splash.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
 
