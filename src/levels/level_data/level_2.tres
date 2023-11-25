@@ -5,5 +5,5 @@
 
 [resource]
 script = ExtResource( 1 )
-DisplayName = "Patience"
+DisplayName = "What goes up, must come down"
 Scene = ExtResource( 2 )

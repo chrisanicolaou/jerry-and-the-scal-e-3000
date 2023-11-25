@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.ComponentModel.Design;
 using GithubGameJam2023.items.scalable_two;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
@@ -19,7 +20,7 @@ public class TutorialLevel : Level
 
     private string[] _tutorialPrompts = new[]
     {
-        "Press A or D to move. Press space to jump",
+        "Press A or D to move. Press W or space to jump",
         "Aim the Scal-E 3000 at the pillar, then left click to embiggen",
         "The Scal-E 3000 can also shrink items. Aim at the pillar again, then right click to shrink",
         "You'll have to find a key to progress",
@@ -32,6 +33,7 @@ public class TutorialLevel : Level
         
         // Suspend key for now
         Key.Mode = RigidBody2D.ModeEnum.Static;
+        Key.Hide();
         _tutorialItem = GetNode<ScalableItemV2>(_tutorialItemPath);
         _tutorialPrompt = _tutorialPromptScene.Instance<TutorialPrompt>();
         UI.AddChild(_tutorialPrompt);
@@ -109,6 +111,7 @@ public class TutorialLevel : Level
     {
         _actionToBlock = "";
         Key.Mode = RigidBody2D.ModeEnum.Rigid;
+        Key.Show();
     }
 
     protected override void OnKeyFound()
