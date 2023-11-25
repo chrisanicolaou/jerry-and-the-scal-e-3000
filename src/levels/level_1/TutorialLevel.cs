@@ -19,11 +19,11 @@ public class TutorialLevel : Level
 
     private string[] _tutorialPrompts = new[]
     {
-        "Press W or D to move. Press space to jump",
+        "Press A or D to move. Press space to jump",
         "Aim the Scal-E 3000 at the pillar, then left click to embiggen",
         "The Scal-E 3000 can also shrink items. Aim at the pillar again, then right click to shrink",
         "You'll have to find a key to progress",
-        "If you ever get stuck, press ESC to pause and restart. Good luck!"
+        "If you ever get stuck, press P to pause and restart. Good luck!"
     };
 
     public override void _Ready()

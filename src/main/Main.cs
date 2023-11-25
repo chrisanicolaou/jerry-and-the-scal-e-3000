@@ -155,4 +155,14 @@ public class Main : Node
 
         ResourceSaver.Save(PlayerDataSavePath, _gameDataManager.PlayerData);
     }
+
+    public override void _Notification(int what)
+    {
+        // In itch.io, clicking the game brings it in to focus. We want to stop this input event from propagating to prevent the user from shooting or clicking things they don't want to
+        if (what == NotificationWmFocusIn)
+        {
+            GD.Print("Focusing...");
+            GetTree().SetInputAsHandled();
+        }
+    }
 }

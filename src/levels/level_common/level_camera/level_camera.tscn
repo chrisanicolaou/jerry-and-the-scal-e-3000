@@ -2,6 +2,7 @@
 
 [node name="LevelCamera" type="Camera2D"]
 position = Vector2( 320, 180 )
+z_index = 120
 current = true
 __meta__ = {
 "_edit_lock_": true

@@ -216,4 +216,15 @@ public class Level : Node2D
             Player.Freeze = false;
         }
     }
+
+    public override void _Notification(int what)
+    {
+        // When we lose focus, pause the game to avoid players accidentally shooting to regain focus. 
+        // Also has the benefit of "notifying" the player when focus is lost. This is necessary because hitting the
+        // fullscreen button on itch.io makes the game lose focus, which is frustrating.
+        if (what == NotificationWmFocusOut)
+        {
+            OnPauseRequested();
+        }
+    }
 }
