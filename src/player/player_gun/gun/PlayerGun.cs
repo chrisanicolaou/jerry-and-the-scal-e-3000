@@ -66,7 +66,7 @@ public class PlayerGun : Node2D
     public void UpdateBulletTrajectory(Vector2 direction, float delta, bool continueOffScreen = false)
     {
         var collision = TrajectoryLine.UpdateLine(_trajectoryLinePoint.GlobalPosition, direction, delta, continueOffScreen);
-        if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutated)
+        if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutating)
         {
             SetScopeOnItem(scalableItem);
         }

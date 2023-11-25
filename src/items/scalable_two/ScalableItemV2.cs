@@ -2,6 +2,7 @@ using Godot;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using GithubGameJam2023.items.scalable_two;
 using GithubGameJam2023.player.player_gun;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
@@ -34,7 +35,8 @@ public class ScalableItemV2 : RigidBody2D
     private List<BreakableItem> _breakableItemsInContact = new List<BreakableItem>();
     
     public bool IsMutated { get; set; }
-    
+    public bool IsMutating { get; set; }
+    public ScalableItemSize Size { get; private set; } = ScalableItemSize.Normal;
 
     public override void _Ready()
     {
@@ -51,8 +53,8 @@ public class ScalableItemV2 : RigidBody2D
 
     public void ChangeScale(ScaleType type)
     {
-        if (IsMutated) return;
-        IsMutated = true;
+        if (type == ScaleType.Small && Size == ScalableItemSize.Small || type == ScaleType.Big && Size == ScalableItemSize.Big) return;
+        IsMutating = true;
         HandleScale(type);
     }
 
@@ -69,50 +71,45 @@ public class ScalableItemV2 : RigidBody2D
     protected virtual async void HandleScale(ScaleType type)
     {
         string animName;
+        var fromEnd = Size != ScalableItemSize.Normal;
         switch (type)
         {
             case ScaleType.Big:
-                animName = "scale_up";
+                animName = fromEnd ? "scale_down" : "scale_up";
                 break;
             case ScaleType.BigPreserveMass:
-                animName = "scale_up_preserve_mass";
+                animName = fromEnd ? "scale_down" : "scale_up_preserve_mass";
                 break;
             case ScaleType.Small:
-                animName = "scale_down";
+                animName = fromEnd ? "scale_up" : "scale_down";
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(type), type, null);
         }
 
-        _animPlayer.Play(animName);
-        _animPlayer.Connect("animation_finished", this, nameof(StartScaleDurationTimerAnimation));
-        
-        GetTree().CreateTimer(DefaultScaleDuration, false).Connect("timeout", this, nameof(HandleScaleBackToNormal), new Array { animName });
+        Size = GetSizeFromScaleType(type);
+        _animPlayer.Play(animName, customSpeed: fromEnd ? -1 : 1, fromEnd: fromEnd);
+        _animPlayer.Connect("animation_finished", this, nameof(HandleScaleAnimationFinished));
     }
 
-    private async void HandleScaleBackToNormal(string animName)
-    {
-        _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
-        _animPlayer.Connect("animation_finished", this, nameof(HandlePostScaleCleanUp));
-    }
+    // private async void HandleScaleBackToNormal(string animName)
+    // {
+    //     _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
+    //     _animPlayer.Connect("animation_finished", this, nameof(HandlePostScaleCleanUp));
+    // // }
+    //
+    // private void HandlePostScaleCleanUp(string _)
+    // {
+    //     _animPlayer.Disconnect("animation_finished", this, nameof(HandlePostScaleCleanUp));
+    //     _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
+    //     IsMutated = false;
+    // }
 
-    private void HandlePostScaleCleanUp(string _)
+    public void HandleScaleAnimationFinished(string _)
     {
-        _animPlayer.Disconnect("animation_finished", this, nameof(HandlePostScaleCleanUp));
+        _animPlayer.Disconnect("animation_finished", this, nameof(HandleScaleAnimationFinished));
         _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
-        IsMutated = false;
-    }
-
-    public void StartScaleDurationTimerAnimation(string _)
-    {
-        _animPlayer.Disconnect("animation_finished", this, nameof(StartScaleDurationTimerAnimation));
-        _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
-        GetTree().CreateTimer(DefaultScaleDuration - 4f, false).Connect("timeout", this, nameof(PlayWhiteFlashes));
-    }
-
-    public void PlayWhiteFlashes()
-    {
-        _animPlayer.Play("white_flashes");
+        IsMutating = false;
     }
 
     // private async void PlayScaleDurationAnimation()
@@ -185,5 +182,20 @@ public class ScalableItemV2 : RigidBody2D
         _continuousMovementCalled = true;
         LinearVelocity = ContinuousMovementLinearVelocity;
         AngularVelocity = ContinuousMovementAngularVelocity;
+    }
+
+    private ScalableItemSize GetSizeFromScaleType(ScaleType type)
+    {
+        if (Size != ScalableItemSize.Normal) return ScalableItemSize.Normal;
+        switch (type)
+        {
+            case ScaleType.Small:
+                return ScalableItemSize.Small;
+            case ScaleType.Big:
+            case ScaleType.BigPreserveMass:
+                return ScalableItemSize.Big;
+            default:
+                return ScalableItemSize.Normal;
+        }
     }
 }

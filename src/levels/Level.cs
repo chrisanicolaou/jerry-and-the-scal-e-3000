@@ -32,32 +32,33 @@ public class Level : Node2D
     private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
     private ModalSize _modalSize;
-    private Door _entranceDoor;
     private Door _exitDoor;
-    private Player _player;
     private Key _key;
     private bool _keyFound;
     private LevelInputController _inputController;
     private LevelUI _levelUI;
+    
+    protected Door EntranceDoor { get; private set; }
+    protected Player Player { get; private set; }
 
     public override void _Ready()
     {
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
         // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         Enum.TryParse(_modalSizeAsStr, out _modalSize);
-        _entranceDoor = GetNode<Door>(_entranceDoorPath);
+        EntranceDoor = GetNode<Door>(_entranceDoorPath);
         _exitDoor = GetNode<Door>(_exitDoorPath);
         _key = GetNode<Key>(_keyPath);
-        _player = GetNode<Player>(_playerPath);
-        _player.NumOfBullets = _numOfBullets;
+        Player = GetNode<Player>(_playerPath);
+        Player.NumOfBullets = _numOfBullets;
         _levelUI = GetNode<LevelUI>(_levelUIPath);
-        _player.Freeze = true;
-        _player.Visible = false;
+        Player.Freeze = true;
+        Player.Visible = false;
         _inputController = GetNode<LevelInputController>(_inputControllerPath);
         _inputController.Connect(nameof(LevelInputController.PauseRequested), this, nameof(OnPauseRequested));
 
-        _player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
-        _player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
+        Player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
+        Player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
         _key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
         _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
@@ -94,15 +95,15 @@ public class Level : Node2D
         }
     }
 
-    public async void StartLevel()
+    public virtual async void StartLevel()
     {
-        _player.GlobalPosition = _entranceDoor.GlobalPosition;
-        await _entranceDoor.Open();
-        _player.Visible = true;
-        await _player.EnterLevel(_entranceDoor);
-        await _entranceDoor.Close();
+        Player.GlobalPosition = EntranceDoor.GlobalPosition;
+        await EntranceDoor.Open();
+        Player.Visible = true;
+        await Player.EnterLevel(EntranceDoor);
+        await EntranceDoor.Close();
 
-        if (_tutorialModalOpts == null && _dialogPrompt == null) _player.Freeze = false;
+        if (_tutorialModalOpts == null && _dialogPrompt == null) Player.Freeze = false;
         
         if (_tutorialModalOpts != null)
         {
@@ -133,29 +134,29 @@ public class Level : Node2D
 
     public async void EndLevel()
     {
-        _player.Freeze = true;
-        _player.GlobalPosition = _exitDoor.GlobalPosition;
+        Player.Freeze = true;
+        Player.GlobalPosition = _exitDoor.GlobalPosition;
         await _exitDoor.Open();
-        await _player.ExitLevel(_exitDoor);
+        await Player.ExitLevel(_exitDoor);
         await _exitDoor.Close();
         EmitSignal(nameof(LevelCompleted));
     }
 
     private void OnItemCarryRequested(ScalableItemV2 item)
     {
-        if (_player.ItemCarry != null)
+        if (Player.ItemCarry != null)
         {
-            if (_player.ItemCarry == item)
+            if (Player.ItemCarry == item)
             {
-                _player.PutdownItem();
+                Player.PutdownItem();
                 AddChild(item);
                 return;
             }
-            var itemDropped = _player.PutdownItem();
+            var itemDropped = Player.PutdownItem();
             AddChild(itemDropped);
         }
         RemoveChild(item);
-        _player.PickupItem(item);
+        Player.PickupItem(item);
     }
 
     private void OnPlayerFell()
@@ -178,7 +179,7 @@ public class Level : Node2D
 
     private async void HandleGunPickup()
     {
-        _player.PickupGun();
+        Player.PickupGun();
         ShowModal(_gunPickupModalOpts, _modalSize);
     }
 
@@ -186,7 +187,7 @@ public class Level : Node2D
     {
         ammoPickup?.QueueFree();
         _levelUI.AddBonusBullet();
-        _player.NumOfBullets++;
+        Player.NumOfBullets++;
     }
 
     private void OnPauseRequested()
@@ -213,7 +214,7 @@ public class Level : Node2D
         GetTree().Paused = true;
         await _modalManager.ShowModal(opts, size);
         GetTree().Paused = false;
-        _player.Freeze = false;
+        Player.Freeze = false;
     }
 
     private async Task ShowDialogPrompt(DialogPrompt prompt)
@@ -231,7 +232,7 @@ public class Level : Node2D
         else
         {
             GetTree().Paused = false;
-            _player.Freeze = false;
+            Player.Freeze = false;
         }
     }
 }
