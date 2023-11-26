@@ -16,6 +16,7 @@ public class BouncePad : StaticBody2D
     {
         if (body is ScalableItemV2 scalableItem)
         {
+            GD.Print($"Mass at time of impact: {scalableItem.Mass}");
             scalableItem.ApplyCentralImpulse(_bounceForce);
         }
     }

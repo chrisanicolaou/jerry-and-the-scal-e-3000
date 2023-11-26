@@ -25,6 +25,7 @@ public class ScalableItemV2 : RigidBody2D
     [Export] private NodePath _interactionAreaPath;
     [Export] private ShaderMaterial _whiteShaderMat;
     [Export] private ShaderMaterial _outlineShaderMat;
+    [Export(PropertyHint.Layers2dPhysics)] private uint _colLayerWhenHeld;
     
     [Export(PropertyHint.Range, "5,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 5f;
     [Export] public bool CanBeCarried { get; set; }
@@ -34,6 +35,8 @@ public class ScalableItemV2 : RigidBody2D
     private AnimationPlayer _animPlayer;
     private InteractionArea _interactionArea;
     private List<BreakableItem> _breakableItemsInContact = new List<BreakableItem>();
+    private uint _originalColLayer;
+    private uint _originalColMask;
     
     public bool IsMutated { get; set; }
     public bool IsMutating { get; set; }
@@ -50,6 +53,8 @@ public class ScalableItemV2 : RigidBody2D
         _interactionArea?.SetDisabled(!CanBeCarried);
         Connect("body_entered", this, nameof(OnBodyEntered));
         Connect("body_exited", this, nameof(OnBodyExited));
+        _originalColLayer = CollisionLayer;
+        _originalColMask = CollisionMask;
     }
 
     public void ChangeScale(ScaleType type)
@@ -161,6 +166,18 @@ public class ScalableItemV2 : RigidBody2D
     {
         if (!CanBeCarried) return;
         EmitSignal(nameof(ItemInteractionRequested), this);
+    }
+
+    public void SwitchToHeldCollisionLayer()
+    {
+        CollisionMask = _colLayerWhenHeld;
+        CollisionLayer = _colLayerWhenHeld;
+    }
+
+    public void SwitchToNormalCollisionLayer()
+    {
+        CollisionMask = _originalColMask;
+        CollisionLayer = _originalColLayer;
     }
 
     private void OnBodyEntered(Node body)

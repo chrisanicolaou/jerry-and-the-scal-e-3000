@@ -104,6 +104,7 @@ public class Player : KinematicBody2D
     {
         ItemCarry = item;
         // ItemCarry.Mode = RigidBody2D.ModeEnum.Kinematic;
+        ItemCarry.SwitchToHeldCollisionLayer();
         _sprite.AddChild(item);
         ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
             _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
@@ -118,7 +119,7 @@ public class Player : KinematicBody2D
         item.Mode = RigidBody2D.ModeEnum.Rigid;
         item.LinearVelocity = Vector2.Zero;
         item.ApplyCentralImpulse(_sprite.FlipH ? -_itemThrowStrength : _itemThrowStrength);
-        // item.DisablePhysics = false;
+        ItemCarry.SwitchToNormalCollisionLayer();
         ItemCarry = null;
         return item;
     }
@@ -203,6 +204,8 @@ public class Player : KinematicBody2D
         //     correction = new Vector2(0, -1) - GetFloorNormal();
         //     correction *= -_gravity;
         // }
+        
+        MoveAndSlide(_velocity, Vector2.Up, true, infiniteInertia: false);
 
         if (!IsOnFloor())
         {
@@ -240,8 +243,6 @@ public class Player : KinematicBody2D
             //     _velocity.y = 0;
             // }
         }
-        
-        MoveAndSlide(_velocity, Vector2.Up, true, infiniteInertia: false);
     }
 
     private void PlayAnimationIfNotPlaying(string animName)

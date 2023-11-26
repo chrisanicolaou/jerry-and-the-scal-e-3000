@@ -8,7 +8,7 @@
 [ext_resource path="res://src/environment/light_textures/light_line_hard.png" type="Texture" id=6]
 [ext_resource path="res://src/environment/tiles/tilesets/brick_tiles.tres" type="TileSet" id=7]
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=8]
-[ext_resource path="res://src/items/breakable/breakable_block_sloped/breakable_block_sloped.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/levels/level_common/level_tilemaps/breakable_tilemap.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/items/interactables/key/key.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/ui/level_ui/trajectory_line/trajectory_line.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/environment/hazards/fall_zone/fall_zone.tscn" type="PackedScene" id=13]
@@ -113,6 +113,12 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="Breakable" parent="." instance=ExtResource( 9 )]
+WeightRequiredToBreak = 200.0
+
+[node name="BreakableTileMap" parent="Breakable" index="0"]
+tile_data = PoolIntArray( 262151, 3, 0, 262152, 3, 0, 262153, 4, 0 )
+
 [node name="ExitDoor" parent="." instance=ExtResource( 17 )]
 position = Vector2( 454, 191 )
 z_index = 2
@@ -136,10 +142,6 @@ _laserPath = NodePath("../Laser")
 visible = false
 
 [node name="InputController" parent="." instance=ExtResource( 8 )]
-
-[node name="BreakablePlatform" parent="." instance=ExtResource( 9 )]
-position = Vector2( 146, 77 )
-WeightRequiredToBreak = 200.0
 
 [node name="Deflector" parent="." instance=ExtResource( 16 )]
 position = Vector2( 517, 179 )
@@ -206,7 +208,7 @@ _outlineShaderMat = SubResource( 2 )
 [node name="Laser" parent="." instance=ExtResource( 21 )]
 
 [node name="BoulderRound" parent="." instance=ExtResource( 14 )]
-position = Vector2( 128, 54 )
+position = Vector2( 128, 46 )
 physics_material_override = SubResource( 4 )
 DefaultScaleDuration = 8.0
 _outlineShaderMat = SubResource( 3 )
@@ -218,5 +220,6 @@ offset = Vector2( -40, -30 )
 position = Vector2( 506, 86 )
 scale = Vector2( -1, 1 )
 
+[editable path="Breakable"]
 [editable path="Deflector"]
 [editable path="FallZone"]
