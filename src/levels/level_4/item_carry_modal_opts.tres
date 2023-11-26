@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource( 1 )
 IconScale = 1.0
-Title = ""
+Title = "Pickups"
 Description = "Small enough items can be moved around. Completely unrelated to this level, by the way."
 ContinueDelayDuration = 2.0

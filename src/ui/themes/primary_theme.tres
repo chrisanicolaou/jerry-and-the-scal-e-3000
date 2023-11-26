@@ -1,5 +1,7 @@
 [gd_resource type="Theme" load_steps=12 format=2]
 
+[ext_resource path="res://src/ui/themes/panel_stylebox.tres" type="StyleBox" id=1]
+
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0431373, 0.0431373, 0.0431373, 1 )
 border_width_left = 5
@@ -70,18 +72,6 @@ corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
-[sub_resource type="StyleBoxFlat" id=6]
-bg_color = Color( 0.0431373, 0.0431373, 0.0431373, 0.784314 )
-border_width_left = 2
-border_width_top = 2
-border_width_right = 2
-border_width_bottom = 2
-border_color = Color( 0.843137, 0.843137, 0.843137, 1 )
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
-
 [resource]
 Button/styles/disabled = SubResource( 2 )
 Button/styles/focus = SubResource( 3 )
@@ -93,4 +83,5 @@ HScrollBar/styles/grabber_highlight = SubResource( 8 )
 HScrollBar/styles/grabber_pressed = SubResource( 9 )
 HScrollBar/styles/scroll = SubResource( 10 )
 HScrollBar/styles/scroll_focus = SubResource( 11 )
-Panel/styles/panel = SubResource( 6 )
+Panel/styles/panel = ExtResource( 1 )
+PanelContainer/styles/panel = ExtResource( 1 )
