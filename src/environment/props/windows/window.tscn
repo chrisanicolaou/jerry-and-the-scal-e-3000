@@ -6,3 +6,4 @@
 texture = ExtResource( 1 )
 hframes = 8
 vframes = 5
+frame = 1

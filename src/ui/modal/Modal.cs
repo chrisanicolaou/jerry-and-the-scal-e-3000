@@ -30,6 +30,7 @@ public class Modal : Control
         _shouldReceiveInput = false;
         var continueDelay = opts.ContinueDelayDuration < 0 ? _continueDelay : opts.ContinueDelayDuration;
         _icon.Texture = opts.IconTex;
+        _icon.Scale = new Vector2(opts.IconScale, opts.IconScale);
         _titleLabel.Text = opts.Title;
         _descriptionLabel.Text = opts.Description;
         Show();

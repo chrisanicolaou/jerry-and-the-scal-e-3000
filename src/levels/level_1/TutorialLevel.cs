@@ -11,9 +11,16 @@ public class TutorialLevel : Level
     [Export] private ModalOptions _gunPickupModalOpts;
     [Export] private PackedScene _tutorialPromptScene;
     [Export] private NodePath _tutorialItemPath;
+    [Export] private NodePath _gunSpinSpritePath;
+    [Export] private NodePath _gunSpinSpriteTwoPath;
+    [Export] private NodePath _gunSpinAnimPlayerPath;
+    [Export] private float _gunSpinPostAnimDelay = 0.5f;
 
     private TutorialPrompt _tutorialPrompt;
     private ScalableItemV2 _tutorialItem;
+    private Sprite _gunSpinSprite;
+    private Sprite _gunSpinSpriteTwo;
+    private AnimationPlayer _gunSpinAnimPlayer;
     private string _actionToBlock = "";
 
     private int _currentPromptIndex = -1;
@@ -40,6 +47,11 @@ public class TutorialLevel : Level
         
         var gunPickup = GetNode<GunPickup>(_gunPickupPath);
         gunPickup.Connect(nameof(GunPickup.GunPickupRequested), this, nameof(OnGunPickupRequested));
+        _gunSpinSprite = GetNode<Sprite>(_gunSpinSpritePath);
+        _gunSpinSpriteTwo = GetNode<Sprite>(_gunSpinSpriteTwoPath);
+        _gunSpinSprite.Hide();
+        _gunSpinSpriteTwo.Hide();
+        _gunSpinAnimPlayer = GetNode<AnimationPlayer>(_gunSpinAnimPlayerPath);
     }
 
     public override void _Input(InputEvent inputEvent)
@@ -69,7 +81,15 @@ public class TutorialLevel : Level
     private async void HandleGunPickup()
     {
         Player.PickupGun();
+        _gunSpinSprite.Show();
+        _gunSpinSpriteTwo.Show();
+        _gunSpinAnimPlayer.Play("gun_spin");
+        // await ToSignal(_gunSpinAnimPlayer, "animation_finished");
+        // if (_gunSpinPostAnimDelay > 0.01f) await ToSignal(GetTree().CreateTimer(_gunSpinPostAnimDelay, false), "timeout");
+        // _gunSpinSprite.Hide();
         await ShowModal(_gunPickupModalOpts);
+        _gunSpinSprite.Hide();
+        _gunSpinSpriteTwo.Hide();
         AdvanceTutorial();
         _tutorialItem.Connect(nameof(ScalableItemV2.ChangedScale), this, nameof(OnTutorialItemEmbiggened));
         _actionToBlock = "shoot_small";

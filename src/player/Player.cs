@@ -126,7 +126,6 @@ public class Player : KinematicBody2D
 
     public void PickupGun()
     {
-        // Some animation here maybe?
         EnableGun();
     }
 

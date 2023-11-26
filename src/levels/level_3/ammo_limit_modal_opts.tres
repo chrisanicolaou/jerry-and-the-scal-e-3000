@@ -1,9 +1,12 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=3 format=2]
 
 [ext_resource path="res://src/ui/modal/ModalOptions.cs" type="Script" id=1]
+[ext_resource path="res://src/items/interactables/ammo_pickup/energy_cell_full.png" type="Texture" id=2]
 
 [resource]
 script = ExtResource( 1 )
-Title = ""
-Description = "The Scal-e 3000 has limited energy. If only there was some way to charge it..."
+IconTex = ExtResource( 2 )
+IconScale = 1.0
+Title = "Energy cells"
+Description = "The Scal-E 3000 needs energy cells to fire. If only you could find some..."
 ContinueDelayDuration = 2.0
