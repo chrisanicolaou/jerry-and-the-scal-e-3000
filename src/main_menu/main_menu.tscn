@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=2]
+[gd_scene load_steps=19 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/fonts/pixelify_36_outline.tres" type="DynamicFont" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://src/main_menu/demo_track.wav" type="AudioStream" id=7]
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=8]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=9]
+[ext_resource path="res://src/ui/fonts/pixelify_18_outline.tres" type="DynamicFont" id=10]
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main_menu/ScaleTriggerArea.cs" type="Script" id=13]
@@ -190,22 +191,39 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0 )
 
-[node name="Title" type="CenterContainer" parent="MainMenuUI"]
+[node name="TitleVBoxContainer" type="VBoxContainer" parent="MainMenuUI"]
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-margin_left = -144.0
-margin_top = -83.5
-margin_right = 144.0
-margin_bottom = -38.5
+margin_left = -109.5
+margin_top = -152.5
+margin_right = 109.5
+margin_bottom = -9.5
 
-[node name="Label" type="Label" parent="MainMenuUI/Title"]
-margin_left = 91.0
-margin_right = 196.0
+[node name="Jerry" type="Label" parent="MainMenuUI/TitleVBoxContainer"]
+margin_right = 219.0
 margin_bottom = 45.0
 custom_fonts/font = ExtResource( 2 )
 text = "Jerry"
+align = 1
+valign = 1
+
+[node name="AndThe" type="Label" parent="MainMenuUI/TitleVBoxContainer"]
+margin_top = 49.0
+margin_right = 219.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 10 )
+text = "and the"
+align = 1
+valign = 1
+
+[node name="Scale-E3000" type="Label" parent="MainMenuUI/TitleVBoxContainer"]
+margin_top = 76.0
+margin_right = 219.0
+margin_bottom = 121.0
+custom_fonts/font = ExtResource( 2 )
+text = "Scale-E 3000"
 align = 1
 valign = 1
 
@@ -215,9 +233,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -42.0
-margin_top = -9.0
+margin_top = 2.0
 margin_right = 42.0
-margin_bottom = 109.0
+margin_bottom = 120.0
 custom_constants/separation = 10
 
 [node name="Play" type="CenterContainer" parent="MainMenuUI/ButtonContainer"]
