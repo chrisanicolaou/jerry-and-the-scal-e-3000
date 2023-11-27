@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=12 format=2]
+[gd_resource type="Theme" load_steps=17 format=2]
 
 [ext_resource path="res://src/ui/themes/panel_stylebox.tres" type="StyleBox" id=1]
 
@@ -72,6 +72,16 @@ corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="StyleBoxEmpty" id=16]
+
 [resource]
 Button/styles/disabled = SubResource( 2 )
 Button/styles/focus = SubResource( 3 )
@@ -85,3 +95,8 @@ HScrollBar/styles/scroll = SubResource( 10 )
 HScrollBar/styles/scroll_focus = SubResource( 11 )
 Panel/styles/panel = ExtResource( 1 )
 PanelContainer/styles/panel = ExtResource( 1 )
+VScrollBar/styles/grabber = SubResource( 12 )
+VScrollBar/styles/grabber_highlight = SubResource( 13 )
+VScrollBar/styles/grabber_pressed = SubResource( 14 )
+VScrollBar/styles/scroll = SubResource( 15 )
+VScrollBar/styles/scroll_focus = SubResource( 16 )

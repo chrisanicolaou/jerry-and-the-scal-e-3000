@@ -8,6 +8,7 @@ public class Main : Node
     private const string PlayerDataSavePath = "user://player_data_ggo_2023.tres";
     [Export] private PackedScene _mainMenuScene;
     [Export] private PackedScene _preLevelScene;
+    [Export] private PackedScene _thanksForPlayingScene;
     [Export] private NodePath _sceneSwitcherPath;
     [Export] private Resource _playerDataResourceScript;
 
@@ -122,7 +123,8 @@ public class Main : Node
         if (_gameDataManager.GetLevelData(_gameDataManager.PlayerData.CurrentLevelIndex) == null)
         {
             _gameDataManager.PlayerData.CurrentLevelIndex = 0;
-            LoadMainMenu();
+            // LoadMainMenu();
+            LoadThanksForPlaying();
         }
         else
         {
@@ -131,6 +133,13 @@ public class Main : Node
         }
 
         SavePlayerData();
+    }
+
+    private async void LoadThanksForPlaying()
+    {
+        var thanksForPlaying = await SwitchRootScene<ThanksForPlaying>(_thanksForPlayingScene);
+        thanksForPlaying.ScrollCredits();
+        thanksForPlaying.Connect(nameof(ThanksForPlaying.CreditsFinished), this, nameof(QuitToMenu));
     }
 
     private async void RetryLevel()

@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://src/main_menu/main_menu.tscn" type="PackedScene" id=1]
 [ext_resource path="res://common/scene_management/root_scene_switcher.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/main/Main.cs" type="Script" id=3]
 [ext_resource path="res://src/player/player_data/PlayerData.cs" type="Script" id=4]
 [ext_resource path="res://src/levels/pre_level/pre_level.tscn" type="PackedScene" id=5]
+[ext_resource path="res://src/thanks_for_playing/thanks_for_playing.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Environment" id=1]
 background_mode = 4
@@ -23,6 +24,7 @@ glow_bicubic_upscale = true
 script = ExtResource( 3 )
 _mainMenuScene = ExtResource( 1 )
 _preLevelScene = ExtResource( 5 )
+_thanksForPlayingScene = ExtResource( 6 )
 _sceneSwitcherPath = NodePath("RootSceneSwitcher")
 _playerDataResourceScript = ExtResource( 4 )
 
