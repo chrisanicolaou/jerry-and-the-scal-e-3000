@@ -85,7 +85,7 @@ margin_bottom = 68.0
 focus_neighbour_top = NodePath("../RetryButton")
 focus_neighbour_bottom = NodePath("../QuitToMenuButton")
 theme = ExtResource( 3 )
-text = "Options"
+text = "Settings"
 
 [node name="QuitToMenuButton" parent="Panel/VBoxContainer/OptionsContainer/Options" instance=ExtResource( 2 )]
 margin_top = 78.0

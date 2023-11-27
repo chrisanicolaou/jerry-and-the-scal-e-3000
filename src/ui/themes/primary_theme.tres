@@ -1,6 +1,10 @@
-[gd_resource type="Theme" load_steps=17 format=2]
+[gd_resource type="Theme" load_steps=25 format=2]
 
 [ext_resource path="res://src/ui/themes/panel_stylebox.tres" type="StyleBox" id=1]
+[ext_resource path="res://src/ui/themes/checkboxes/checkbox_ticked.png" type="Texture" id=2]
+[ext_resource path="res://src/ui/themes/sliders/grabber_default.png" type="Texture" id=3]
+[ext_resource path="res://src/ui/themes/sliders/grabber_highlight.png" type="Texture" id=4]
+[ext_resource path="res://src/ui/themes/checkboxes/checkbox_unchecked.png" type="Texture" id=5]
 
 [sub_resource type="StyleBoxFlat" id=2]
 bg_color = Color( 0.0431373, 0.0431373, 0.0431373, 1 )
@@ -72,6 +76,36 @@ corner_radius_bottom_left = 8
 
 [sub_resource type="StyleBoxEmpty" id=11]
 
+[sub_resource type="StyleBoxFlat" id=20]
+bg_color = Color( 1, 0.823529, 0.482353, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 1, 0.823529, 0.482353, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id=19]
+bg_color = Color( 0.588235, 0.588235, 0.588235, 1 )
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+expand_margin_top = 2.0
+expand_margin_bottom = 2.0
+
+[sub_resource type="StyleBoxFlat" id=22]
+bg_color = Color( 0, 0, 0, 1 )
+
 [sub_resource type="StyleBoxEmpty" id=12]
 
 [sub_resource type="StyleBoxEmpty" id=13]
@@ -88,13 +122,22 @@ Button/styles/focus = SubResource( 3 )
 Button/styles/hover = SubResource( 4 )
 Button/styles/normal = SubResource( 1 )
 Button/styles/pressed = SubResource( 5 )
+CheckBox/icons/checked = ExtResource( 2 )
+CheckBox/icons/unchecked = ExtResource( 5 )
 HScrollBar/styles/grabber = SubResource( 7 )
 HScrollBar/styles/grabber_highlight = SubResource( 8 )
 HScrollBar/styles/grabber_pressed = SubResource( 9 )
 HScrollBar/styles/scroll = SubResource( 10 )
 HScrollBar/styles/scroll_focus = SubResource( 11 )
+HSlider/icons/grabber = ExtResource( 3 )
+HSlider/icons/grabber_highlight = ExtResource( 4 )
+HSlider/styles/grabber_area = SubResource( 20 )
+HSlider/styles/grabber_area_highlight = SubResource( 21 )
+HSlider/styles/slider = SubResource( 19 )
 Panel/styles/panel = ExtResource( 1 )
 PanelContainer/styles/panel = ExtResource( 1 )
+TooltipLabel/colors/font_color = Color( 1, 1, 1, 1 )
+TooltipPanel/styles/panel = SubResource( 22 )
 VScrollBar/styles/grabber = SubResource( 12 )
 VScrollBar/styles/grabber_highlight = SubResource( 13 )
 VScrollBar/styles/grabber_pressed = SubResource( 14 )

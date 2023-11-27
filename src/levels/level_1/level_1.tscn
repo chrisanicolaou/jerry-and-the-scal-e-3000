@@ -202,6 +202,7 @@ scale = Vector2( -1, 1 )
 
 [node name="Window" parent="." instance=ExtResource( 25 )]
 position = Vector2( 381, 209 )
+frame = 17
 
 [node name="GunSpin" type="Sprite" parent="."]
 material = SubResource( 3 )

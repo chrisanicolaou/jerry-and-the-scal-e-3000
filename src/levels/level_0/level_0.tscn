@@ -234,6 +234,7 @@ position = Vector2( 410, 224 )
 position = Vector2( 240, 47 )
 
 [node name="UI" parent="." instance=ExtResource( 18 )]
+visible = false
 
 [node name="Laser" parent="." instance=ExtResource( 21 )]
 

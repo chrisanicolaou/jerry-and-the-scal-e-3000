@@ -7,14 +7,12 @@
 [ext_resource path="res://src/ui/menus/level_select/PageButton.cs" type="Script" id=5]
 [ext_resource path="res://src/ui/menus/level_select/level_select_node/level_select_node.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/ui/menus/level_select/level_select_page/level_select_page.tscn" type="PackedScene" id=7]
-
-[sub_resource type="StyleBoxFlat" id=1]
-bg_color = Color( 0, 0, 0, 0.392157 )
+[ext_resource path="res://src/ui/menus/level_select/shroud.tres" type="StyleBox" id=8]
 
 [node name="Shroud" type="Panel"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-custom_styles/panel = SubResource( 1 )
+custom_styles/panel = ExtResource( 8 )
 script = ExtResource( 4 )
 _pageScene = ExtResource( 7 )
 _levelNodeScene = ExtResource( 6 )
