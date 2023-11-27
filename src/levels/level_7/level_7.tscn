@@ -79,10 +79,10 @@ _verticalLevelBounds = Vector2( 0, 190 )
 position = Vector2( 224, 134 )
 
 [node name="EntranceDoor" parent="." instance=ExtResource( 12 )]
-position = Vector2( 79, 238 )
+position = Vector2( 79, 240 )
 
 [node name="ExitDoor" parent="." instance=ExtResource( 12 )]
-position = Vector2( 420, 239 )
+position = Vector2( 420, 240 )
 _isLocked = true
 
 [node name="UI" parent="." instance=ExtResource( 15 )]
