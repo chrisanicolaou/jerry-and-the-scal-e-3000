@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://src/environment/backgrounds/x_hint/x_hint.png" type="Texture" id=1]
+
+[node name="XHint" type="Sprite"]
+self_modulate = Color( 0.509804, 0, 0, 0.294118 )
+texture = ExtResource( 1 )

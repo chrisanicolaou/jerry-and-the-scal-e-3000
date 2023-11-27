@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://src/ui/modal/ModalOptions.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+IconScale = 1.0
+Title = "This is Jerry."
+Description = "Jerry has woken up, disorientated, in a strange underground dungeon. Can you help him find his way out?"
+ContinueDelayDuration = 3.0

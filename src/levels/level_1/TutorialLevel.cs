@@ -25,9 +25,7 @@ public class TutorialLevel : Level
 
     private int _currentPromptIndex = -1;
 
-    private string[] _tutorialPrompts = new[]
-    {
-        "Press A or D to move. Press W or space to jump",
+    private string[] _tutorialPrompts = {
         "Aim the Scal-E 3000 at the pillar, then left click to embiggen",
         "The Scal-E 3000 can also shrink items. Aim at the pillar again, then right click to shrink",
         "You'll have to find a key to progress",
@@ -65,13 +63,11 @@ public class TutorialLevel : Level
 
     public override async void StartLevel()
     {
-        // Replace this with logic to "wake the player up" etc
         Player.GlobalPosition = EntranceDoor.GlobalPosition;
         await EntranceDoor.Open();
         Player.Visible = true;
         await Player.EnterLevel(EntranceDoor);
         await EntranceDoor.Close();
-        AdvanceTutorial();
         
         Player.Freeze = false;
     }

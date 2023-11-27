@@ -28,12 +28,12 @@ public class Level : Node2D
 
     private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
-    private Door _exitDoor;
     protected Key Key { get; private set; }
     private bool _keyFound;
     private LevelInputController _inputController;
     
     protected Door EntranceDoor { get; private set; }
+    protected Door ExitDoor { get; private set; }
     protected Player Player { get; private set; }
     protected LevelUI UI { get; private set; }
 
@@ -42,7 +42,7 @@ public class Level : Node2D
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
         // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         EntranceDoor = GetNode<Door>(_entranceDoorPath);
-        _exitDoor = GetNode<Door>(_exitDoorPath);
+        ExitDoor = GetNode<Door>(_exitDoorPath);
         Key = GetNode<Key>(_keyPath);
         Player = GetNode<Player>(_playerPath);
         Player.NumOfBullets = _numOfBullets;
@@ -55,7 +55,7 @@ public class Level : Node2D
         Player.Connect(nameof(Player.ShotsFired), this, nameof(OnShotsFired));
         Player.Connect(nameof(Player.ItemForcePutdown), this, nameof(OnItemForcePutdown));
         Key.Connect(nameof(Key.KeyFound), this, nameof(OnKeyFound));
-        _exitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
+        ExitDoor.Connect(nameof(Door.PlayerReachedDoor), this, nameof(OnExitDoorReached));
 
         for (var i = 0; i < _carryableItemPaths?.Count; i++)
         {
@@ -112,11 +112,12 @@ public class Level : Node2D
         UI.AddCollectedKey();
     }
 
-    private async void OnExitDoorReached()
+    protected virtual async void OnExitDoorReached()
     {
         if (_keyFound)
         {
-            await _exitDoor.Unlock();
+            Player.Freeze = true;
+            await ExitDoor.Unlock();
             EndLevel();
         }
     }
@@ -124,10 +125,10 @@ public class Level : Node2D
     public async void EndLevel()
     {
         Player.Freeze = true;
-        Player.GlobalPosition = _exitDoor.GlobalPosition;
-        await _exitDoor.Open();
-        await Player.ExitLevel(_exitDoor);
-        await _exitDoor.Close();
+        Player.GlobalPosition = ExitDoor.GlobalPosition;
+        await ExitDoor.Open();
+        await Player.ExitLevel(ExitDoor);
+        await ExitDoor.Close();
         EmitSignal(nameof(LevelCompleted));
     }
 

@@ -35,12 +35,13 @@ public class PlayerGun : Node2D
         _aimDirection = _player.GlobalPosition.DirectionTo(mousePos);
         GlobalPosition = (_player.GlobalPosition + (_playerOffset.x * _aimDirection));
         GlobalPosition = new Vector2(GlobalPosition.x, GlobalPosition.y + _playerOffset.y);
-        RotationDegrees = 90 * _aimDirection.y * (_aimDirection.x > 0 ? 1 : -1);
+        // RotationDegrees = 90 * _aimDirection.y;
+        RotationDegrees = _aimDirection.x > 0 ? 90 * _aimDirection.y : 180 - 90 * _aimDirection.y;
         if (TrajectoryLine != null) UpdateBulletTrajectory(_aimDirection, delta);
         var yScale = _aimDirection.x > 0 ? 1 : -1;
         if (Math.Abs(Scale.y - yScale) > 0.01)
         {
-            Scale = new Vector2(yScale, yScale);
+            Scale = new Vector2(Scale.x, yScale);
         }
     }
 

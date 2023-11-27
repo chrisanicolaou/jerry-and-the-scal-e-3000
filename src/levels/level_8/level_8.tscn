@@ -68,7 +68,7 @@ WeightRequiredToBreak = 200.0
 tile_data = PoolIntArray( 720908, 3, 0, 720909, 3, 0, 720910, 3, 0, 720911, 3, 0, 720912, 3, 0, 720913, 3, 0, 720914, 3, 0, 720915, 3, 0 )
 
 [node name="Player" parent="." instance=ExtResource( 4 )]
-position = Vector2( 54, 217 )
+position = Vector2( 290, 292 )
 _trajectoryLinePath = NodePath("../TrajectoryLine")
 _laserPath = NodePath("../Laser")
 

@@ -62,7 +62,7 @@ public class LevelUI : CanvasLayer
         if (_bullets.Count <= 0) return;
         var bulletControlSprite = _bullets[_bullets.Count - ++_shotsFired];
         bulletControlSprite.Sprite.Texture = _emptyEnergyCellTex;
-        bulletControlSprite.Sprite.Modulate = new Color(bulletControlSprite.Sprite.Modulate, _transparency);
+        // bulletControlSprite.Sprite.Modulate = new Color(bulletControlSprite.Sprite.Modulate, _transparency);
     }
 
     public void OpenPauseMenu()
@@ -73,6 +73,11 @@ public class LevelUI : CanvasLayer
     public void ClosePauseMenu()
     {
         _pauseMenu.Hide();
+    }
+
+    public void HideBottomBar()
+    {
+        _keyContainer.Hide();
     }
 
     // Lots of tight coupling here between specific sprite/sizes. NOT good

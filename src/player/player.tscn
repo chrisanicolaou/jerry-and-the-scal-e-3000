@@ -14,7 +14,7 @@
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 6.0
-height = 16.0
+height = 13.0
 
 [sub_resource type="CircleShape2D" id=2]
 radius = 15.0
@@ -186,7 +186,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ 16.0 ]
+"values": [ 13.0 ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("../Interaction/CollisionShape2D:shape:radius")
@@ -346,7 +346,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 16.0, 8.0 ]
+"values": [ 13.0, 8.0 ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("../Interaction/CollisionShape2D:shape:radius")
@@ -506,7 +506,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0, 0.4 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 0,
-"values": [ 16.0, 32.0 ]
+"values": [ 13.0, 32.0 ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("../Interaction/CollisionShape2D:shape:radius")

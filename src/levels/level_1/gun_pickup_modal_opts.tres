@@ -8,5 +8,5 @@ script = ExtResource( 2 )
 IconTex = ExtResource( 1 )
 IconScale = 2.0
 Title = "Scal-E 3000"
-Description = "A mysterious device capable of manipulating the scale of objects. (It often gets a bad wrap for its energy inefficiency.)"
+Description = "A mysterious device capable of manipulating the scale of objects. (It often gets a bad rap for its energy inefficiency.)"
 ContinueDelayDuration = 2.0
