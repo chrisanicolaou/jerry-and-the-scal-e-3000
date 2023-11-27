@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_tilemap.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://src/levels/level_common/level_tilemaps/shaded_brick_tilemap.tscn" type="PackedScene" id=21]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/spider_web_tilemap.tscn" type="PackedScene" id=22]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/moss_tilemap.tscn" type="PackedScene" id=23]
+[ext_resource path="res://src/environment/misc/water_drop/water_drop_generator.tscn" type="PackedScene" id=24]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -132,3 +133,6 @@ frame = 9
 [node name="Window2" parent="." instance=ExtResource( 18 )]
 position = Vector2( 140, 228 )
 frame = 8
+
+[node name="WaterDropGenerator" parent="." instance=ExtResource( 24 )]
+position = Vector2( 381, 96 )

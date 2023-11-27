@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
@@ -8,6 +8,7 @@
 [ext_resource path="res://src/levels/level_common/level_input_controller/level_input_controller.tscn" type="PackedScene" id=6]
 [ext_resource path="res://src/ui/level_ui/level_ui.tscn" type="PackedScene" id=7]
 [ext_resource path="res://src/levels/level_common/level_camera/level_camera.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/environment/misc/water_drop/water_drop_generator.tscn" type="PackedScene" id=9]
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=10]
 [ext_resource path="res://src/items/scalable_two/pillar/pillar.tscn" type="PackedScene" id=11]
 [ext_resource path="res://src/items/interactables/door/door.tscn" type="PackedScene" id=12]
@@ -133,5 +134,13 @@ position = Vector2( 236, 140 )
 
 [node name="AmmoPickup9" parent="." instance=ExtResource( 19 )]
 position = Vector2( 229, 125 )
+
+[node name="WaterDropGenerator" parent="." instance=ExtResource( 9 )]
+position = Vector2( 409, 32 )
+_delayBetweenDrops = 5.0
+
+[node name="WaterDropGenerator2" parent="." instance=ExtResource( 9 )]
+position = Vector2( 498, 240 )
+_delayBetweenDrops = 3.0
 
 [editable path="Breakable"]
