@@ -6,11 +6,14 @@ using ChiciStudios.GithubGameJam2023.Common.Audio;
 public class Door : Node2D
 {
     [Signal] public delegate void PlayerReachedDoor();
+    
+    [Export] private bool _stoneDoor;
     [Export] private AudioStream _openDoorSfx;
     [Export] private AudioStream _closeDoorSfx;
     [Export] private NodePath _interactionAreaPath;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spritePath;
+    [Export] private NodePath _stoneSpritePath;
     [Export] private bool _isLocked;
 
     private AudioManager _audioManager;
@@ -25,6 +28,7 @@ public class Door : Node2D
         _sprite.Frame = _isLocked ? 0 : 4;
         InteractionArea = GetNode<InteractionArea>(_interactionAreaPath);
         InteractionArea.Connect(nameof(InteractionArea.InteractionAreaActivated), this, nameof(OnInteractionAreaActivated));
+        GetNode<Sprite>(_stoneSpritePath).Visible = _stoneDoor;
     }
 
     public async Task Open()

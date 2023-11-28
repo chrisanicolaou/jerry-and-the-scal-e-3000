@@ -1,10 +1,11 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://common/interaction/interaction_area/interaction_area.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/items/interactables/door/door.png" type="Texture" id=2]
 [ext_resource path="res://src/items/interactables/door/Door.cs" type="Script" id=3]
 [ext_resource path="res://src/items/interactables/door/door_open.wav" type="AudioStream" id=4]
 [ext_resource path="res://src/items/interactables/door/door_close.wav" type="AudioStream" id=5]
+[ext_resource path="res://src/items/interactables/door/doorway_stone.png" type="Texture" id=6]
 
 [sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 12.5, 16 )
@@ -80,6 +81,7 @@ _closeDoorSfx = ExtResource( 5 )
 _interactionAreaPath = NodePath("Area2D")
 _animPlayerPath = NodePath("AnimationPlayer")
 _spritePath = NodePath("Sprite")
+_stoneSpritePath = NodePath("StonesSprite")
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )
@@ -97,5 +99,10 @@ anims/RESET = SubResource( 1 )
 anims/door_close = SubResource( 2 )
 anims/door_open = SubResource( 5 )
 anims/door_unlock = SubResource( 3 )
+
+[node name="StonesSprite" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, -5 )
+texture = ExtResource( 6 )
 
 [editable path="Area2D"]

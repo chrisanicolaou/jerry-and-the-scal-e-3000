@@ -229,6 +229,7 @@ anims/wake_up = SubResource( 3 )
 
 [node name="Door2" parent="." instance=ExtResource( 19 )]
 position = Vector2( 410, 224 )
+_stoneDoor = true
 
 [node name="Key" parent="." instance=ExtResource( 17 )]
 position = Vector2( 240, 47 )
