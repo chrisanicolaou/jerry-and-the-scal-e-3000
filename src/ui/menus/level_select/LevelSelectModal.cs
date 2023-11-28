@@ -53,7 +53,7 @@ public class LevelSelectModal : Panel
     private void OnInputEvent(InputEvent inputEvent)
     {
         // Shroud was clicked
-        if ((inputEvent is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.ButtonIndex == 1))
+        if (inputEvent is InputEventMouseButton mouseButtonEvent && mouseButtonEvent.ButtonIndex == 1)
         {
             Hide();
             EmitSignal(nameof(PanelClosed));

@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://src/ui/menus/level_select/shroud.tres" type="StyleBox" id=1]
 [ext_resource path="res://src/ui/themes/text_button_theme.tres" type="Theme" id=2]
+[ext_resource path="res://src/ui/menus/options_menu/OptionsMenu.cs" type="Script" id=3]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -19,6 +20,13 @@
 anchor_right = 1.0
 anchor_bottom = 1.0
 custom_styles/panel = ExtResource( 1 )
+script = ExtResource( 3 )
+_masterSliderPath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/VBoxContainer/HSlider")
+_musicSliderPath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/VBoxContainer3/HSlider")
+_sfxSliderPath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/VBoxContainer2/HSlider")
+_aimLineTogglePath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/HBoxContainer/CheckBox")
+_easyModeTogglePath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/HBoxContainer2/CheckBox")
+_restoreDefaultButtonPath = NodePath("SettingsPanel/ScrollContainer/VBoxContainer/MarginContainer/Button")
 
 [node name="SettingsPanel" type="Panel" parent="."]
 anchor_left = 0.5
@@ -52,7 +60,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 8.0
 margin_top = 27.0
-margin_right = -5.0
+margin_right = -8.0
 margin_bottom = -7.0
 scroll_horizontal_enabled = false
 
@@ -74,6 +82,8 @@ margin_top = 20.0
 margin_right = 120.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 120, 0 )
+min_value = -25.0
+max_value = 0.0
 
 [node name="VBoxContainer3" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
 margin_top = 40.0
@@ -90,6 +100,8 @@ margin_top = 20.0
 margin_right = 120.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 120, 0 )
+min_value = -25.0
+max_value = 0.0
 
 [node name="VBoxContainer2" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
 margin_top = 80.0
@@ -106,6 +118,8 @@ margin_top = 20.0
 margin_right = 120.0
 margin_bottom = 36.0
 rect_min_size = Vector2( 120, 0 )
+min_value = -25.0
+max_value = 0.0
 
 [node name="HBoxContainer" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
 margin_top = 120.0
@@ -156,8 +170,10 @@ margin_top = 160.0
 margin_right = 120.0
 margin_bottom = 178.0
 custom_constants/margin_top = 2
+custom_constants/margin_left = 1
 
 [node name="Button" type="Button" parent="SettingsPanel/ScrollContainer/VBoxContainer/MarginContainer"]
+margin_left = 1.0
 margin_top = 2.0
 margin_right = 120.0
 margin_bottom = 18.0

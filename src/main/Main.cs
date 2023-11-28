@@ -1,6 +1,8 @@
 using Godot;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 using ChiciStudios.GithubGameJam2023.Common.SceneManagement;
 
 public class Main : Node
@@ -14,6 +16,7 @@ public class Main : Node
 
     private RootSceneSwitcher _sceneSwitcher;
     private GameDataManager _gameDataManager;
+    private AudioManager _audioManager;
     private Node _currentRootScene;
     private string _playerDataResourceScriptPath;
 
@@ -23,6 +26,12 @@ public class Main : Node
         _playerDataResourceScriptPath = _playerDataResourceScript.ResourcePath;
         _gameDataManager = GetNode<GameDataManager>("/root/GameDataManager");
         _gameDataManager.PlayerData = ResourceLoader.Load(PlayerDataSavePath) as PlayerData ?? GD.Load<CSharpScript>(_playerDataResourceScriptPath).New() as PlayerData;
+        Debug.Assert(_gameDataManager.PlayerData != null, "_gameDataManager.PlayerData != null");
+        
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
+        _audioManager.SetBusDb(AudioBusName.Master, _gameDataManager.PlayerData.MasterDb);
+        _audioManager.SetBusDb(AudioBusName.Music, _gameDataManager.PlayerData.MusicDb);
+        _audioManager.SetBusDb(AudioBusName.Sfx, _gameDataManager.PlayerData.SfxDb);
         StartGame();
         // RestartPrototype();
         // CreatePrototypeLevel();

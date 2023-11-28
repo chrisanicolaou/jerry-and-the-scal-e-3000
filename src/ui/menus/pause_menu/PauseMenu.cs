@@ -11,11 +11,13 @@ public class PauseMenu : Control
     [Export] private NodePath _retryButtonPath;
     [Export] private NodePath _optionsButtonPath;
     [Export] private NodePath _quitToMenuButtonPath;
+    [Export] private NodePath _optionsModalPath;
 
     private Button _resumeButton;
     private Button _retryButton;
     private Button _optionsButton;
     private Button _quitToMenuButton;
+    private OptionsMenu _optionsModal;
 
     public override void _Ready()
     {
@@ -28,6 +30,8 @@ public class PauseMenu : Control
         _retryButton.Connect("pressed", this, nameof(OnRetryButtonPressed));
         _optionsButton.Connect("pressed", this, nameof(OnOptionsButtonPressed));
         _quitToMenuButton.Connect("pressed", this, nameof(OnQuitToMenuButtonPressed));
+
+        _optionsModal = GetNode<OptionsMenu>(_optionsModalPath);
     }
 
     public void ShowAndFocus()
@@ -38,24 +42,21 @@ public class PauseMenu : Control
 
     private void OnResumeButtonPressed()
     {
-        GD.Print("Button workin");
         EmitSignal(nameof(ResumeRequested));
     }
 
     private void OnRetryButtonPressed()
     {
-        GD.Print("Button workin");
         EmitSignal(nameof(RetryRequested));
     }
 
     private void OnOptionsButtonPressed()
     {
-        GD.Print("Button workin");
+        _optionsModal.Show();
     }
 
     private void OnQuitToMenuButtonPressed()
     {
-        GD.Print("Button workin");
         EmitSignal(nameof(QuitToMenuRequested));
     }
 }

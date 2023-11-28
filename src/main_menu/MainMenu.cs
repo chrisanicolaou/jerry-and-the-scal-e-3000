@@ -11,6 +11,8 @@ public class MainMenu : Node2D
     [Export] private NodePath _playButtonPath;
     [Export] private NodePath _levelSelectButtonPath;
     [Export] private NodePath _levelSelectModalPath;
+    [Export] private NodePath _optionsButtonPath;
+    [Export] private NodePath _optionsModalPath;
     [Export] private NodePath _uiExceptionFadeRectPath;
     [Export] private NodePath _rollingBoulderPath;
     [Export] private AudioStream _musicTrack;
@@ -20,8 +22,10 @@ public class MainMenu : Node2D
 
     private Button _playButton;
     private Button _levelSelectButton;
+    private Button _optionsButton;
     private ColorRect _uiExceptionFadeRect;
     private LevelSelectModal _levelSelectModal;
+    private OptionsMenu _optionsModal;
     private AudioManager _audioManager;
     private ScalableItemV2 _rollingBoulder;
 
@@ -38,6 +42,9 @@ public class MainMenu : Node2D
         _levelSelectButton = GetNode<Button>(_levelSelectButtonPath);
         _levelSelectButton.Connect("pressed", this, nameof(OnLevelSelectButtonPressed));
         _rollingBoulder = GetNode<ScalableItemV2>(_rollingBoulderPath);
+        _optionsButton = GetNode<Button>(_optionsButtonPath);
+        _optionsButton.Connect("pressed", this, nameof(OnOptionsButtonPressed));
+        _optionsModal = GetNode<OptionsMenu>(_optionsModalPath);
         // _playButton.CallDeferred("grab_focus");
     }
 
@@ -75,6 +82,7 @@ public class MainMenu : Node2D
     private void OnLevelSelectButtonPressed() => _levelSelectModal.ShowModal();
 
     private void OnLevelSelected(LevelData levelData) => EmitSignal(nameof(LevelSelected), levelData);
+    private void OnOptionsButtonPressed() => _optionsModal.Show();
 
     private void OnNavigateBackToMainMenu()
     {

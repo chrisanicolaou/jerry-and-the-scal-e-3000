@@ -2,8 +2,8 @@
 {
     public static class AudioBusName
     {
-        public static string Master => "master";
-        public static string Music => "music";
-        public static string Sfx => "sfx";
+        public const string Master = "Master";
+        public const string Music = "Music";
+        public const string Sfx = "Sfx";
     }
 }

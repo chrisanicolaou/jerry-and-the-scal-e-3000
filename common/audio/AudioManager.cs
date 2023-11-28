@@ -18,6 +18,8 @@ namespace ChiciStudios.GithubGameJam2023.Common.Audio
         public AudioStreamPlayer PlaySfx(AudioStream sfx,AudioOptions opts = null) => Play(sfx, _sfxPlayerPool.FirstOrDefault(asp => !asp.Playing), opts ?? _defaultSfxOpts);
         public void StopMusic() => _musicPlayer.Stop();
 
+        public void SetBusDb(string busName, float db) => AudioServer.SetBusVolumeDb(AudioServer.GetBusIndex(busName), db);
+
         public override void _Ready()
         {
             _musicPlayer = new AudioStreamPlayer { Name = "MusicPlayer", PauseMode = PauseModeEnum.Process };

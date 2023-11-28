@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://src/ui/menus/pause_menu/greyscale_post_process_shader_mat.tres" type="Material" id=1]
 [ext_resource path="res://src/ui/buttons/chici_button/chici_button.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/ui/themes/text_button_theme.tres" type="Theme" id=3]
 [ext_resource path="res://src/ui/fonts/pixelify_18.tres" type="DynamicFont" id=4]
 [ext_resource path="res://src/ui/menus/pause_menu/PauseMenu.cs" type="Script" id=5]
+[ext_resource path="res://src/ui/menus/options_menu/options_menu.tscn" type="PackedScene" id=6]
 
 [node name="PauseMenu" type="Control"]
 pause_mode = 2
@@ -15,6 +16,7 @@ _resumeButtonPath = NodePath("Panel/VBoxContainer/OptionsContainer/Options/Resum
 _retryButtonPath = NodePath("Panel/VBoxContainer/OptionsContainer/Options/RetryButton")
 _optionsButtonPath = NodePath("Panel/VBoxContainer/OptionsContainer/Options/OptionsButton")
 _quitToMenuButtonPath = NodePath("Panel/VBoxContainer/OptionsContainer/Options/QuitToMenuButton")
+_optionsModalPath = NodePath("OptionsMenu")
 
 [node name="GreyscaleShroud" type="ColorRect" parent="."]
 material = ExtResource( 1 )
@@ -94,3 +96,6 @@ margin_bottom = 94.0
 focus_neighbour_top = NodePath("../OptionsButton")
 theme = ExtResource( 3 )
 text = "Quit to menu"
+
+[node name="OptionsMenu" parent="." instance=ExtResource( 6 )]
+visible = false

@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=20 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/ui/fonts/pixelify_36_outline.tres" type="DynamicFont" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://src/items/shader_mats/rainbow_outline/rainbow_outline.gdshader" type="Shader" id=11]
 [ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main_menu/ScaleTriggerArea.cs" type="Script" id=13]
+[ext_resource path="res://src/ui/menus/options_menu/options_menu.tscn" type="PackedScene" id=14]
 
 [sub_resource type="Shader" id=1]
 code = "/*
@@ -162,6 +163,8 @@ script = ExtResource( 5 )
 _playButtonPath = NodePath("MainMenuUI/ButtonContainer/Play/ChiciButton")
 _levelSelectButtonPath = NodePath("MainMenuUI/ButtonContainer/LevelSelect/ChiciButton")
 _levelSelectModalPath = NodePath("MainMenuUI/LevelSelectModal")
+_optionsButtonPath = NodePath("MainMenuUI/ButtonContainer/Options/ChiciButton")
+_optionsModalPath = NodePath("MainMenuUI/OptionsMenu")
 _uiExceptionFadeRectPath = NodePath("MainMenuUI/ColorRect")
 _rollingBoulderPath = NodePath("BoulderRound")
 _musicTrack = ExtResource( 7 )
@@ -271,7 +274,6 @@ margin_left = 15.0
 margin_right = 69.0
 margin_bottom = 16.0
 theme = ExtResource( 4 )
-disabled = true
 text = "Settings"
 
 [node name="Quit" type="CenterContainer" parent="MainMenuUI/ButtonContainer"]
@@ -291,6 +293,9 @@ disabled = true
 text = "Quit"
 
 [node name="LevelSelectModal" parent="MainMenuUI" instance=ExtResource( 6 )]
+visible = false
+
+[node name="OptionsMenu" parent="MainMenuUI" instance=ExtResource( 14 )]
 visible = false
 
 [node name="GlobalShadow" parent="." instance=ExtResource( 1 )]
