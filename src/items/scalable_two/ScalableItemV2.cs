@@ -1,12 +1,13 @@
 using Godot;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 using GithubGameJam2023.items.scalable_two;
 using GithubGameJam2023.player.player_gun;
-using Godot.Collections;
-using Array = Godot.Collections.Array;
 
+// Over time, I dumped (and am continuing to dump) a fair bit of stuff in here that's specific to individual items.
+// In retrospect, I should have made separate inheritors of ScalableItemV2 (which should also now just be ScalableItem) to reduce
+// some of this clutter and complexity. Oops!
 public class ScalableItemV2 : RigidBody2D
 {
     [Signal] public delegate void ItemInteractionRequested(ScalableItemV2 item);
@@ -25,12 +26,15 @@ public class ScalableItemV2 : RigidBody2D
     [Export] private NodePath _interactionAreaPath;
     [Export] private ShaderMaterial _whiteShaderMat;
     [Export] private ShaderMaterial _outlineShaderMat;
+    [Export] private AudioStream _scaleUpSfx;
+    [Export] private AudioStream _scaleDownSfx;
     [Export(PropertyHint.Layers2dPhysics)] private uint _colLayerWhenHeld;
     
     [Export(PropertyHint.Range, "5,10,0.1")] protected float DefaultScaleDuration { get; private set; } = 5f;
     [Export] public bool CanBeCarried { get; set; }
     [Export] public Vector2 CarryOffset { get; set; }
 
+    private AudioManager _audioManager;
     private Sprite _sprite;
     private AnimationPlayer _animPlayer;
     private InteractionArea _interactionArea;
@@ -44,6 +48,7 @@ public class ScalableItemV2 : RigidBody2D
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _sprite = GetNode<Sprite>(_spritePath);
         _sprite.Material = null;
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
@@ -74,7 +79,7 @@ public class ScalableItemV2 : RigidBody2D
         _sprite.Material = null;
     }
 
-    protected virtual async void HandleScale(ScaleType type)
+    protected virtual void HandleScale(ScaleType type)
     {
         string animName;
         var fromEnd = Size != ScalableItemSize.Normal;
@@ -94,23 +99,11 @@ public class ScalableItemV2 : RigidBody2D
         }
 
         Size = GetSizeFromScaleType(type);
+        _audioManager.PlaySfx(type == ScaleType.Small ? _scaleDownSfx : _scaleUpSfx);
         _animPlayer.Play(animName, customSpeed: fromEnd ? -1 : 1, fromEnd: fromEnd);
         _animPlayer.Connect("animation_finished", this, nameof(HandleScaleAnimationFinished));
         EmitSignal(nameof(ChangedScale), Size);
     }
-
-    // private async void HandleScaleBackToNormal(string animName)
-    // {
-    //     _animPlayer.Play(animName, customSpeed: -1, fromEnd: true);
-    //     _animPlayer.Connect("animation_finished", this, nameof(HandlePostScaleCleanUp));
-    // // }
-    //
-    // private void HandlePostScaleCleanUp(string _)
-    // {
-    //     _animPlayer.Disconnect("animation_finished", this, nameof(HandlePostScaleCleanUp));
-    //     _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
-    //     IsMutated = false;
-    // }
 
     public void HandleScaleAnimationFinished(string _)
     {
@@ -118,39 +111,7 @@ public class ScalableItemV2 : RigidBody2D
         _interactionArea?.CallDeferred(nameof(InteractionArea.SetDisabled), !CanBeCarried);
         IsMutating = false;
     }
-
-    // private async void PlayScaleDurationAnimation()
-    // {
-    //     var preFlashDuration = DefaultScaleDuration - 3.75f;
-    //     GetTree().CreateTimer(preFlashDuration, false).Connect("timeout", this, nameof(PlayWhiteFlashes));
-    // }
-
-    // private async void PlayWhiteFlashes()
-    // {
-    //     var duration = 1f;
-    //     for (var i = 0; i < 8; i++)
-    //     {
-    //         if (IsQueuedForDeletion()) return;
-    //         if (i % 2 == 0)
-    //         {
-    //             duration = Mathf.Max(0.125f, duration / 2);
-    //         }
-    //         await PlayWhiteFlash(duration);
-    //     }
-    // }
-    //
-    // private async Task PlayWhiteFlash(float duration)
-    // {
-    //     _sprite.Material = _whiteShaderMat;
-    //     GetTree().CreateTimer(duration, false).Connect("timeout", this, nameof(SetSpriteMaterial), new Array { null });
-    //     await ToSignal(GetTree().CreateTimer(duration, false), "timeout");
-    // }
-    //
-    // private async void SetSpriteMaterial(ShaderMaterial mat)
-    // {
-    //     _sprite.Material = null;
-    // }
-
+    
     public override void _PhysicsProcess(float delta)
     {
         if (_interactionArea != null) _interactionArea.RotationDegrees = -RotationDegrees;

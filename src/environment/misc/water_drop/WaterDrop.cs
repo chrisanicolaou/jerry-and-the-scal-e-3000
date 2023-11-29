@@ -1,11 +1,15 @@
 using Godot;
 using System;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
+using Godot.Collections;
 
 public class WaterDrop : Area2D
 {
     [Export(PropertyHint.Range, "1,10,0.5")] private float _fallSpeed = 1;
+    [Export] private Array<AudioStream> _waterDropsSfx;
     [Export] private NodePath _animPlayerPath;
 
+    private AudioManager _audioManager;
     private AnimationPlayer _animPlayer;
     private bool _freeze;
 
@@ -14,6 +18,7 @@ public class WaterDrop : Area2D
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _animPlayer = GetNode<AnimationPlayer>(_animPlayerPath);
         Connect("body_entered", this, nameof(OnBodyEntered));
     }
@@ -33,6 +38,7 @@ public class WaterDrop : Area2D
     {
         if (_freeze) return;
         _animPlayer.Play("splash");
+        _audioManager.PlaySfx(_waterDropsSfx[(int)(GD.Randi() % _waterDropsSfx.Count)]);
         _freeze = true;
     }
 }

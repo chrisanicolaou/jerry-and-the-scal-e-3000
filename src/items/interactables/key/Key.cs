@@ -6,7 +6,7 @@ public class Key : RigidBody2D
 {
     [Signal] public delegate void KeyFound();
 
-    [Export] private AudioStream _keySfx;
+    [Export] private AudioStream _pickupSfx;
     [Export] private NodePath _interactionAreaPath;
     protected InteractionArea InteractionArea { get; private set; }
     private AudioManager _audioManager;
@@ -21,6 +21,6 @@ public class Key : RigidBody2D
     public virtual void OnInteractionAreaActivated()
     {
         EmitSignal(nameof(KeyFound));
-        _audioManager.PlaySfx(_keySfx);
+        _audioManager.PlaySfx(_pickupSfx);
     }
 }

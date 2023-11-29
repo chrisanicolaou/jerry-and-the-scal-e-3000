@@ -16,6 +16,8 @@ public class MainMenu : Node2D
     [Export] private NodePath _uiExceptionFadeRectPath;
     [Export] private NodePath _rollingBoulderPath;
     [Export] private AudioStream _musicTrack;
+    [Export] private AudioStream _rollingBoulderLargeSfx;
+    [Export] private AudioStream _rollingBoulderNormalSfx;
     [Export] private Vector2 _rollingBoulderStartPosition = new Vector2(-209, 271);
     [Export] private Vector2 _rollingBoulderLinearVelocity = new Vector2(70, 0);
     [Export] private float _rollingBoulderAngularVelocity = 3;
@@ -52,7 +54,6 @@ public class MainMenu : Node2D
     {
         _uiExceptionFadeRect.Color = Colors.Transparent;
         _audioManager.PlayMusic(_musicTrack);
-        _rollingBoulderStartPosition = _rollingBoulderStartPosition;
         _rollingBoulder.LinearVelocity = _rollingBoulderLinearVelocity;
         _rollingBoulder.AngularVelocity = _rollingBoulderAngularVelocity;
         _rollingBoulder.ApplyImpulse(Vector2.Zero, Vector2.Zero);
@@ -71,6 +72,8 @@ public class MainMenu : Node2D
 
     private void StartRollingTheBoulderBecauseEvenThoughTheBoulderShouldBeInItsOriginalStateAfterThisSceneIsInstantiatedItIsSomeHowBeingAffectedByPriorInstantiationsOfThisSceneResultingInItHavingADifferentInitialVelocityToTheOneSetInTheInspector()
     {
+        var audioPlayer = _audioManager.PlayPositionalSfx(_rollingBoulderNormalSfx);
+        _rollingBoulder.AddChild(audioPlayer);
         _rollingBoulder.ContinuousMovement = true;
         _rollingBoulder.ContinuousMovementStartPosition = _rollingBoulderStartPosition;
         _rollingBoulder.ContinuousMovementLinearVelocity = _rollingBoulderLinearVelocity;

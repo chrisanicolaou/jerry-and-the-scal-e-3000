@@ -110,6 +110,8 @@ position = Vector2( 117, 78 )
 physics_material_override = SubResource( 2 )
 DefaultScaleDuration = 8.0
 _outlineShaderMat = SubResource( 1 )
+_scaleUpSfx = null
+_scaleDownSfx = null
 
 [node name="BouncePad" parent="." instance=ExtResource( 21 )]
 position = Vector2( 368, 248 )

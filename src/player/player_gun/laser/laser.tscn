@@ -1,10 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://src/player/player_gun/laser/laser_contact_particles.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/player/player_gun/laser/Laser.cs" type="Script" id=2]
 [ext_resource path="res://src/player/player_gun/laser/laser_beam_particles.tscn" type="PackedScene" id=3]
-[ext_resource path="res://src/player/player_gun/laser/grow.wav" type="AudioStream" id=6]
-[ext_resource path="res://src/player/player_gun/laser/shrink.wav" type="AudioStream" id=7]
+[ext_resource path="res://src/player/player_gun/laser/gunshot_mid.wav" type="AudioStream" id=4]
 
 [sub_resource type="CanvasItemMaterial" id=2]
 blend_mode = 1
@@ -18,9 +17,9 @@ begin_cap_mode = 2
 end_cap_mode = 2
 script = ExtResource( 2 )
 _scaleUpCol = Color( 0.435294, 1, 0.231373, 1 )
-_scaleUpSfx = ExtResource( 6 )
+_scaleUpSfx = ExtResource( 4 )
 _scaleDownCol = Color( 1, 0.705882, 0.247059, 1 )
-_scaleDownSfx = ExtResource( 7 )
+_scaleDownSfx = ExtResource( 4 )
 _width = 5.0
 _holdDuration = 0.25
 _powerUpDuration = 0.1
