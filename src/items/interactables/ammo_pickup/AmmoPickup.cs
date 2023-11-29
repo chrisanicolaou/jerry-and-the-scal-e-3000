@@ -7,5 +7,6 @@ public class AmmoPickup : Key
     public override void OnInteractionAreaActivated()
     {
         EmitSignal(nameof(AmmoPickupFound));
+        AudioManager.PlaySfx(PickupSfx);
     }
 }

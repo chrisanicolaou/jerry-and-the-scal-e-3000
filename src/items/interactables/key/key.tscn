@@ -15,7 +15,7 @@ collision_layer = 1024
 collision_mask = 1217
 can_sleep = false
 script = ExtResource( 4 )
-_pickupSfx = ExtResource( 5 )
+PickupSfx = ExtResource( 5 )
 _interactionAreaPath = NodePath("Area2D")
 
 [node name="Sprite" type="Sprite" parent="."]
