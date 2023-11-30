@@ -107,9 +107,11 @@ position = Vector2( 224, 134 )
 
 [node name="EntranceDoor" parent="." instance=ExtResource( 12 )]
 position = Vector2( 79, 240 )
+_stoneDoor = true
 
 [node name="ExitDoor" parent="." instance=ExtResource( 12 )]
 position = Vector2( 420, 240 )
+_stoneDoor = true
 _isLocked = true
 
 [node name="UI" parent="." instance=ExtResource( 15 )]
@@ -135,4 +137,4 @@ position = Vector2( 140, 228 )
 frame = 8
 
 [node name="WaterDropGenerator" parent="." instance=ExtResource( 24 )]
-position = Vector2( 381, 96 )
+position = Vector2( 313, 96 )

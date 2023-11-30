@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://src/levels/level_common/level_background/level_background.tscn" type="PackedScene" id=1]
 [ext_resource path="res://src/levels/level_common/level_global_shadow/level_global_shadow.tscn" type="PackedScene" id=2]
@@ -23,6 +23,7 @@
 [ext_resource path="res://src/levels/level_common/level_tilemaps/brick_cracks_tilemap.tscn" type="PackedScene" id=21]
 [ext_resource path="res://src/levels/level_common/level_tilemaps/moss_tilemap.tscn" type="PackedScene" id=22]
 [ext_resource path="res://src/environment/props/windows/window.tscn" type="PackedScene" id=23]
+[ext_resource path="res://src/environment/misc/water_drop/water_drop_generator.tscn" type="PackedScene" id=24]
 
 [sub_resource type="ShaderMaterial" id=1]
 resource_local_to_scene = true
@@ -119,6 +120,7 @@ position = Vector2( 115, 272 )
 
 [node name="ExitDoor" parent="." instance=ExtResource( 9 )]
 position = Vector2( 239, 208 )
+_stoneDoor = true
 _isLocked = true
 
 [node name="Key" parent="." instance=ExtResource( 8 )]
@@ -161,3 +163,6 @@ scale = Vector2( -1, 1 )
 [node name="Window" parent="." instance=ExtResource( 23 )]
 position = Vector2( 343, 258 )
 frame = 16
+
+[node name="WaterDropGenerator" parent="." instance=ExtResource( 24 )]
+position = Vector2( 379, 96 )

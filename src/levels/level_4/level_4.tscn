@@ -100,6 +100,7 @@ _verticalLevelBounds = Vector2( 140, 190 )
 
 [node name="EntranceDoor" parent="." instance=ExtResource( 5 )]
 position = Vector2( 202, 239 )
+_stoneDoor = true
 
 [node name="ExitDoor" parent="." instance=ExtResource( 5 )]
 position = Vector2( 434, 239 )
