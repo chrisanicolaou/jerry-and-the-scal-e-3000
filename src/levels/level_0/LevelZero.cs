@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 
 public class LevelZero : Level
 {
@@ -9,7 +10,10 @@ public class LevelZero : Level
     [Export] private NodePath _playerSpritePath;
     [Export] private ModalOptions _jerryModalOpts;
     [Export] private PackedScene _tutorialPromptScene;
+    [Export] private AudioStream _playerWakeUpSfx;
+    [Export] private AudioStream _playerBlinkSfx;
 
+    private AudioManager _audioManager;
     private AnimationPlayer _playerWakeUpAnimPlayer;
     private Sprite _playerWakeUpSprite;
     private Sprite _playerSprite;
@@ -20,6 +24,7 @@ public class LevelZero : Level
     public override void _Ready()
     {
         base._Ready();
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _playerWakeUpAnimPlayer = GetNode<AnimationPlayer>(_playerWakeUpAnimPlayerPath);
         _playerWakeUpSprite = GetNode<Sprite>(_playerWakeUpSpritePath);
         _playerSprite = GetNode<Sprite>(_playerSpritePath);
@@ -46,5 +51,15 @@ public class LevelZero : Level
     protected override async void OnExitDoorReached()
     {
         EndLevel();
+    }
+
+    public void PlayBlinkSfx()
+    {
+        _audioManager.PlaySfx(_playerBlinkSfx);
+    }
+
+    public void PlayWakeUpSfx()
+    {
+        _audioManager.PlaySfx(_playerWakeUpSfx);
     }
 }

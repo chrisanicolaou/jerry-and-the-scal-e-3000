@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/blink_2.wav-6d1067de9d6f05345318e1163af93655.sample"
+
+[deps]
+
+source_file="res://src/player/blink_2.wav"
+dest_files=[ "res://.import/blink_2.wav-6d1067de9d6f05345318e1163af93655.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

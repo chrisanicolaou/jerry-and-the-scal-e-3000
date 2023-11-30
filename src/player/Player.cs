@@ -26,6 +26,8 @@ public class Player : KinematicBody2D
     [Export] private NodePath _gunPath;
     [Export] private NodePath _trajectoryLinePath;
     [Export] private NodePath _laserPath;
+    [Export] private AudioStream _dropItemSfx;
+    [Export] private AudioStream _pickUpItemSfx;
 
     private AudioManager _audioManager;
     private Vector2 _velocity;
@@ -102,6 +104,7 @@ public class Player : KinematicBody2D
 
     public void PickupItem(ScalableItemV2 item)
     {
+        _audioManager.PlaySfx(_pickUpItemSfx);
         ItemCarry = item;
         // ItemCarry.Mode = RigidBody2D.ModeEnum.Kinematic;
         ItemCarry.SwitchToHeldCollisionLayer();
@@ -112,6 +115,7 @@ public class Player : KinematicBody2D
 
     public ScalableItemV2 PutdownItem()
     {
+        _audioManager.PlaySfx(_dropItemSfx);
         var item = ItemCarry;
         _sprite.RemoveChild(item);
         item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
