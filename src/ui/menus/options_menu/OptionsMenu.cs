@@ -24,7 +24,7 @@ public class OptionsMenu : Panel
     
     // Hard coding default values directly into the OptionsMenu for the sake of simplicity
     private bool _aimLineDefault = true;
-    private bool _easyModeDefault = true;
+    private bool _easyModeDefault = false;
     private int _masterSliderDefault = 0;
     private int _musicSliderDefault = 0;
     private int _sfxSliderDefault = 0;
@@ -96,7 +96,11 @@ public class OptionsMenu : Panel
 
     private void RestoreDefaults()
     {
-        
+        _aimLineToggle.Pressed = _aimLineDefault;
+        _easyModeToggle.Pressed = _easyModeDefault;
+        _masterSlider.Value = _masterSliderDefault;
+        _musicSlider.Value = _musicSliderDefault;
+        _sfxSlider.Value = _sfxSliderDefault;
     }
 
     private float GetDbValueFromSliderValue(float value)
