@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.Threading.Tasks;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 
 public class Modal : Control
 {
@@ -10,7 +11,10 @@ public class Modal : Control
     [Export] private NodePath _titleLabelPath;
     [Export] private NodePath _descriptionLabelPath;
     [Export] private NodePath _continueLabelPath;
+    [Export] private AudioStream _openSfx;
+    [Export] private AudioStream _closeSfx;
 
+    private AudioManager _audioManager;
     private Sprite _icon;
     private Label _titleLabel;
     private Label _descriptionLabel;
@@ -19,6 +23,7 @@ public class Modal : Control
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _icon = GetNode<Sprite>(_iconSpritePath);
         _titleLabel = GetNode<Label>(_titleLabelPath);
         _descriptionLabel = GetNode<Label>(_descriptionLabelPath);
@@ -33,6 +38,7 @@ public class Modal : Control
         _icon.Scale = new Vector2(opts.IconScale, opts.IconScale);
         _titleLabel.Text = opts.Title;
         _descriptionLabel.Text = opts.Description;
+        _audioManager.PlaySfx(_openSfx);
         Show();
         _continueLabel.Hide();
         await ToSignal(GetTree().CreateTimer(continueDelay), "timeout");
@@ -41,6 +47,7 @@ public class Modal : Control
         await ToSignal(this, nameof(ModalCloseRequested));
         _shouldReceiveInput = false;
         Hide();
+        _audioManager.PlaySfx(_closeSfx);
     }
 
     public override void _Input(InputEvent @event)

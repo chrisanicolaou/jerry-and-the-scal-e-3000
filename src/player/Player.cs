@@ -21,6 +21,7 @@ public class Player : KinematicBody2D
     [Export] private float _maxFallSpeed = 250;
     [Export] private float _snappyFallMultiplier = 750;
     [Export] private Vector2 _itemThrowStrength;
+    [Export] private Vector2 _carryOffset = Vector2.Zero;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spriteNodePath;
     [Export] private NodePath _gunPath;
@@ -28,6 +29,7 @@ public class Player : KinematicBody2D
     [Export] private NodePath _laserPath;
     [Export] private AudioStream _dropItemSfx;
     [Export] private AudioStream _pickUpItemSfx;
+    [Export] private AudioStream _laserNoEnergySfx;
 
     private AudioManager _audioManager;
     private Vector2 _velocity;
@@ -108,18 +110,18 @@ public class Player : KinematicBody2D
         ItemCarry = item;
         // ItemCarry.Mode = RigidBody2D.ModeEnum.Kinematic;
         ItemCarry.SwitchToHeldCollisionLayer();
-        _sprite.AddChild(item);
-        ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
-            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+        // _sprite.AddChild(item);
+        ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x - _carryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x + _carryOffset.x,
+            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y + _carryOffset.y);
     }
 
     public ScalableItemV2 PutdownItem()
     {
         _audioManager.PlaySfx(_dropItemSfx);
         var item = ItemCarry;
-        _sprite.RemoveChild(item);
-        item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
-            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+        // _sprite.RemoveChild(item);
+        item.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x - _carryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x + _carryOffset.x,
+            _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y + _carryOffset.y);
         item.Mode = RigidBody2D.ModeEnum.Rigid;
         item.LinearVelocity = Vector2.Zero;
         item.ApplyCentralImpulse(_sprite.FlipH ? -_itemThrowStrength : _itemThrowStrength);
@@ -144,7 +146,11 @@ public class Player : KinematicBody2D
         
         if (inputEvent.IsActionPressed("shoot_big") && _hasGun)
         {
-            if (!CanShoot) return;
+            if (!CanShoot)
+            {
+                _audioManager.PlaySfx(_laserNoEnergySfx);
+                return;
+            }
             _gun.Fire(ScaleType.Big);
             // GetTree().Root.AddChild(bullet);
             NumOfBullets--;
@@ -153,7 +159,11 @@ public class Player : KinematicBody2D
 
         if (inputEvent.IsActionPressed("shoot_small") && _hasGun)
         {
-            if (!CanShoot) return;
+            if (!CanShoot)
+            {
+                _audioManager.PlaySfx(_laserNoEnergySfx);
+                return;
+            }
             _gun.Fire(ScaleType.Small);
             // GetTree().Root.AddChild(bullet);
             NumOfBullets--;
@@ -193,8 +203,8 @@ public class Player : KinematicBody2D
             }
             else
             {
-                ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x,
-                _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y);
+                ItemCarry.GlobalPosition = new Vector2(_sprite.FlipH ? _sprite.GlobalPosition.x - ItemCarry.CarryOffset.x - _carryOffset.x : _sprite.GlobalPosition.x + ItemCarry.CarryOffset.x + _carryOffset.x,
+                    _sprite.GlobalPosition.y + ItemCarry.CarryOffset.y + _carryOffset.y);
             }
         }
 

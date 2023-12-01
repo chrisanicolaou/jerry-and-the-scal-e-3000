@@ -142,13 +142,13 @@ public class Level : Node2D
             if (Player.ItemCarry == item)
             {
                 Player.PutdownItem();
-                AddChild(item);
+                // AddChild(item);
                 return;
             }
             var itemDropped = Player.PutdownItem();
-            AddChild(itemDropped);
+            // AddChild(itemDropped);
         }
-        RemoveChild(item);
+        // RemoveChild(item);
         Player.PickupItem(item);
     }
 
