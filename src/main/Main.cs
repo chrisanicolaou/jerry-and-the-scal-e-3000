@@ -98,6 +98,7 @@ public class Main : Node
             await _sceneSwitcher.Transition(SceneTransitionDirection.In);
             await preLevel.HoldForDuration();
         }
+        GetTree().Paused = false;
         var levelInstance = await SwitchRootScene<Level>(level.Scene);
         levelInstance.Connect(nameof(Level.LevelCompleted), this, nameof(OnLevelComplete));
         levelInstance.Connect(nameof(Level.RetryRequested), this, nameof(RetryLevel));
