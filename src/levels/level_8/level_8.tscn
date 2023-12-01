@@ -130,9 +130,10 @@ _isLocked = true
 position = Vector2( 211, 168 )
 
 [node name="BulletDeflector2" parent="." instance=ExtResource( 17 )]
-position = Vector2( 178, 30 )
+position = Vector2( 178, 23 )
 rotation = 1.5708
-scale = Vector2( 2, 2 )
+scale = Vector2( 4, 2 )
+z_index = 100
 
 [node name="Laser" parent="." instance=ExtResource( 18 )]
 

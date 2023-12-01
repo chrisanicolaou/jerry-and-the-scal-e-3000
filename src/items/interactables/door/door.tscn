@@ -9,7 +9,7 @@
 [ext_resource path="res://src/items/interactables/door/key_unlock.wav" type="AudioStream" id=7]
 
 [sub_resource type="RectangleShape2D" id=4]
-extents = Vector2( 12.5, 16 )
+extents = Vector2( 3.5, 10.5 )
 
 [sub_resource type="Animation" id=1]
 length = 0.001
@@ -93,7 +93,7 @@ hframes = 8
 UseKeyHint = false
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
-position = Vector2( 0.5, 1 )
+position = Vector2( 0.5, 6.5 )
 shape = SubResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
