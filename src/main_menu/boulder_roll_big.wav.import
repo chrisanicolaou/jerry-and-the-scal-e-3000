@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/boulder_roll_big.wav-66e23f52235613769424cfa19a7d6775.sample"
+path="res://.import/boulder_roll_big.wav-0faf79075623a56a6db151199598a4c8.sample"
 
 [deps]
 
-source_file="res://src/items/scalable_two/boulder_round/boulder_roll_big.wav"
-dest_files=[ "res://.import/boulder_roll_big.wav-66e23f52235613769424cfa19a7d6775.sample" ]
+source_file="res://src/main_menu/boulder_roll_big.wav"
+dest_files=[ "res://.import/boulder_roll_big.wav-0faf79075623a56a6db151199598a4c8.sample" ]
 
 [params]
 

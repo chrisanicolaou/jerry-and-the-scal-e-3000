@@ -14,8 +14,8 @@
 [ext_resource path="res://src/items/scalable_two/boulder_round/boulder_round.tscn" type="PackedScene" id=12]
 [ext_resource path="res://src/main_menu/ScaleTriggerArea.cs" type="Script" id=13]
 [ext_resource path="res://src/ui/menus/options_menu/options_menu.tscn" type="PackedScene" id=14]
-[ext_resource path="res://src/items/scalable_two/boulder_round/boulder_roll_big.wav" type="AudioStream" id=15]
-[ext_resource path="res://src/items/scalable_two/boulder_round/boulder_roll_small.wav" type="AudioStream" id=16]
+[ext_resource path="res://src/main_menu/boulder_roll_big.wav" type="AudioStream" id=15]
+[ext_resource path="res://src/main_menu/boulder_roll_small.wav" type="AudioStream" id=16]
 
 [sub_resource type="Shader" id=1]
 code = "/*
