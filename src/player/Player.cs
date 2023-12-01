@@ -133,6 +133,11 @@ public class Player : KinematicBody2D
         EnableGun();
     }
 
+    public void ToggleTrajectoryLine(bool value)
+    {
+        _gun.TrajectoryLine.Visible = value;
+    }
+
     public override void _UnhandledInput(InputEvent inputEvent)
     {
         if (Freeze) return;

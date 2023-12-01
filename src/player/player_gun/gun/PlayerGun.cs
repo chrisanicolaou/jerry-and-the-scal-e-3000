@@ -69,7 +69,7 @@ public class PlayerGun : Node2D
         var collision = TrajectoryLine.UpdateLine(_trajectoryLinePoint.GlobalPosition, direction, delta, continueOffScreen);
         if (collision?.Collider is ScalableItemV2 scalableItem && !scalableItem.IsMutating)
         {
-            SetScopeOnItem(scalableItem);
+            SetScopeOnItem(scalableItem, TrajectoryLine.Visible);
         }
         else
         {
@@ -78,11 +78,11 @@ public class PlayerGun : Node2D
         }
     }
 
-    private void SetScopeOnItem(ScalableItemV2 scalableItem)
+    private void SetScopeOnItem(ScalableItemV2 scalableItem, bool addHighlight)
     {
         if (_itemInScope != scalableItem) _itemInScope?.RemoveOutline();
         _itemInScope = scalableItem;
-        _itemInScope.AddOutline();
+        if (addHighlight) _itemInScope.AddOutline();
     }
 
     public void Disable()

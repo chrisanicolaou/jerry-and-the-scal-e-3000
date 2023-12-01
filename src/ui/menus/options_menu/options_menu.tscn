@@ -26,7 +26,7 @@ anchor_bottom = 0.5
 margin_left = -69.0
 margin_top = -89.0
 margin_right = 70.0
-margin_bottom = 122.0
+margin_bottom = 102.0
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsPanel"]
 anchor_right = 1.0
@@ -56,7 +56,7 @@ scroll_horizontal_enabled = false
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/ScrollContainer"]
 margin_right = 120.0
-margin_bottom = 178.0
+margin_bottom = 158.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
 margin_right = 120.0
@@ -125,23 +125,23 @@ margin_bottom = 16.0
 text = "Aim line"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
+visible = false
 margin_top = 140.0
 margin_right = 120.0
 margin_bottom = 156.0
-hint_tooltip = "Various benefits, including unlimited ammo"
 
 [node name="CheckButton" parent="SettingsPanel/ScrollContainer/VBoxContainer/HBoxContainer2" instance=ExtResource( 5 )]
 
 [node name="Label" type="Label" parent="SettingsPanel/ScrollContainer/VBoxContainer/HBoxContainer2"]
 margin_left = 20.0
-margin_right = 81.0
+margin_right = 118.0
 margin_bottom = 16.0
-text = "Easy mode"
+text = "Unlimited energy"
 
 [node name="MarginContainer" type="MarginContainer" parent="SettingsPanel/ScrollContainer/VBoxContainer"]
-margin_top = 160.0
+margin_top = 140.0
 margin_right = 120.0
-margin_bottom = 178.0
+margin_bottom = 158.0
 custom_constants/margin_top = 2
 custom_constants/margin_left = 1
 

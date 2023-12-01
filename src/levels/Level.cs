@@ -26,6 +26,7 @@ public class Level : Node2D
     [Export] private ModalOptions _tutorialModalOpts;
     [Export] private DialogPrompt _dialogPrompt;
 
+    private GameDataManager _gameDataManager;
     private DialogBoxCanvas _dialogBoxCanvas;
     private ModalManager _modalManager;
     protected Key Key { get; private set; }
@@ -40,6 +41,7 @@ public class Level : Node2D
     public override void _Ready()
     {
         _modalManager = GetNode<ModalManager>("/root/ModalManager");
+        _gameDataManager = GetNode<GameDataManager>("/root/GameDataManager");
         // _dialogBoxCanvas = GetNode<DialogBoxCanvas>("/root/DialogBoxCanvas");
         EntranceDoor = GetNode<Door>(_entranceDoorPath);
         ExitDoor = GetNode<Door>(_exitDoorPath);
@@ -49,6 +51,7 @@ public class Level : Node2D
         UI = GetNode<LevelUI>(_levelUIPath);
         Player.Freeze = true;
         Player.Visible = false;
+        Player.ToggleTrajectoryLine(_gameDataManager.PlayerData.AimLineEnabled);
         _inputController = GetNode<LevelInputController>(_inputControllerPath);
         _inputController.Connect(nameof(LevelInputController.PauseRequested), this, nameof(OnPauseRequested));
 
@@ -181,6 +184,7 @@ public class Level : Node2D
     private void OnResumeRequested()
     {
         UI.ClosePauseMenu();
+        Player.ToggleTrajectoryLine(_gameDataManager.PlayerData.AimLineEnabled);
         GetTree().Paused = false;
     }
 
