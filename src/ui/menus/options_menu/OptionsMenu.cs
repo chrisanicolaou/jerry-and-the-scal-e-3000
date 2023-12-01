@@ -21,6 +21,13 @@ public class OptionsMenu : Panel
     private Button _restoreDefaultButton;
     private PlayerData _playerData;
     private AudioManager _audioManager;
+    
+    // Hard coding default values directly into the OptionsMenu for the sake of simplicity
+    private bool _aimLineDefault = true;
+    private bool _easyModeDefault = true;
+    private int _masterSliderDefault = 0;
+    private int _musicSliderDefault = 0;
+    private int _sfxSliderDefault = 0;
 
     public override void _Ready()
     {
@@ -38,6 +45,7 @@ public class OptionsMenu : Panel
         _sfxSlider.Connect("value_changed", this, nameof(OnSliderValueChanged), new Array { AudioBusName.Sfx });
         _aimLineToggle.Connect("toggled", this, nameof(OnAimLineToggled));
         _easyModeToggle.Connect("toggled", this, nameof(OnEasyModeToggled));
+        _restoreDefaultButton.Connect("pressed", this, nameof(RestoreDefaults));
         
         _masterSlider.Value = _playerData.MasterDb;
         _musicSlider.Value = _playerData.MusicDb;
@@ -84,6 +92,11 @@ public class OptionsMenu : Panel
     private void OnEasyModeToggled(bool toggled)
     {
         _playerData.EasyModeEnabled = toggled;
+    }
+
+    private void RestoreDefaults()
+    {
+        
     }
 
     private float GetDbValueFromSliderValue(float value)

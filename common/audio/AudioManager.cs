@@ -71,6 +71,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Audio
             player.Stream = audioStream;
             player.VolumeDb = opts.Db;
             player.Bus = opts.BusName;
+            player.PauseMode = opts.PauseMode;
         }
 
         private void SetupPlayer(AudioStreamPlayer2D player, AudioStream audioStream, AudioOptions opts)
@@ -80,6 +81,7 @@ namespace ChiciStudios.GithubGameJam2023.Common.Audio
             player.Bus = opts.BusName;
             player.MaxDistance = opts.MaxDistance;
             player.Attenuation = opts.Attenuation;
+            player.PauseMode = opts.PauseMode;
         }
     }
 }

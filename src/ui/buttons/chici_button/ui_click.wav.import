@@ -1,0 +1,23 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ui_click.wav-795dd45ec2b2da22747dda60eea6e0d0.sample"
+
+[deps]
+
+source_file="res://src/ui/buttons/chici_button/ui_click.wav"
+dest_files=[ "res://.import/ui_click.wav-795dd45ec2b2da22747dda60eea6e0d0.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop_mode=0
+edit/loop_begin=0
+edit/loop_end=-1
+compress/mode=0

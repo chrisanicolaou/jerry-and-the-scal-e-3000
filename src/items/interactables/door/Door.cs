@@ -10,6 +10,7 @@ public class Door : Node2D
     [Export] private bool _stoneDoor;
     [Export] private AudioStream _openDoorSfx;
     [Export] private AudioStream _closeDoorSfx;
+    [Export] private AudioStream _unlockSfx;
     [Export] private NodePath _interactionAreaPath;
     [Export] private NodePath _animPlayerPath;
     [Export] private NodePath _spritePath;
@@ -55,6 +56,7 @@ public class Door : Node2D
     {
         _isLocked = false;
         _animPlayer.Play("door_unlock");
+        _audioManager.PlaySfx(_unlockSfx);
         await ToSignal(_animPlayer, "animation_finished");
     }
 }

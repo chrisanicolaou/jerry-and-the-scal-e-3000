@@ -1,6 +1,7 @@
 using Godot;
 using System;
 using System.ComponentModel.Design;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 using GithubGameJam2023.items.scalable_two;
 using Godot.Collections;
 using Array = Godot.Collections.Array;
@@ -15,7 +16,9 @@ public class TutorialLevel : Level
     [Export] private NodePath _gunSpinSpriteTwoPath;
     [Export] private NodePath _gunSpinAnimPlayerPath;
     [Export] private float _gunSpinPostAnimDelay = 0.5f;
+    [Export] private AudioStream _scalEPickUpSfx;
 
+    private AudioManager _audioManager;
     private TutorialPrompt _tutorialPrompt;
     private ScalableItemV2 _tutorialItem;
     private Sprite _gunSpinSprite;
@@ -35,6 +38,8 @@ public class TutorialLevel : Level
     public override void _Ready()
     {
         base._Ready();
+
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         
         // Suspend key for now
         Key.Mode = RigidBody2D.ModeEnum.Static;
@@ -76,6 +81,7 @@ public class TutorialLevel : Level
 
     private async void HandleGunPickup()
     {
+        _audioManager.PlaySfx(_scalEPickUpSfx, new AudioOptions { BusName = AudioBusName.Sfx, PauseMode = PauseModeEnum.Process });
         Player.PickupGun();
         _gunSpinSprite.Show();
         _gunSpinSpriteTwo.Show();
