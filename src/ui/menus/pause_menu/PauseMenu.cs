@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using ChiciStudios.GithubGameJam2023.Common.Audio;
 
 public class PauseMenu : Control
 {
@@ -12,7 +13,9 @@ public class PauseMenu : Control
     [Export] private NodePath _optionsButtonPath;
     [Export] private NodePath _quitToMenuButtonPath;
     [Export] private NodePath _optionsModalPath;
+    [Export] private AudioStream _pauseSfx;
 
+    private AudioManager _audioManager;
     private Button _resumeButton;
     private Button _retryButton;
     private Button _optionsButton;
@@ -21,6 +24,7 @@ public class PauseMenu : Control
 
     public override void _Ready()
     {
+        _audioManager = GetNode<AudioManager>("/root/AudioManager");
         _resumeButton = GetNode<Button>(_resumeButtonPath);
         _retryButton = GetNode<Button>(_retryButtonPath);
         _optionsButton = GetNode<Button>(_optionsButtonPath);
@@ -37,7 +41,7 @@ public class PauseMenu : Control
     public void ShowAndFocus()
     {
         Show();
-        // _resumeButton.CallDeferred("grab_focus");
+        _audioManager.PlaySfx(_pauseSfx, new AudioOptions { BusName = AudioBusName.Sfx, PauseMode = PauseModeEnum.Process });
     }
 
     private void OnResumeButtonPressed()

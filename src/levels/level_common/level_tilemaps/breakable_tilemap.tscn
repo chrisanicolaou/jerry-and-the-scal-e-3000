@@ -1,13 +1,15 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://src/environment/tiles/tilesets/breakable_tiles.tres" type="TileSet" id=1]
 [ext_resource path="res://src/items/breakable/breakable_particles/breakable_particles.tscn" type="PackedScene" id=2]
 [ext_resource path="res://src/items/breakable/BreakableItem.cs" type="Script" id=3]
+[ext_resource path="res://src/levels/level_common/level_tilemaps/breakable_break.wav" type="AudioStream" id=4]
 
 [node name="Breakable" type="StaticBody2D"]
 script = ExtResource( 3 )
 _tileMapPath = NodePath("BreakableTileMap")
 _particlePath = NodePath("Particles2D")
+_breakSfx = ExtResource( 4 )
 
 [node name="BreakableTileMap" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )

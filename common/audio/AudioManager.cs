@@ -32,11 +32,14 @@ namespace ChiciStudios.GithubGameJam2023.Common.Audio
 
         public override void _Ready()
         {
+            PauseMode = PauseModeEnum.Process;
             _musicPlayer = new AudioStreamPlayer { Name = "MusicPlayer", PauseMode = PauseModeEnum.Process };
             AddChild(_musicPlayer);
             for (var i = 0; i < _sfxPoolSize; i++)
             {
-                var sfxPlayer = new AudioStreamPlayer { Name = $"SfxPlayer{i}" };
+                // I am reluctantly allowing all SFX to play regardless of game state. This is because switching between pause mode process/stopped doesn't actually
+                // kick in immediately, so trying to switch to "Process" before playing sfx doesn't play
+                var sfxPlayer = new AudioStreamPlayer { Name = $"SfxPlayer{i}", PauseMode = PauseModeEnum.Process};
                 AddChild(sfxPlayer);
                 _sfxPlayerPool.Add(sfxPlayer);
             }
