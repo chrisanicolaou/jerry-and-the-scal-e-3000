@@ -29,6 +29,7 @@ _sceneSwitcherPath = NodePath("RootSceneSwitcher")
 _playerDataResourceScript = ExtResource( 4 )
 
 [node name="RootSceneSwitcher" parent="." instance=ExtResource( 2 )]
+pause_mode = 2
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource( 1 )
